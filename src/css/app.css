@@ -1,0 +1,434 @@
+@import "antd/dist/antd.css";
+@import "file-icon-vectors/dist/file-icon-vectors.min.css";
+/* @import "react-simple-keyboard/build/css/index.css"; */
+
+@font-face {
+  font-family: "Frutiger";
+  src: url("../fonts/Frutiger LT Arabic 55 Roman.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Frutiger";
+  src: url("../fonts/Frutiger LT Arabic 65 Bold.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Circular";
+  src: url("../fonts/CircularStd-Book.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Circular";
+  src: url("../fonts/CircularStd-Bold.ttf");
+  font-weight: bold;
+}
+
+* {
+  font-family: "Frutiger" !important;
+}
+
+body {
+  overflow: hidden;
+}
+
+.brand {
+  height: 240px;
+  width: 70%;
+  margin: auto;
+  background-color: #f6f9fb;
+  border-radius: 0 0 6px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand img {
+  margin-top: 45px;
+}
+
+.search-box {
+  width: 340px;
+  height: 40px;
+  display: inline-flex;
+}
+
+.search-box input {
+  height: 100%;
+  width: 100%;
+  padding: 4px 14px;
+  outline: none;
+  border: none;
+  font-size: 18px;
+}
+.search-box img {
+  width: 24px;
+}
+
+.user-account h4 {
+  margin: 0 5px;
+  display: inline-flex;
+}
+
+.side-menu {
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  width: 70%;
+  margin-top: 60px;
+}
+
+.app-info {
+  position: absolute;
+  bottom: 40px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: gray;
+}
+.app-info a {
+  color: #2c24ff;
+  font-weight: bold;
+}
+
+.side-menu li {
+  display: flex;
+  align-items: baseline;
+  font-size: 18px;
+  margin-top: 16px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: center;
+  transition: 0.2s;
+}
+.side-menu li.active {
+  background-color: #f6f9fb;
+  color: #2c24ff;
+  font-weight: bold;
+}
+.side-menu li:hover {
+  opacity: 0.6;
+}
+.side-menu span {
+  margin: 0 8px;
+}
+
+.app-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container {
+  max-width: 1250px;
+}
+
+.patients-list {
+  margin-top: 20px;
+  border: 1px solid #f3f3f3;
+}
+
+.patients-list-header {
+  /* padding: 0 30px; */
+}
+
+.patient-item {
+  display: flex;
+  /* border-radius: 4px; */
+  padding: 20px;
+  border-bottom: 1px solid #f3f3f3;
+  /* background-color: rgba(255, 255, 255, .15);  
+  backdrop-filter: blur(50px); */
+}
+
+.patient-item:last-child {
+  border: none;
+}
+
+.patient-item .item-name {
+  flex: 35%;
+  display: flex;
+  align-items: center;
+}
+.patient-item .item-name .name-info {
+  margin: 0 16px;
+}
+.patient-item .item-name .name-info span {
+  display: block;
+  font-weight: bold;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+.patient-item .item-name .name-info small {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 14px;
+}
+.patient-item .item-age {
+  flex: 20%;
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+.patient-item .item-age span {
+  font-size: 12px;
+  font-weight: lighter;
+  margin-top: 10px;
+  margin-left: 8px;
+  color: #2c24ff;
+}
+
+.patient-item .item-address {
+  flex: 25%;
+  display: flex;
+  align-items: center;
+}
+.patient-item .item-address .address-info {
+  margin: 0 12px;
+  margin-top: 2px;
+}
+.patient-item .item-address .address-info span {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+.patient-item .item-address .address-info small {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 12px;
+  color: #2c24ff;
+}
+.patient-item .item-actions {
+  flex: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.patient-item .item-new {
+  display: flex;
+  align-items: center;
+}
+
+.list-footer {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-footer .right {
+  display: flex;
+  align-items: center;
+}
+.list-footer .right span {
+  padding: 0 10px;
+}
+.list-footer .left {
+  color: gray;
+}
+
+.add-btn {
+  border-color: #2c24ff;
+  color: #2c24ff;
+}
+.add-btn:hover,
+.add-btn:focus {
+  color: #7672f5;
+  background: #fff;
+  border-color: #837ffa;
+}
+
+.patient-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.attachment-item {
+  background-color: #fbfaff;
+  border-radius: 4px;
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  border: 0.3px solid transparent;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.attachment-item:hover {
+  border-color: #9a97f8;
+}
+.attachment-item:active {
+  opacity: 0.4;
+}
+
+.attachment-item h4 {
+  margin: 0;
+  line-height: 1;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 15vw;
+}
+
+.attachment-item span,
+.attachment-item small {
+  display: block;
+}
+
+.attachment-item small {
+  margin-top: 2px;
+}
+
+.attachment-item .fiv-viv {
+  font-size: 55px;
+  margin-right: 18px;
+}
+
+.attachment-list {
+  margin-top: 30px;
+}
+
+.selected-drugs {
+  border: 0.4px solid #f3f3f3;
+}
+.selected-drugs .drug-item {
+  border-bottom: 0.4px solid #f3f3f3;
+  display: flex;
+  padding: 12px 20px;
+  align-items: center;
+}
+.selected-drugs .drug-item:last-child {
+  border-bottom: none;
+}
+
+.selected-drugs .drug-item .item-drug {
+  flex: 55%;
+}
+.selected-drugs .drug-item .item-note {
+  flex: 35%;
+}
+.selected-drugs .drug-item .item-actions {
+  flex: 10%;
+  text-align: right;
+}
+
+.drop-file-glass {
+  background-image: url("../assets/shap.svg");
+  border-radius: 4px;
+}
+.drop-file {
+  backdrop-filter: blur(77px);
+  border-radius: 4px;
+  padding: 70px 20px;
+  padding-bottom: 45px;
+  text-align: center;
+  border: 2px dashed transparent;
+}
+
+.drop-file img {
+  margin-bottom: 20px;
+}
+
+.drop-file p {
+  color: #000;
+}
+.drop-file a {
+  color: #2c24ff;
+}
+
+.file-item {
+  background-color: #fbfaff;
+  border-radius: 4px;
+  padding:20px;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0.3px solid transparent;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.file-item:hover{
+  border-color: #2c24ff;
+}
+
+.file-item .file-info{
+  display: inline-flex;
+}
+.file-item .file-info span{
+  display: block;
+  line-height: 1;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  
+}
+.file-item .file-info small{
+ color: #707070;
+}
+.file-item .file-info .file-text{
+ margin-left: 12px;
+ width: 13vw;
+}
+.file-item .file-info .fiv-viv{
+ font-size: 35px;
+}
+
+
+
+.drugs-item {
+  background-color: #fbfaff;
+  border-radius: 4px;
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  border: 0.3px solid transparent;
+  transition: 0.2s;
+  justify-content: space-between;
+}
+
+
+.drugs-item h4 {
+  margin: 0;
+  line-height: 1;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 15vw;
+}
+
+.drugs-item span{
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   margin-right: 10px;
+   display: inline-table;
+   box-shadow:0px 0px 4px -2px #9E9E9E;
+   margin-top: 2px;
+}
+.drugs-item small {
+  display: block;
+}
+
+.drugs-item small {
+  margin-top: 2px;
+}
+
+.drugs-item .fiv-viv {
+  font-size: 55px;
+  margin-right: 18px;
+}
+
+.drugs-list {
+  margin-top: 30px;
+}
+
