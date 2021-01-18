@@ -16,7 +16,6 @@
     "antd": "^4.8.2",
     "file-dialog": "0.0.8",
     "file-icon-vectors": "^1.0.0",
-    "fs-extra": "^9.0.1",
     "get-age": "^1.0.1",
     "moment": "^2.27.0",
     "react": "^17.0.1",

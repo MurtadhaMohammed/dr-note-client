@@ -1,25 +1,66 @@
 import React, { useState, useEffect } from "react";
-import { Select, Button, Empty, Spin, Drawer, Row, Col } from "antd";
-import { PatientItem, PatientForm } from "../components/home";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { DrugsItem } from "../components/drugs";
+import { Select, Button, message, Row, Col } from "antd";
+import { DrugForm, DrugsItem } from "../components/drugs";
+import { createDrug, getDrug } from "../db/controllers";
+import { DrugStore } from "../store/drugStore";
 
 const { Option } = Select;
 
-const drugs = [
-  { id: 1, name: "New Drug test info", createdAt: 'Nov 20, 2020',color: "#4caf50" },
-  { id: 2, name: "New Drug  info", createdAt: 'Nov 20, 2020',color: "#00bcd4" },
-  { id: 3, name: "Drug test info", createdAt: 'Nov 20, 2020',color: "#ffc107" },
-  { id: 5, name: "New Drug test info", createdAt: 'Nov 20, 2020',color: "#e91e63" },
-  { id: 8, name: "New Drug test info", createdAt: 'Nov 20, 2020',color: "#e91e63" },
-  { id: 4, name: "Foo Bar Foo YEes", createdAt: 'Nov 20, 2020',color: "#009688" },
-  { id: 6, name: "Drug test info", createdAt: 'Nov 20, 2020',color: "#ffc107" },
-  { id: 7, name: "Foo Bar Foo YEes", createdAt: 'Nov 20, 2020',color: "#009688" },
-  { id: 9, name: "New Drug  info", createdAt: 'Nov 20, 2020',color: "#00bcd4" },
-  { id: 10, name: "New Drug  info", createdAt: 'Nov 20, 2020',color: "#00bcd4" },
-];
 export const DrugsScreen = (props) => {
-  useEffect(() => {}, []);
+
+  const colors = ['#008891', '#ef4f4f', '#ff9a00', '#1fab89', '#d72323', '#0c056d'];
+  const randomColor = (color) => {
+    return color[Math.floor((Math.random() * color.length))];
+  }
+
+  const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
+  const [data, setData] = useState([]);
+  const [addLoading, setAddLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  let {
+    name,
+    color,
+    setName,
+    setColor
+  } = DrugStore();
+
+  useEffect(() => {
+    loadData();
+  }, [page]);
+  const loadData = () => {
+    setLoading(true);
+    getDrug(page, (result) => {
+      if (result.status) {
+        setLoading(false);
+        setData(result.drugs);
+        setCount(result.total);
+        setPages(result.pages);
+      }
+    });
+  };
+
+
+  const addDrug = () => {
+    color = randomColor(colors);
+    let data = { name, color };
+    createDrug(data, (status) => {
+      if (status) {
+        setAddLoading(false);
+        setName(null);
+        setColor(null);
+        loadData();
+        message.success("Insert successfully .");
+      } else {
+        setAddLoading(false);
+        message.error("The process is not complete!");
+      }
+    });
+    setIsModalVisible(false); // close modal after add
+  };
 
   return (
     <div className="page">
@@ -27,19 +68,24 @@ export const DrugsScreen = (props) => {
         <div>
           <span>Drug List</span>
         </div>
+<<<<<<< HEAD
         <Button onClick={()=> setIsNew(true)} size="large" type="link">
+=======
+        <Button size="large" type="link" onClick={() => setIsModalVisible(true)}>
+>>>>>>> b17a502d0afab261d71503b26d6396f83d6d172b
           + New Drug
         </Button>
       </section>
       <section className="drugs-list">
         <Row gutter={[20, 20]}>
-          {drugs.map((item) => (
+          {data.map((item) => (
             <Col key={item.id} md={12} lg={8}>
               <DrugsItem item={item} />
             </Col>
           ))}
         </Row>
       </section>
+      <DrugForm visible={isModalVisible} loading={addLoading} onSubmit={addDrug} onClose={() => setIsModalVisible(false)} />
     </div>
   );
 };
