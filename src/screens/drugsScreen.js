@@ -27,7 +27,7 @@ export const DrugsScreen = (props) => {
         <div>
           <span>Drug List</span>
         </div>
-        <Button size="large" type="link">
+        <Button onClick={()=> setIsNew(true)} size="large" type="link">
           + New Drug
         </Button>
       </section>

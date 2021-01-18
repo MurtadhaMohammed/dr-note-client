@@ -13,7 +13,7 @@ import {
 } from "./screens";
 import { Button } from "antd";
 
-import { HashRouter as Router, Switch, Route, useLocation } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 const SreachComponent = () => (
   <div className="search-box">
