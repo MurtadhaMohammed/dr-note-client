@@ -1,0 +1,63 @@
+.attachment-item {
+  background-color: #fbfaff;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: 0.3px solid transparent;
+  transition: 0.2s;
+  height: 94px;
+  cursor: pointer;
+  position: relative;
+}
+
+.attachment-item .icon {
+  width: 42px;
+}
+
+.attachment-item .body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+  flex: 1;
+}
+
+.attachment-item .action {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+}
+
+.attachment-item:hover {
+  border-color: #9a97f8;
+}
+.attachment-item:active {
+  opacity: 0.4;
+}
+
+.attachment-item h4 {
+  margin: 0;
+  line-height: 1;
+  font-weight: bold;
+  overflow: hidden;
+  font-size: 18px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 15vw;
+}
+
+.attachment-item span,
+.attachment-item small {
+  display: block;
+}
+
+.attachment-item small {
+  margin-top: 2px;
+}
+
+.attachment-item .fiv-viv {
+  font-size: 55px;
+}

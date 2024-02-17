@@ -1,0 +1,29 @@
+/* .drop-file-glass {
+  background-image: url("../../assets/shap.svg");
+  border-radius: 4px;
+} */
+
+.drop-file {
+  border-radius: 8px;
+  padding: 70px 20px;
+  padding-bottom: 45px;
+  text-align: center;
+  border: 2px dashed #eee;
+  transition: 0.2s;
+}
+
+.drop-file:hover {
+  background-color: #fbfaff;
+  box-shadow: #33333342 1px 4px 11px -5px;
+}
+
+.drop-file img {
+  margin-bottom: 20px;
+}
+
+.drop-file p {
+  color: #000;
+}
+.drop-file a {
+  color: #2c24ff;
+}

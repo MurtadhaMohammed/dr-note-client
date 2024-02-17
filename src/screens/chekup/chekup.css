@@ -1,0 +1,24 @@
+.selected-drugs {
+  border: 0.4px solid #f3f3f3;
+  border-radius: 4px;
+}
+.selected-drugs .drug-item {
+  border-bottom: 0.4px solid #f3f3f3;
+  display: flex;
+  padding: 12px 20px;
+  align-items: center;
+}
+.selected-drugs .drug-item:last-child {
+  border-bottom: none;
+}
+
+.selected-drugs .drug-item .item-drug {
+  flex: 55%;
+}
+.selected-drugs .drug-item .item-note {
+  flex: 35%;
+}
+.selected-drugs .drug-item .item-actions {
+  flex: 10%;
+  text-align: right;
+}

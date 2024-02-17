@@ -1,0 +1,38 @@
+.file-item {
+    background-color: #fbfaff;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.3px solid transparent;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .file-item:hover {
+    border-color: #2c24ff;
+  }
+  
+  .file-item .file-info {
+    display: inline-flex;
+  }
+  .file-item .file-info span {
+    display: block;
+    line-height: 1;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .file-item .file-info small {
+    color: #707070;
+  }
+  .file-item .file-info .file-text {
+    margin-left: 12px;
+    width: 13vw;
+  }
+  .file-item .file-info .fiv-viv {
+    font-size: 35px;
+  }

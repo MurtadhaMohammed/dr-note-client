@@ -1,0 +1,46 @@
+.login-screen {
+  height: 86vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-screen .login-card {
+  width: 360px;
+}
+
+.login-screen .title {
+  margin: 0;
+}
+
+.login-screen .ant-divider-horizontal {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.login-screen button {
+  margin-top: 26px;
+}
+
+.login-screen input {
+  text-align: center;
+}
+
+.login-screen .otp > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-screen .otp > div input {
+  border: none;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  height: 42px;
+  width: 42px !important;
+  display: block;
+}
+
+.login-screen .ant-spin-dot-item {
+  background-color: #fff;
+}

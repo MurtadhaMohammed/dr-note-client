@@ -2,37 +2,40 @@
   "name": "racheta-desktop",
   "version": "1.0.0",
   "description": "",
+  "homepage": "/",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "serve": "parcel ./src/index.html --public-url ./ --target=electron",
-    "brow": "parcel ./src/index.html",
-    "build-mac": "electron-packager . racheta --overwrite --asar=true --platform=win32 --arch=ia32  --out=build"
+    "start": "vite --host",
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "antd": "^4.8.2",
-    "file-dialog": "0.0.8",
+    "antd": "^5.14.0",
+    "dayjs": "^1.11.10",
+    "file-dialog": "^0.0.8",
     "file-icon-vectors": "^1.0.0",
     "get-age": "^1.0.1",
+    "immutable": "^5.0.0-beta.5",
+    "jwt-decode": "^4.0.0",
     "moment": "^2.27.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-icons": "^3.11.0",
-    "react-router-dom": "^5.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
+    "react-otp-input": "^3.1.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.22.0",
     "react-simple-keyboard": "^2.5.56",
     "rsuite": "^4.8.4",
     "save-as": "^0.1.8",
-    "sequelize": "^6.3.5",
-    "sqlite3": "^5.0.0",
     "uuid": "^8.3.2",
     "zustand": "^3.0.2"
   },
   "devDependencies": {
-    "electron": "^10.1.0",
-    "electron-packager": "^15.1.0",
-    "less": "^3.12.2"
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "less": "^3.12.2",
+    "process": "^0.11.10",
+    "vite": "^5.1.1"
   }
 }

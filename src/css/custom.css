@@ -40,17 +40,17 @@
 .ant-select-single.ant-select-show-arrow .ant-select-selection-item,
 .ant-select-single.ant-select-show-arrow,
 .ant-btn-link {
-  font-weight: bold;
+  /* font-weight: bold; */
   color: #2c24ff;
 }
-
+/* 
 .ant-btn-link:hover,
 .ant-btn-link:focus {
   color: rgb(99, 94, 248);
   background: transparent;
-}
+} */
 
-.ant-input-affix-wrapper:focus,
+/* .ant-input-affix-wrapper:focus,
 .ant-input-affix-wrapper-focused,
 .ant-input-affix-wrapper:hover,
 .ant-picker-focused,
@@ -60,12 +60,12 @@ textarea.ant-input:focus {
   border-color: #2c24ff;
   -webkit-box-shadow: 0 0 0 2px rgba(211, 90, 241, 0.2);
   box-shadow: 0 0 0 2px rgba(211, 90, 241, 0.2);
-}
+} */
 
-.ant-input-affix-wrapper-focused svg,
+/* .ant-input-affix-wrapper-focused svg,
 .ant-picker-focused svg {
   color: #2c24ff;
-}
+} */
 
 .ant-drawer-content-wrapper {
   margin: 6px !important;
