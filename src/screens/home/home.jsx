@@ -7,11 +7,13 @@ import { useInfiniteQuery } from "react-query";
 import { apiCall } from "../../lib/services";
 import LoadMoreBtn from "../../components/loadMoreBtn/loadMoreBtn";
 import { useAppStore } from "../../lib/store";
+import PatientHistory from "./history/history";
 
 const { Option } = Select;
 
 const HomeScreen = () => {
   const [isModal, setIsModal] = useState(false);
+  const [isHistory, setIsHistory] = useState(false);
   const [record, setRecord] = useState(null);
   const { querySearch } = useAppStore();
   const pageSize = 10;
@@ -64,6 +66,10 @@ const HomeScreen = () => {
               <PatientItem
                 key={k}
                 item={item}
+                onHistory={(val) => {
+                  setRecord(val);
+                  setIsHistory(true);
+                }}
                 onEdit={(val) => {
                   setRecord(val);
                   setIsModal(true);
@@ -108,6 +114,19 @@ const HomeScreen = () => {
             setRecord(null);
           }}
         />
+      </Drawer>
+      <Drawer
+        title={<span>{record?.name}</span>}
+        placement="right"
+        closable={true}
+        width={400}
+        onClose={() => {
+          setIsHistory(false);
+          setRecord(null);
+        }}
+        open={isHistory}
+      >
+        <PatientHistory patientId={record?.id} />
       </Drawer>
     </div>
   );

@@ -50,7 +50,7 @@ body {
 }
 
 .search-box {
-  width: 340px;
+  /* width: 340px; */
   height: 40px;
   display: flex;
   align-items: center;
@@ -133,8 +133,8 @@ body {
   display: flex;
   align-items: baseline;
   font-size: 18px;
-  margin-top: 16px;
-  padding: 8px 14px;
+  margin-top: 12px;
+  padding: 12px;
   border-radius: 4px;
   cursor: pointer;
   align-items: center;

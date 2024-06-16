@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Modal, Button, Input, Spin, Drawer, Row, Col } from "antd";
-import { DrugStore } from "../../../store/drugStore";
+import { Modal, Input, Row, Col, message, Space, Button } from "antd";
+import { useMutation } from "react-query";
+import { apiCall } from "../../../lib/services";
+import qc from "../../../lib/queryClient";
 
 const InputFiled = (label, input) => (
   <div className="text-input">
@@ -9,21 +11,41 @@ const InputFiled = (label, input) => (
   </div>
 );
 
-export const DrugForm = ({ visible, onClose, onSubmit, loading }) => {
-  let { name, color, setName, setColor } = DrugStore();
+export const DrugForm = ({ visible, onClose }) => {
+  let [name, setName] = useState(null);
 
-  // const handleCancel = () => {
-  //     // visible=false;
-  //     console.log("close");
-  //     console.log(randomColor(colors));
-  // };
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (data) =>
+      apiCall({ url: "drug/v1/create", method: "POST", data }),
+    onSuccess: () => {
+      message.success(`Insert Successfully.`);
+      setName(null);
+      qc.invalidateQueries("drugs");
+      onClose(false);
+    },
+    onError: () => message.error("Error !"),
+  });
+
   return (
     <div>
       <Modal
         title="Add Prescption"
-        visible={visible}
-        onOk={onSubmit}
-        loading={loading}
+        open={visible}
+        destroyOnClose
+        width={400}
+        footer={
+            <Button
+              style={{marginTop: 16}}
+              block
+              loading={isLoading}
+              type="primary"
+              disabled={!name}
+              onClick={() => mutate({ name })}
+            >
+              Save
+            </Button>
+         
+        }
         onCancel={onClose}
       >
         <div>

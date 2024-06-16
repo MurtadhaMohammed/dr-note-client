@@ -1,0 +1,47 @@
+.racheta {
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  min-height: 500px;
+  overflow: hidden;
+  width: 100% !important;
+}
+
+.raHeader {
+  background-color: #eee;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.raHeader span{
+  display: block !important;
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.raHeader span{
+    color: #bababa;
+    font-size: 20px;
+}
+
+.raContent {
+  padding: 16px;
+}
+.racheta ul {
+  margin-left: 30px;
+}
+
+.racheta ul li {
+  margin-bottom: 8px;
+}
+.patient {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

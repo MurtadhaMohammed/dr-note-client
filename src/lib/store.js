@@ -5,7 +5,12 @@ export const useAppStore = create((set) => ({
   isLogin: false,
   user: null,
   querySearch: {},
+  racheta: {
+    open: false,
+    data: null,
+  },
   selectedName: null,
+  setRacheta: (racheta) => set({ racheta }),
   setQuerySearch: (querySearch) => set({ querySearch }),
   setSelectedName: (selectedName) => set({ selectedName }),
   setIsLogin: (isLogin) => {

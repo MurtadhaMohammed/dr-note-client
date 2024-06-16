@@ -7,9 +7,9 @@ import {
   Input,
   message,
   Space,
-  Typography,
+  AutoComplete,
 } from "antd";
-import { PlusOutlined, SaveOutlined } from "@ant-design/icons";
+import { PlusOutlined, SaveOutlined, PrinterOutlined } from "@ant-design/icons";
 import { DrugItem } from "./drugItem/drugItem";
 import { FileItem } from "./fileItem/fileItem";
 import DropZon from "../../components/dropZon/dropZon";
@@ -18,10 +18,9 @@ import "./chekup.css";
 import { useMutation, useQuery } from "react-query";
 import qc from "../../lib/queryClient";
 import { apiCall } from "../../lib/services";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppStore } from "../../lib/store";
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 const InputFiled = (label, input) => (
@@ -31,62 +30,23 @@ const InputFiled = (label, input) => (
   </div>
 );
 
-// const selectedDrugs = [
-//   {
-//     id: 34,
-//     name: "New Test Drug name",
-//     note: "this is just test note",
-//   },
-//   {
-//     id:56,
-//     name: "Drug name for test only",
-//     note: "this is a test",
-//   },
-//   {
-//     id: 43,
-//     name: "Foo Bar",
-//     note: "just test note",
-//   },
-// ];
-
-const files = [
-  {
-    id: 1,
-    title: "Test DH results doers Foo Yees",
-    name: "مرتضى محمد علاء",
-    createdAt: "Nov 20, 2020",
-    type: "pdf",
-  },
-  {
-    id: 3,
-    title: "Test DH results doers Bar Noo This Test Only",
-    name: "Ali Salam",
-    createdAt: "Nov 20, 2020",
-    type: "xls",
-  },
-  {
-    id: 89,
-    title: "Test DH results doers",
-    name: "Marwa Salam",
-    createdAt: "Nov 20, 2020",
-    type: "pdf",
-  },
-];
-
-const ChekupScreen = (props) => {
+const ChekupScreen = () => {
   const [note, setNote] = useState(null);
   const [selectedDrugs, setSelectedDrugs] = useState([]);
   const [drugName, setDrugName] = useState(null);
   const [drugNote, setDrugNote] = useState(null);
-  const { id, name } = useParams();
-  const { setSelectedName } = useAppStore();
+  const [options, setOptions] = useState([]);
+  const { id, visitId } = useParams();
+  const { setSelectedName, setRacheta } = useAppStore();
+  const navigate = useNavigate();
 
   const { mutate, isSaveLoading } = useMutation({
     mutationFn: (data) =>
       apiCall({ url: "visit/v1/create", method: "POST", data }),
-    onSuccess: () => {
+    onSuccess: (resp) => {
       message.success(`Insert Successfully.`);
       qc.invalidateQueries("patients");
+      navigate(`/patients/${id}/visit/${resp?.id}`, { replace: true });
     },
     onError: () => message.error("Error !"),
   });
@@ -98,9 +58,24 @@ const ChekupScreen = (props) => {
     retry: 2,
   });
 
+  const { data: visit } = useQuery({
+    queryKey: [`visit-${visitId}`, visitId],
+    queryFn: (e) => apiCall({ url: `visit/v1/find/${e.queryKey[1]}` }),
+    refetchOnWindowFocus: false,
+    retry: 2,
+    enabled: !!visitId,
+  });
+
   useEffect(() => {
     if (data) setSelectedName(data?.name);
   }, [data]);
+
+  useEffect(() => {
+    if (visit) {
+      setNote(visit?.note);
+      setSelectedDrugs(visit?.drugs);
+    }
+  }, [visit]);
 
   const { mutate: mutateFile, isLoading: isLoadingFile } = useMutation({
     mutationFn: (data) =>
@@ -112,7 +87,7 @@ const ChekupScreen = (props) => {
     onError: () => message.error("Error !"),
   });
 
-  const handleDrugAdd = () => {
+  const handleDrugAdd = async () => {
     setSelectedDrugs([
       ...selectedDrugs,
       {
@@ -121,9 +96,14 @@ const ChekupScreen = (props) => {
         note: drugNote,
       },
     ]);
-
     setDrugName(null);
     setDrugNote(null);
+
+    await apiCall({
+      url: "drug/v1/upsert",
+      method: "PATCH",
+      data: { name: drugName },
+    });
   };
 
   const handlRemoveDrug = (id) => {
@@ -132,11 +112,27 @@ const ChekupScreen = (props) => {
 
   const handleSave = () => {
     let _data = { note, drugs: selectedDrugs, patientId: id };
+    if (visitId) _data.id = visitId;
     mutate(_data);
   };
 
+  const getDrugs = async (search = "") => {
+    let resp = await apiCall({ url: `drug/v1/all?q=${search}&take=10` });
+    setOptions(
+      resp.map((e) => {
+        return {
+          value: e.name,
+        };
+      })
+    );
+  };
+
+  useEffect(() => {
+    getDrugs();
+  }, []);
+
   return (
-    <div className="page" style={{ paddingTop: 25 }}>
+    <div className="page checkup-screen" style={{ paddingTop: 25 }}>
       <Row gutter={[50, 50]}>
         <Col span={16}>
           <Row gutter={[20, 40]}>
@@ -154,27 +150,20 @@ const ChekupScreen = (props) => {
             </Col>
 
             <Col span={24} style={{ display: "flex", alignItems: "flex-end" }}>
-              {/* <Typography.Text>Prescription</Typography.Text>
-              <br/> */}
               {InputFiled(
                 "Prescription",
                 <Space>
-                  <Select
+                  <AutoComplete
+                    style={{
+                      width: 300,
+                    }}
                     size="large"
-                    showSearch
-                    allowClear
+                    options={options}
                     value={drugName}
-                    style={{ width: 300 }}
-                    placeholder="Chose Drug . . ."
                     onChange={(val) => setDrugName(val)}
-                  >
-                    <Option key={1} value="drugOne">
-                      One
-                    </Option>
-                    <Option key={2} value="drugTwo">
-                      Two
-                    </Option>
-                  </Select>
+                    placeholder="Chose Drug . . ."
+                    onSearch={getDrugs}
+                  />
                   <Input
                     value={drugNote}
                     onChange={(e) => setDrugNote(e.target.value)}
@@ -203,16 +192,35 @@ const ChekupScreen = (props) => {
               </div>
             </Col>
             <Col span={24}>
-              <Button
-                type="primary"
-                size="large"
-                icon={<SaveOutlined />}
-                loading={isSaveLoading}
-                disabled={!note}
-                onClick={handleSave}
-              >
-                Save & Print
-              </Button>
+              <Space>
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={<SaveOutlined />}
+                  loading={isSaveLoading}
+                  disabled={!note}
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+                <Button
+                  // type="primary"
+                  size="large"
+                  icon={<PrinterOutlined />}
+                  disabled={!visitId}
+                  onClick={() =>
+                    setRacheta({
+                      open: true,
+                      data: {
+                        patient: data,
+                        visit,
+                      },
+                    })
+                  }
+                >
+                  Print Racheta
+                </Button>
+              </Space>
             </Col>
           </Row>
         </Col>
@@ -227,7 +235,7 @@ const ChekupScreen = (props) => {
               })
             }
           />
-          {data?.files.map((file) => (
+          {data?.files?.map((file) => (
             <FileItem key={file.id} file={file} />
           ))}
         </Col>

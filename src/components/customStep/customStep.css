@@ -1,0 +1,23 @@
+.custom-step {
+  display: flex;
+  align-items: center;
+}
+
+.custom-step span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #6560f7;
+  border-radius: 25px;
+  margin-right: 6px;
+  transition: 0.4s;
+}
+
+.custom-step span:last-child {
+  margin: 0;
+}
+
+.custom-step span.active {
+  width: 80px;
+  background-color: #2c24ff;
+}

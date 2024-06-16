@@ -10,6 +10,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useAppStore } from "./lib/store";
 import LoginScreen from "./screens/login/login";
 import SearchBox from "./components/SearchBox/searchBox";
+import ScheduleScreen from "./screens/schedule/schedule";
 
 const GoBackComponent = () => {
   const { selectedName } = useAppStore();
@@ -55,6 +56,14 @@ function App() {
         <Route
           path="/patients/:id"
           element={<ProtectedRoute comp={<ChekupScreen />} />}
+        />
+        <Route
+          path="/patients/:id/visit/:visitId"
+          element={<ProtectedRoute comp={<ChekupScreen />} />}
+        />
+        <Route
+          path="/schedule"
+          element={<ProtectedRoute comp={<ScheduleScreen />} />}
         />
         <Route
           path="/drugs"

@@ -1,0 +1,30 @@
+.schedule
+  :where(
+    .css-dev-only-do-not-override-1hss4uw
+  ).ant-picker-calendar.ant-picker-calendar-full
+  .ant-picker-calendar-date {
+  border: none;
+  border: 1px solid rgba(5, 5, 5, 0.06) !important;
+  border-collapse: collapse !important;
+  margin: 0 !important;
+}
+
+.schedule
+  :where(.css-dev-only-do-not-override-1hss4uw).ant-picker-calendar
+  .ant-picker-calendar-header {
+  justify-content: flex-start !important;
+  margin-bottom: 16px;
+}
+
+.schedule .head .actions {
+  margin-bottom: -56px;
+}
+
+.bookings-modal-title{
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 99;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f3f3f3;
+}

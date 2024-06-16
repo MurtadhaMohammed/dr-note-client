@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { Layout, Avatar, Dropdown, Space } from "antd";
 import logo from "../assets/logo.svg";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
+import { MdDateRange } from "react-icons/md";
+
+
 import {
   FaUserInjured,
   FaClipboardList,
@@ -10,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../lib/store";
+import { RachetaModal } from "./racheta/racheta";
 
 const { Header, Sider, Content } = Layout;
 
@@ -51,6 +55,19 @@ export const AppContainer = ({ head, children, isContainer }) => {
           >
             <FaUserInjured />
             <span>Patients</span>
+          </li>
+          <li
+            className={
+              location.pathname === "/schedule"
+                ? "active"
+                : location.pathname.split("/")[1] === "schedule"
+                ? "active"
+                : ""
+            }
+            onClick={() => navigate("/schedule")}
+          >
+            <MdDateRange />
+            <span>Schedule</span>
           </li>
           <li
             className={location.pathname === "/attachements" ? "active" : ""}
@@ -106,6 +123,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
           <div className="container">{children}</div>
         </Content>
       </Layout>
+      <RachetaModal/>
     </Layout>
   );
 };
