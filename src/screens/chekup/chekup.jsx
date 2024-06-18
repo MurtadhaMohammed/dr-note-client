@@ -134,9 +134,10 @@ const ChekupScreen = () => {
   return (
     <div
       className="checkup-screen p-[16px] sm:p-[24px]"
-      style={{ paddingTop: 25 }}
     >
-      <Row gutter={[50, 50]}>
+      <div className="m-[10px] sm:m-0">
+
+      <Row gutter={[50, 50]} className="m-0">
         <Col md={16}>
           <Row gutter={[20, 40]}>
             <Col span={24}>
@@ -242,6 +243,7 @@ const ChekupScreen = () => {
           ))}
         </Col>
       </Row>
+      </div>
     </div>
   );
 };
