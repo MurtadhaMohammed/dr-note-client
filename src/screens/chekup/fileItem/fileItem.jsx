@@ -26,7 +26,7 @@ export const FileItem = ({ file }) => {
       <div className="file-info">
         <span className={`fiv-viv fiv-icon-png`}></span>
         <div className="file-text">
-          <span>{file.name}</span>
+          <span className="truncate w-[60vw]  md:w-[15vw]">{file.name}</span>
           <small>
             {dayjs(file.createdAt).format("YYYY , dddd MM  hh:mm A")}
           </small>

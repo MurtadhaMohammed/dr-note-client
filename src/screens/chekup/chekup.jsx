@@ -132,9 +132,12 @@ const ChekupScreen = () => {
   }, []);
 
   return (
-    <div className="checkup-screen p-[16px] sm:p-[24px]" style={{ paddingTop: 25 }}>
+    <div
+      className="checkup-screen p-[16px] sm:p-[24px]"
+      style={{ paddingTop: 25 }}
+    >
       <Row gutter={[50, 50]}>
-        <Col span={16}>
+        <Col md={16}>
           <Row gutter={[20, 40]}>
             <Col span={24}>
               {InputFiled(
@@ -154,9 +157,7 @@ const ChekupScreen = () => {
                 "Prescription",
                 <Space>
                   <AutoComplete
-                    style={{
-                      width: 300,
-                    }}
+                    className="w-[180px] sm:w-[300px]"
                     size="large"
                     options={options}
                     value={drugName}
@@ -165,6 +166,7 @@ const ChekupScreen = () => {
                     onSearch={getDrugs}
                   />
                   <Input
+                    className="flex-1"
                     value={drugNote}
                     onChange={(e) => setDrugNote(e.target.value)}
                     size="large"
@@ -224,7 +226,7 @@ const ChekupScreen = () => {
             </Col>
           </Row>
         </Col>
-        <Col span={8}>
+        <Col md={8} xs={24}>
           <h4>Attachments</h4>
           <DropZon
             loading={isLoadingFile}

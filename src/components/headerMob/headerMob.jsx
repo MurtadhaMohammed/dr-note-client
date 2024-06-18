@@ -1,11 +1,5 @@
 import { Button, Space } from "antd";
-import {
-  FaUserInjured,
-  FaClipboardList,
-  FaFlask,
-  FaInfoCircle,
-  FaArrowLeft,
-} from "react-icons/fa";
+import { FaUserInjured, FaClipboardList, FaFlask } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
@@ -44,6 +38,7 @@ export const HeaderMob = () => {
           <b className="text-[20px]">{selectedName}</b>
         </Space>
       ),
+      child: true,
     },
     {
       key: "/schedule",
@@ -85,13 +80,15 @@ export const HeaderMob = () => {
           icon={<IoMenu size={28} />}
         />
       </div>
-      <div className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] rounded-[8px] py-[12px] px-[16px] mt-[12px]">
-        <input
-          className="bg-[#f6f6f6] w-full text-[18px] outline-0"
-          placeholder="Search..."
-        />
-        <FiSearch className="opacity-40" size={22} />
-      </div>
+      {!titles?.find((el) => el.key === page)?.child && (
+        <div className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] rounded-[8px] py-[12px] px-[16px] mt-[12px]">
+          <input
+            className="bg-[#f6f6f6] w-full text-[18px] outline-0"
+            placeholder="Search..."
+          />
+          <FiSearch className="opacity-40" size={22} />
+        </div>
+      )}
       <MenuMob open={isMenu} onClose={() => setIsMenu(false)} page={page} />
     </div>
   );

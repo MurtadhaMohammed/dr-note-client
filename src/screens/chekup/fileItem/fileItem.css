@@ -31,7 +31,7 @@
   }
   .file-item .file-info .file-text {
     margin-left: 12px;
-    width: 13vw;
+    /* width: 13vw; */
   }
   .file-item .file-info .fiv-viv {
     font-size: 35px;
