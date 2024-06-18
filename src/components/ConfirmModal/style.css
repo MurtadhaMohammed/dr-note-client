@@ -1,0 +1,84 @@
+.confirm-modal .confirm-backdroup {
+  position: fixed;
+  /* position: absolute; */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #00000033;
+  backdrop-filter: blur(1px);
+  z-index: 999999999 !important;
+  display: flex;
+  align-items: flex-end;
+  animation: modalFade 1s forwards;
+}
+
+.confirm-modal .content .header {
+  margin-top: 10px;
+}
+.confirm-modal .content .header b {
+  font-size: 18px;
+}
+.confirm-modal .content .msg p {
+  font-size: 16px;
+  color: #666;
+}
+
+
+.confirm-modal .content {
+  position: fixed;
+  top: 5vh;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* height: 400px; */
+  background-color: #fff;
+  width: 100%;
+  min-height: 150px;
+  border-radius: 16px 16px 0px 0px;
+  transform: translateY(100%);
+  z-index: 999999999 !important;
+  transition: 0.3s;
+}
+.confirm-modal .confirm-open-modal {
+  animation: contentFade 0.3s forwards;
+  animation-timing-function: ease-out;
+}
+/* 
+ .confirm-modal .close-modal {
+  transform: translateY(100%);
+  animation: contentClose 0.2s ;
+  animation-timing-function: ease-out;
+} */
+
+@keyframes modalFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* @keyframes contentClose {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+} */
+
+@keyframes contentFade {
+  0% {
+    transform: translateY(100%);
+  }
+
+  60% {
+    transform: translateY(-15px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}

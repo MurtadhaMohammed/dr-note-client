@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { UserAddOutlined } from "@ant-design/icons";
 import { Select, Button, Empty, Spin, Drawer } from "antd";
 import { PatientItem } from "./patientItem/patientItem";
 import { PatientForm } from "./patientForm/patinetForm";
@@ -8,6 +9,8 @@ import { apiCall } from "../../lib/services";
 import LoadMoreBtn from "../../components/loadMoreBtn/loadMoreBtn";
 import { useAppStore } from "../../lib/store";
 import PatientHistory from "./history/history";
+import { useMobileDetect } from "../../hooks/mobileDetect";
+import { PatientItemMob } from "./patientItemMob/patientItemMob";
 
 const { Option } = Select;
 
@@ -16,6 +19,7 @@ const HomeScreen = () => {
   const [isHistory, setIsHistory] = useState(false);
   const [record, setRecord] = useState(null);
   const { querySearch } = useAppStore();
+  const { isMobile } = useMobileDetect();
   const pageSize = 10;
 
   let searchValue = querySearch?.key === "HOME" ? querySearch?.value : "";
@@ -44,26 +48,30 @@ const HomeScreen = () => {
       refetchOnWindowFocus: false,
     });
 
+  const PatientCard = isMobile ? PatientItemMob : PatientItem;
+
   return (
-    <div className="page">
-      <section className="app-flex">
-        <div>
-          <span>Patient List for</span>
-          <Select defaultValue="1" variant={false}>
-            <Option value={"1"}>This Day</Option>
-            <Option value={"2"}>Last Week</Option>
-            <Option value={"3"}>All </Option>
-          </Select>
-        </div>
-        <Button size="large" type="link" onClick={() => setIsModal(true)}>
-          + New Patient
-        </Button>
-      </section>
-      <section className="patients-list">
+    <div className="p-0 sm:p-[24px]">
+      {!isMobile && (
+        <section className="app-flex">
+          <div>
+            <span>Patient List for</span>
+            <Select defaultValue="1" variant={false}>
+              <Option value={"1"}>This Day</Option>
+              <Option value={"2"}>Last Week</Option>
+              <Option value={"3"}>All </Option>
+            </Select>
+          </div>
+          <Button size="large" type="link" onClick={() => setIsModal(true)}>
+            + New Patient
+          </Button>
+        </section>
+      )}
+      <section className="patients-list mt-0 sm:mt-[12px]">
         <Spin tip="Loading..." spinning={isLoading}>
           {data?.pages?.length > 0 ? (
             data?.pages?.map((item, k) => (
-              <PatientItem
+              <PatientCard
                 key={k}
                 item={item}
                 onHistory={(val) => {
@@ -83,6 +91,12 @@ const HomeScreen = () => {
             />
           )}
         </Spin>
+        <button
+          onClick={() => setIsModal(true)}
+          class="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+        >
+          <UserAddOutlined className="text-[22px]" />
+        </button>
       </section>
 
       {data?.pages?.length >= pageSize && (

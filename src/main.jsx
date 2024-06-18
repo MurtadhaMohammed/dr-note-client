@@ -11,6 +11,8 @@ import { useAppStore } from "./lib/store";
 import LoginScreen from "./screens/login/login";
 import SearchBox from "./components/SearchBox/searchBox";
 import ScheduleScreen from "./screens/schedule/schedule";
+import ConfirmModal from "./components/ConfirmModal";
+import "./index.css";
 
 const GoBackComponent = () => {
   const { selectedName } = useAppStore();
@@ -75,6 +77,7 @@ function App() {
         />
         <Route path="/" element={<ProtectedRoute comp={<HomeScreen />} />} />
       </Routes>
+      <ConfirmModal/>
     </AppContainer>
   );
 }

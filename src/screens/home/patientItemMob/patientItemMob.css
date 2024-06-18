@@ -1,0 +1,80 @@
+.patient-item-mob {
+  display: flex;
+  /* border-radius: 4px; */
+  padding: 20px;
+  border-bottom: 1px solid #f3f3f3;
+  /* background-color: rgba(255, 255, 255, .15);  
+    backdrop-filter: blur(50px); */
+}
+
+.patient-item-mob:last-child {
+  border: none;
+}
+
+.patient-item-mob .item-name {
+  flex: 35%;
+  display: flex;
+  align-items: center;
+}
+.patient-item-mob .item-name .name-info {
+  margin: 0 8px;
+  flex: 1;
+}
+.patient-item-mob .item-name .name-info span {
+  display: block;
+  font-weight: bold;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+.patient-item-mob .item-name .name-info small {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 14px;
+}
+.patient-item-mob .item-age {
+  flex: 20%;
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+.patient-item-mob .item-age span {
+  font-size: 12px;
+  font-weight: lighter;
+  margin-top: 10px;
+  margin-left: 8px;
+  color: #666;
+}
+
+.patient-item-mob .item-address {
+  flex: 25%;
+  display: flex;
+  align-items: center;
+}
+.patient-item-mob .item-address .address-info {
+  margin: 0 8px;
+  margin-top: 2px;
+}
+.patient-item-mob .item-address .address-info span {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+.patient-item-mob .item-address .address-info small {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 12px;
+  color: #666;
+}
+.patient-item-mob .item-actions {
+  flex: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.patient-item-mob .item-new {
+  display: flex;
+  align-items: center;
+}

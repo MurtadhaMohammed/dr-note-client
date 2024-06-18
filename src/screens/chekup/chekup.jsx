@@ -132,7 +132,7 @@ const ChekupScreen = () => {
   }, []);
 
   return (
-    <div className="page checkup-screen" style={{ paddingTop: 25 }}>
+    <div className="checkup-screen p-[16px] sm:p-[24px]" style={{ paddingTop: 25 }}>
       <Row gutter={[50, 50]}>
         <Col span={16}>
           <Row gutter={[20, 40]}>

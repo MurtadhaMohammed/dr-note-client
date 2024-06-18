@@ -23,7 +23,7 @@ export const DrugsItem = ({ item }) => {
       <div className="info">
         <span style={{ backgroundColor: item.color }}></span>
         <div>
-          <h4 style={{ fontSize: 18 }}>{item.name}</h4>
+          <h4 className="truncate w-[60vw]  md:w-[15vw] text-[18px]">{item.name}</h4>
           <small style={{ color: "gray" }}>
             {dayjs(item.createdAt).format("YYYY , dddd MM  hh:mm A")}
           </small>

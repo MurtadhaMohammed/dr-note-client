@@ -21,7 +21,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 15vw;
+  /* width: 15vw; */
 }
 
 .drug-screen .drugs-item .info span {

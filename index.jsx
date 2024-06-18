@@ -9,24 +9,23 @@ import qc from "./src/lib/queryClient";
 import "./src/css/app.css";
 import "./src/css/custom.css";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={qc}>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "#2c24ff",
-            colorLink: "#2c24ff",
-            borderRadius: 4,
-          },
-        }}
-      >
-        <Router>
+    <Router>
+      <QueryClientProvider client={qc}>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#2c24ff",
+              colorLink: "#2c24ff",
+              borderRadius: 4,
+            },
+          }}
+        >
           <App />
-        </Router>
-      </ConfigProvider>
-    </QueryClientProvider>
+        </ConfigProvider>
+      </QueryClientProvider>
+    </Router>
   </React.StrictMode>
 );

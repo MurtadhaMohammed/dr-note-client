@@ -51,7 +51,7 @@ const ScheduleScreen = () => {
   };
 
   return (
-    <div className="page schedule">
+    <div className="schedule p-[16px] sm:p-[24px]">
       <section className="app-flex head">
         <div></div>
 

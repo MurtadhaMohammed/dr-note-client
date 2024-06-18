@@ -7,11 +7,14 @@ import { apiCall } from "../../lib/services";
 import { useAppStore } from "../../lib/store";
 import LoadMoreBtn from "../../components/loadMoreBtn/loadMoreBtn";
 import AttachmentForm from "./attachmentForm/attachmentForm";
+import { useMobileDetect } from "../../hooks/mobileDetect";
+import { FileAddOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
 const AttachmentsScreen = () => {
   const [isNew, setIsNew] = useState(false);
+  const { isMobile } = useMobileDetect();
   const { querySearch } = useAppStore();
   const pageSize = 20;
 
@@ -42,26 +45,28 @@ const AttachmentsScreen = () => {
     });
 
   return (
-    <div className="page">
-      <section className="app-flex">
-        <div>
-          <span>List of Attachments for</span>
-          <Select defaultValue="1" variant={false}>
-            <Option value={"1"}>This Day</Option>
-            <Option value={"2"}>Last Week</Option>
-            <Option value={"3"}>All </Option>
-          </Select>
-        </div>
-        <Button size="large" type="link" onClick={() => setIsNew(true)}>
-          + New File
-        </Button>
-      </section>
-      <section className="attachment-list">
+    <div className="p-[16px] sm:p-[24px]">
+      {!isMobile && (
+        <section className="app-flex">
+          <div>
+            <span>List of Attachments for</span>
+            <Select defaultValue="1" variant={false}>
+              <Option value={"1"}>This Day</Option>
+              <Option value={"2"}>Last Week</Option>
+              <Option value={"3"}>All </Option>
+            </Select>
+          </div>
+          <Button size="large" type="link" onClick={() => setIsNew(true)}>
+            + New File
+          </Button>
+        </section>
+      )}
+      <section className="mt-0 sm:mt-[14px]">
         <Spin tip="Loading..." spinning={isLoading}>
           {data?.pages?.length > 0 ? (
             <Row gutter={[20, 20]}>
               {data?.pages?.map((item) => (
-                <Col key={item.id} md={12} lg={8}>
+                <Col key={item.id} xs={24} md={12} lg={8}>
                   <AttachmentItem item={item} />
                 </Col>
               ))}
@@ -73,6 +78,12 @@ const AttachmentsScreen = () => {
             />
           )}
         </Spin>
+        <button
+          onClick={() => setIsNew(true)}
+          class="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+        >
+          <FileAddOutlined className="text-[22px]" />
+        </button>
       </section>
       {data?.pages?.length >= pageSize && (
         <LoadMoreBtn

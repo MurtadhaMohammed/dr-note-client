@@ -16,6 +16,7 @@
     "dayjs": "^1.11.10",
     "file-dialog": "^0.0.8",
     "file-icon-vectors": "^1.0.0",
+    "framer-motion": "^11.2.10",
     "get-age": "^1.0.1",
     "immutable": "^5.0.0-beta.5",
     "jwt-decode": "^4.0.0",
@@ -24,6 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
+    "react-modal-sheet": "^3.1.0",
     "react-otp-input": "^3.1.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.22.0",
@@ -35,8 +37,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.6.0",
+    "autoprefixer": "^10.4.19",
     "less": "^3.12.2",
+    "postcss": "^8.4.38",
     "process": "^0.11.10",
+    "tailwindcss": "^3.4.4",
     "vite": "^5.1.1"
   }
 }

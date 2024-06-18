@@ -4,16 +4,16 @@ import logo from "../assets/logo.svg";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import { MdDateRange } from "react-icons/md";
 
-
 import {
   FaUserInjured,
   FaClipboardList,
   FaFlask,
   FaInfoCircle,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import { useAppStore } from "../lib/store";
 import { RachetaModal } from "./racheta/racheta";
+import { HeaderMob } from "./headerMob/headerMob";
 
 const { Header, Sider, Content } = Layout;
 
@@ -38,7 +38,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
 
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider width={280} theme="light">
+      <Sider width={220} theme="light" className="side-bar">
         <div className="brand">
           <img src={logo} />
         </div>
@@ -89,11 +89,15 @@ export const AppContainer = ({ head, children, isContainer }) => {
           </li>
         </ul>
         <small className="app-info">
-          Developed by <a>PureTik</a>
+          Developed by{" "}
+          <a href="https://www.puretik.com" target="_blank">
+            PureTik
+          </a>
         </small>
       </Sider>
       <Layout>
-        <Header>
+        <HeaderMob />
+        <Header className="hidden sm:block">
           <div className="container app-flex" style={{ height: "100%" }}>
             {head}
             <Dropdown
@@ -123,7 +127,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
           <div className="container">{children}</div>
         </Content>
       </Layout>
-      <RachetaModal/>
+      <RachetaModal />
     </Layout>
   );
 };

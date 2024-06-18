@@ -7,10 +7,13 @@ import { apiCall } from "../../lib/services";
 import { useInfiniteQuery } from "react-query";
 import { useAppStore } from "../../lib/store";
 import LoadMoreBtn from "../../components/loadMoreBtn/loadMoreBtn";
+import { useMobileDetect } from "../../hooks/mobileDetect";
+import { AppstoreAddOutlined } from "@ant-design/icons";
 
 const DrugsScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { querySearch } = useAppStore();
+  const { isMobile } = useMobileDetect();
   const pageSize = 21;
 
   let searchValue = querySearch?.key === "drugs" ? querySearch?.value : "";
@@ -39,25 +42,27 @@ const DrugsScreen = () => {
     });
 
   return (
-    <div className="page drug-screen">
-      <section className="app-flex">
-        <div>
-          <span>Drug List</span>
-        </div>
-        <Button
-          size="large"
-          type="link"
-          onClick={() => setIsModalVisible(true)}
-        >
-          + New Drug
-        </Button>
-      </section>
-      <section className="drugs-list">
+    <div className="drug-screen p-[16px] sm:p-[24px]">
+      {!isMobile && (
+        <section className="app-flex">
+          <div>
+            <span>Drug List</span>
+          </div>
+          <Button
+            size="large"
+            type="link"
+            onClick={() => setIsModalVisible(true)}
+          >
+            + New Drug
+          </Button>
+        </section>
+      )}
+      <section className="mt-0 sm:mt-[14px]">
         <Spin tip="Loading..." spinning={isLoading}>
           {data?.pages?.length > 0 ? (
             <Row gutter={[20, 20]}>
               {data?.pages?.map((item) => (
-                <Col key={item.id} md={12} lg={8}>
+                <Col key={item.id} xs={24} md={12} lg={8}>
                   <DrugsItem item={item} />
                 </Col>
               ))}
@@ -69,6 +74,12 @@ const DrugsScreen = () => {
             />
           )}
         </Spin>
+        <button
+          onClick={() => setIsModalVisible(true)}
+          class="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+        >
+          <AppstoreAddOutlined className="text-[22px]" />
+        </button>
       </section>
       {data?.pages?.length >= pageSize && (
         <LoadMoreBtn

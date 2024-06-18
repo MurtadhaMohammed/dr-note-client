@@ -23,8 +23,8 @@ export const AttachmentItem = ({ item }) => {
       <div className="icon">
         <span className={`fiv-viv fiv-icon-${item.type || "png"}`}></span>
       </div>
-      <div className="body">
-        <h4>{item.name}</h4>
+      <div className="body flex-1">
+        <h4 className="truncate w-[60vw]  md:w-[15vw]">{item.name}</h4>
         <span style={{ fontSize: 14 }}>{item?.patient?.name}</span>
         <small style={{ color: "gray" }}>
           {dayjs(item.createdAt).format("YYYY , dddd MM  hh:mm A")}
