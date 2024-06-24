@@ -9,6 +9,7 @@ import {
   FaClipboardList,
   FaFlask,
   FaInfoCircle,
+  FaFileInvoice,
 } from "react-icons/fa";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { useAppStore } from "../lib/store";
@@ -82,6 +83,13 @@ export const AppContainer = ({ head, children, isContainer }) => {
           >
             <FaFlask />
             <span>Drugs list</span>
+          </li>
+          <li
+            className={location.pathname === "/receipt" ? "active" : ""} // New Invoice menu item
+            onClick={() => navigate("/receipt")}
+          >
+            <FaFileInvoice />
+            <span>Invoices</span>
           </li>
           <li>
             <FaInfoCircle />
