@@ -38,11 +38,7 @@ export const PatientItem = ({ item, onEdit, onHistory }) => {
         <div className="name-info">
           <Space direction="vertical" size={4}>
             <span>{item.name}</span>
-            {item.phone && (
-              <small>
-                <FaCopy style={{ fontSize: 10, color: "gray" }} /> {item.phone}
-              </small>
-            )}
+            {item.phone && <small>{item.phone}</small>}
           </Space>
         </div>
       </div>
@@ -51,7 +47,7 @@ export const PatientItem = ({ item, onEdit, onHistory }) => {
         <span>Years Old</span>
       </div>
       <div className="item-address">
-        <FaMapMarkerAlt style={{ fontSize: 24, color: "#ccc"}} />
+        <FaMapMarkerAlt style={{ fontSize: 24, color: "#ccc" }} />
         <div className="address-info">
           <span>{item.address || "..."}</span>
           <small>Address</small>
