@@ -144,7 +144,7 @@ export const PatientForm = ({ record, onClose }) => {
                     Male
                   </Select.Option>
                   <Select.Option id={"femal"} value={"femal"}>
-                    Fmale
+                    Female
                   </Select.Option>
                 </Select>
                 {/* <Radio.Group>

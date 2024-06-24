@@ -1,0 +1,20 @@
+/* receiptForm.css */
+
+.text-input {
+    margin-bottom: 16px;
+  }
+  
+  .head {
+    margin-bottom: 16px;
+  }
+  
+  .body {
+    margin-bottom: 16px;
+  }
+  
+  .app-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
