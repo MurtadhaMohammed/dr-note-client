@@ -28,17 +28,7 @@ export const PatientItem = ({ bookingId, item }) => {
 
   return (
     <div className="patient-item-schedule">
-      <div className="item-actions">
-        <Popconfirm
-          title="Delete the task"
-          description="Are you sure to cancel this booking?"
-          onConfirm={() => mutate()}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button loading={isLoading} type="text" danger icon={<FiX  size={22}/>} />
-        </Popconfirm>
-      </div>
+     
       <div className="item-name">
         <Avatar
           style={{ background: item.gender === "male" ? "#7265e6" : "#e91e63" }}
@@ -48,11 +38,7 @@ export const PatientItem = ({ bookingId, item }) => {
         <div className="name-info">
           <Space direction="vertical" size={4}>
             <span>{item.name}</span>
-            {item.phone && (
-              <small>
-                <FaCopy style={{ fontSize: 10, color: "gray" }} /> {item.phone}
-              </small>
-            )}
+            {item.phone && <small>{item.phone}</small>}
           </Space>
         </div>
       </div>
@@ -75,6 +61,24 @@ export const PatientItem = ({ bookingId, item }) => {
         >
           + New Chekup
         </Button>
+      </div>
+      <div className="item-actions">
+        <Popconfirm
+          title="Delete the task"
+          description="Are you sure to cancel this booking?"
+          onConfirm={() => mutate()}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button
+            loading={isLoading}
+            size="small"
+            className="mt-1"
+            // type="text"
+            danger
+            icon={<FiX className="-mb-0.5" />}
+          />
+        </Popconfirm>
       </div>
     </div>
   );

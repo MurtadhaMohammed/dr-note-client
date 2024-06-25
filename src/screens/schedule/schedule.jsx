@@ -10,8 +10,13 @@ import {
   Spin,
   Typography,
   Divider,
+  Empty,
 } from "antd";
-import { UnorderedListOutlined, CalendarOutlined } from "@ant-design/icons";
+import {
+  UnorderedListOutlined,
+  CalendarOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import "./schedule.css";
 import ScheduleForm from "./scheduleForm/scheduleForm";
 import { useQuery } from "react-query";
@@ -19,6 +24,8 @@ import { apiCall } from "../../lib/services";
 import { useAppStore } from "../../lib/store";
 import dayjs from "dayjs";
 import { PatientItem } from "./patientItem/patientItem";
+import { PatientItemMob } from "./patientItemMob/patientItemMob";
+import { useMobileDetect } from "../../hooks/mobileDetect";
 
 const { Option } = Select;
 
@@ -27,6 +34,8 @@ const ScheduleScreen = () => {
   const [isView, setIsView] = useState(false);
   const [currentDate, setCurrentDate] = useState(null);
   const { querySearch } = useAppStore();
+  const { isMobile } = useMobileDetect();
+  const [tab, setTab] = useState("schedule");
 
   let searchValue = querySearch?.key === "schedule" ? querySearch?.value : "";
 
@@ -50,6 +59,8 @@ const ScheduleScreen = () => {
     };
   };
 
+  const PatientCard = isMobile ? PatientItemMob : PatientItem;
+
   return (
     <div className="schedule p-[16px] sm:p-[24px]">
       <section className="app-flex head">
@@ -62,16 +73,15 @@ const ScheduleScreen = () => {
                 {
                   label: <UnorderedListOutlined />,
                   value: "list",
-                  disabled: true,
                 },
                 {
                   label: <CalendarOutlined />,
                   value: "schedule",
                 },
               ]}
-              // onChange={onChange4}
-              value={"schedule"}
+              value={tab}
               optionType="button"
+              onChange={(e) => setTab(e.target.value)}
             />
 
             <Button size="md" type="primary" onClick={() => setIsNew(true)}>
@@ -80,39 +90,77 @@ const ScheduleScreen = () => {
           </Space>
         </div>
       </section>
-      <section>
-        <Calendar
-          //onPanelChange={onPanelChange}
-          onSelect={(current, { source }) => {
-            if (source !== "date") return;
-            setCurrentDate(current);
-            setIsView(true);
-          }}
-          cellRender={(current, info) => (
-            <ul className="events">
-              {parseList(current)
-                ?.list?.slice(0, 3)
-                ?.map((b, i) => (
-                  <li key={i}>
-                    <Typography.Text ellipsis>
-                      <Badge
-                        color={
-                          b?.patient?.gender === "male" ? "#7265e6" : "#e91e63"
-                        }
-                      />{" "}
-                      {b?.patient?.name}
-                    </Typography.Text>
-                  </li>
-                ))}
-              {parseList(current).count !== 0 && (
-                <Typography.Text style={{ fontSize: 14 }} type="secondary">{`+${
-                  parseList(current).count
-                } Patients`}</Typography.Text>
-              )}
-            </ul>
-          )}
-        />
-      </section>
+      {tab === "list" ? (
+        <section className="patients-list mt-16">
+          <Spin tip="Loading..." spinning={isLoading}>
+            {data?.length > 0 ? (
+              data?.map((item, k) => (
+                <PatientCard
+                  key={k}
+                  item={item?.patient}
+                  // onHistory={(val) => {
+                  //   setRecord(val);
+                  //   setIsHistory(true);
+                  // }}
+                  // onEdit={(val) => {
+                  //   setRecord(val);
+                  //   setIsModal(true);
+                  // }}
+                />
+              ))
+            ) : (
+              <Empty
+                style={{ padding: 50 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+              />
+            )}
+          </Spin>
+          <button
+            onClick={() => setIsModal(true)}
+            class="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+          >
+            <UserAddOutlined className="text-[22px]" />
+          </button>
+        </section>
+      ) : (
+        <section>
+          <Calendar
+            //onPanelChange={onPanelChange}
+            onSelect={(current, { source }) => {
+              if (source !== "date") return;
+              setCurrentDate(current);
+              setIsView(true);
+            }}
+            cellRender={(current, info) => (
+              <ul className="events">
+                {parseList(current)
+                  ?.list?.slice(0, 3)
+                  ?.map((b, i) => (
+                    <li key={i}>
+                      <Typography.Text ellipsis>
+                        <Badge
+                          color={
+                            b?.patient?.gender === "male"
+                              ? "#7265e6"
+                              : "#e91e63"
+                          }
+                        />{" "}
+                        {b?.patient?.name}
+                      </Typography.Text>
+                    </li>
+                  ))}
+                {parseList(current).count !== 0 && (
+                  <Typography.Text
+                    style={{ fontSize: 14 }}
+                    type="secondary"
+                  >{`+${parseList(current).count} Patients`}</Typography.Text>
+                )}
+              </ul>
+            )}
+          />
+        </section>
+      )}
+
       <Modal
         destroyOnClose
         footer={null}
@@ -179,10 +227,12 @@ const ScheduleScreen = () => {
             + New Book
           </Button>
         </div>
-        {currentDate &&
-          parseList(currentDate)?.list?.map((b, i) => (
-            <PatientItem bookingId={b?.id} item={b?.patient} />
-          ))}
+        <div className="-mx-[20px]">
+          {currentDate &&
+            parseList(currentDate)?.list?.map((b, i) => (
+              <PatientItem bookingId={b?.id} item={b?.patient} />
+            ))}
+        </div>
       </Modal>
     </div>
   );
