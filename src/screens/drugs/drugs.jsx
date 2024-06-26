@@ -42,7 +42,7 @@ const DrugsScreen = () => {
     });
 
   return (
-    <div className="drug-screen p-[16px] sm:p-[24px]">
+    <div className="page drug-screen p-[16px] sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div>

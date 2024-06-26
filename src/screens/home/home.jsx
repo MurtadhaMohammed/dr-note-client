@@ -51,7 +51,7 @@ const HomeScreen = () => {
   const PatientCard = isMobile ? PatientItemMob : PatientItem;
 
   return (
-    <div className="p-0 sm:p-[24px]">
+    <div className="page p-0 sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div>
