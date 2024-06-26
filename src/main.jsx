@@ -77,7 +77,7 @@ function App() {
         />
         <Route path="/" element={<ProtectedRoute comp={<HomeScreen />} />} />
       </Routes>
-      <ConfirmModal/>
+      <ConfirmModal />
     </AppContainer>
   );
 }

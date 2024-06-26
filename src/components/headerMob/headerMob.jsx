@@ -13,7 +13,7 @@ import { useState } from "react";
 export const HeaderMob = () => {
   const [isMenu, setIsMenu] = useState(false);
   const location = useLocation();
-  const { selectedName } = useAppStore();
+  const { selectedName, isScroll } = useAppStore();
   let page = "/" + location.pathname.split("/")[1];
 
   const titles = [
@@ -70,7 +70,16 @@ export const HeaderMob = () => {
   ];
 
   return (
-    <div className="sticky sm:hidden  p-[16px] bg-white border border-b-[#eee]">
+    <div
+      className="sticky sm:hidden  p-[16px] bg-white border border-b-[#eee] transition-all"
+      style={{
+        height: isScroll
+          ? 66
+          : titles?.find((el) => el.key === page)?.child
+          ? 66
+          : 128,
+      }}
+    >
       <div className="flex items-center justify-between">
         {titles?.find((el) => el.key === page)?.title}
         <Button
@@ -81,7 +90,12 @@ export const HeaderMob = () => {
         />
       </div>
       {!titles?.find((el) => el.key === page)?.child && (
-        <div className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] rounded-[8px] py-[12px] px-[16px] mt-[12px]">
+        <div
+          className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] rounded-[8px] py-[12px] px-[16px] mt-[12px] transition-all"
+          style={{
+            transform: !isScroll ? "rotateX(360deg)" : "rotateX(270deg)",
+          }}
+        >
           <input
             className="bg-[#f6f6f6] w-full text-[18px] outline-0"
             placeholder="Search..."

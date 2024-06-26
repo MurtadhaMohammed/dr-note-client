@@ -27,7 +27,7 @@ const items = [
 
 export const AppContainer = ({ head, children, isContainer }) => {
   // let history = useHistory();
-  let { setIsLogin, user } = useAppStore();
+  let { setIsLogin, user, setIsScroll , isScroll} = useAppStore();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
             </Dropdown>
           </div>
         </Header>
-        <Content>
+        <Content onScroll={(e) =>!!e?.target?.scrollTop !== isScroll &&setIsScroll(!!e?.target?.scrollTop)}>
           <div className="container">{children}</div>
         </Content>
       </Layout>
