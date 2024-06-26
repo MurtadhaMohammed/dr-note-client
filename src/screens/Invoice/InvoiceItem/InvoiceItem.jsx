@@ -2,22 +2,21 @@ import React from "react";
 import { Button, Popconfirm, Space, message, Avatar } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./InvoiceItem.css";
-import { apiCall } from "../../../lib/services";
+import medical from "../../../assets/med.svg";
 
 const InvoiceItem = ({ item, onEdit, onDelete }) => {
-  const handleDelete = async () => {
-    try {
-      await apiCall({
-        url: `invoice/v1/delete/${item.id}`,
-        method: "DELETE",
-      });
-      message.success("Deleted Successfully.");
-      onDelete();
-    } catch (error) {
-      message.error("Failed to delete the invoice.");
-    }
-  };
+  function formatDate(item) {
+    const createdAt = item.createdAt;
+    const date = new Date(createdAt);
 
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const year = date.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+  }
+  const formattedDate = formatDate(item);
   return (
     <div className="Invoice-item">
       <div className="item-name">
@@ -27,21 +26,30 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
         <div className="name-info">
           <Space direction="vertical" size={4}>
             <span>{item.patient?.name}</span>
-            <small>{item.date}</small>
+            <small>{formattedDate}</small>
           </Space>
         </div>
       </div>
       <div className="item-service">
-        <span>{item.service}</span>
+        <span className="text-[18px] font-bold flex "><img src={medical}/>{item.service}</span>
       </div>
       <div className="item-amount">
-        <span>${item.amount}</span>
+        <span className="text-[18px] font-bold ">
+          {item.amount}
+          <span className="text-[12px] font-light mt-2 ml-2 text-gray-600">
+            IQD
+          </span>
+        </span>
       </div>
       <div className="item-actions">
-        <Button onClick={() => onEdit(item)} type="text" icon={<EditOutlined />} />
+        <Button
+          onClick={() => onEdit(item)}
+          type="text"
+          icon={<EditOutlined />}
+        />
         <Popconfirm
           title="Delete the Invoice"
-          onConfirm={handleDelete}
+          onConfirm={onDelete}
           okText="Yes"
           cancelText="No"
         >

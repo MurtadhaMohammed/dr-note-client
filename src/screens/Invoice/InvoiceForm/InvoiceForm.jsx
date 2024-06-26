@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Button,
   Col,
@@ -30,13 +30,17 @@ const InputField = (label, input) => (
   </div>
 );
 
-const InvoiceForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
+const InvoiceForm = ({ onClose, onSave, selectedInvoice }) => {
   const [current, setCurrent] = useState(0);
   const [isNew, setIsNew] = useState(false);
-  const [patient, setPatient] = useState(selectedPatient || {});
-  const [date, setDate] = useState(dayjs().format("YYYY-MM-DD")); 
-  const [amount, setAmount] = useState("");
-  const [service, setService] = useState("");
+  const [patient, setPatient] = useState(selectedInvoice?.patient || {});
+  const [date, setDate] = useState(
+    selectedInvoice
+      ? dayjs(selectedInvoice.date).format("YYYY-MM-DD")
+      : dayjs().format("YYYY-MM-DD")
+  );
+  const [amount, setAmount] = useState(selectedInvoice?.amount || "");
+  const [service, setService] = useState(selectedInvoice?.service || "");
   const inputRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
 
@@ -48,9 +52,17 @@ const InvoiceForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
-      apiCall({ url: "invoice/v1/create", method: "POST", data }),
+      apiCall({
+        url: selectedInvoice
+          ? `invoice/v1/edit/${selectedInvoice.id}`
+          : "invoice/v1/create",
+        method: selectedInvoice ? "PUT" : "POST",
+        data,
+      }),
     onSuccess: () => {
-      message.success(`Invoice Added Successfully.`);
+      message.success(
+        `Invoice ${selectedInvoice ? "Updated" : "Added"} Successfully.`
+      );
       qc.invalidateQueries("invoices");
       onSave();
     },
@@ -77,6 +89,20 @@ const InvoiceForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
     });
     onClose();
   };
+
+  useEffect(() => {
+    if (selectedInvoice) {
+      setPatient(selectedInvoice.patient);
+      setDate(dayjs(selectedInvoice.date).format("YYYY-MM-DD"));
+      setAmount(selectedInvoice.amount);
+      setService(selectedInvoice.service);
+    } else {
+      setPatient({});
+      setDate(dayjs().format("YYYY-MM-DD"));
+      setAmount("");
+      setService("");
+    }
+  }, [selectedInvoice]);
 
   const steps = [
     <Row gutter={[16, 16]}>
@@ -255,7 +281,7 @@ const InvoiceForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
       <div className="head">
         <Space direction="vertical" size={0}>
           <Typography.Title level={5} style={{ margin: 0 }}>
-            New Invoice
+            {selectedInvoice ? "Edit Invoice" : "New Invoice"}
           </Typography.Title>
           <Typography.Text type="secondary">
             Select patient and fill in Invoice details.
