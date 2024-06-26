@@ -72,7 +72,7 @@ const InvoiceList = ({ patientId }) => {
         }
       />
       <Modal
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => {
           setIsModalVisible(false);
           setSelectedInvoice(null);

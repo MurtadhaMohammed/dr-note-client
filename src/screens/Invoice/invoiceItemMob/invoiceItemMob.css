@@ -40,23 +40,16 @@
     justify-content: space-between;
   }
   
-  .invoice-item-mob .item-service {
-    flex: 60%;
-  }
-  
-  .invoice-item-mob .item-service span {
-    font-size: 18px;
-    font-weight: bold;
-  }
+
   
   .invoice-item-mob .item-amount {
-    flex: 40%;
+    flex: 20%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
   }
   
-  .invoice-item-mob .item-amount span {
+  .invoice-item-mob .item-amount .price {
     font-size: 18px;
     font-weight: bold;
   }

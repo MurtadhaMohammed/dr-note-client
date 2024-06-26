@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import { Button, Popconfirm, Space, Avatar } from "antd";
-import { EditOutlined, DeleteOutlined, PrinterOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PrinterOutlined,
+  MoreOutlined,
+} from "@ant-design/icons";
 import InvoicePrint from "../../../components/InvoicePrint/invoicePrint"; // Import the InvoicePrint component
 import "./invoiceItemMob.css";
+import { Sheet } from "react-modal-sheet";
+import { useConfirmModal } from "../../../components/ConfirmModal/store";
+
 
 const InvoiceItemMob = ({ item, onEdit, onDelete }) => {
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+  const [isActions, setIsActions] = useState(false);
+  const { openConfirm, closeConfirm, setConfirmLoading } = useConfirmModal();
 
-  const formatDate = (item) => {
-    const createdAt = item.createdAt;
-    const date = new Date(createdAt);
-
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-    const year = date.getFullYear();
-
-    return `${day}/${month}/${year}`;
-  };
-
-  const formattedDate = formatDate(item);
 
   const handlePrint = () => {
     setIsPrintModalOpen(true);
@@ -28,49 +26,96 @@ const InvoiceItemMob = ({ item, onEdit, onDelete }) => {
     setIsPrintModalOpen(false);
   };
 
+  const handleDelete = () => {
+    onDelete(item.id);
+    closeConfirm();
+    setConfirmLoading(false);
+  }
+
   return (
     <>
       <div className="invoice-item-mob">
         <div className="item-name">
-          <Avatar style={{ background: "#7265e6" }}>
+          <Avatar
+            style={{
+              background:
+                item.patient?.gender === "male" ? "#7265e6" : "#e91e63",
+            }}
+          >
             {item.patient?.name.substr(0, 1).toUpperCase()}
           </Avatar>
           <div className="name-info">
             <Space direction="vertical" size={4}>
-              <span>{item.patient?.name}</span>
-              <small>{formattedDate}</small>
+              <span className="text-[16px]">{item.patient?.name}</span>
             </Space>
           </div>
         </div>
-        <div className="item-details">
-          <div className="item-service">
-            <span>{item.service}</span>
-          </div>
           <div className="item-amount">
-            <span>
+            <span className="price">
               {item.amount}
-              <span className="text-gray-600 ml-2">IQD</span>
+              <span className="text-[12px]  mt-2 ml-2 text-gray-600">IQD</span>
             </span>
-          </div>
         </div>
-        <div className="item-actions">
-          <Button onClick={() => onEdit(item)} type="text" icon={<EditOutlined />} />
-          <Popconfirm
-            title="Delete the Invoice"
-            onConfirm={onDelete}
-            okText="Yes"
-            cancelText="No"
+          <Button
+            type="text"
+            icon={<MoreOutlined size={22} />}
+            onClick={() => setIsActions(true)}
+          />
+          <Sheet
+            isOpen={isActions}
+            onClose={() => setIsActions(false)}
+            detent="content-height"
           >
-            <Button type="text" danger icon={<DeleteOutlined />} />
-          </Popconfirm>
-          <Button onClick={handlePrint} type="text" icon={<PrinterOutlined />} />
+            <Sheet.Container className=" overflow-hidden">
+              {/* <Sheet.Header /> */}
+              <Sheet.Content>
+                <div className="flex flex-col overflow-hidden">
+                  <button
+                    onClick={() =>
+                      openConfirm({
+                        title: "Delete Patient!",
+                        msg: "Are you sure to delete this Patient?",
+                        onConfirm:()=> handleDelete(),
+                      })
+                    }
+                    className="p-[20px] border border-b-[#eee] transition-all active:opacity-30 text-[#ff0000] text-[18px]"
+                  >
+                    Delete Patient
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setIsActions(false);
+                      onEdit(item);
+                    }}
+                    className="p-[20px]  border-b border-b-[#eee] transition-all active:opacity-30 text-[18px]"
+                  >
+                    Edit Invoice
+                  </button>
+
+                  <button
+                    onClick={handlePrint}
+                    className="p-[20px]  border-b border-b-[#eee] transition-all active:opacity-30 text-[18px]"
+                  >
+                    Print Invoice
+                  </button>
+                  <button
+                    onClick={() => setIsActions(false)}
+                    className="p-[20px] m-[20px] rounded-[12px] bg-[#f6f6f6] transition-all active:opacity-30 text-[18px]"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Sheet.Content>
+            </Sheet.Container>
+            <Sheet.Backdrop onClick={() => setIsActions(false)} />
+          </Sheet>
+          <InvoicePrint
+            invoice={item}
+            isOpen={isPrintModalOpen}
+            onClose={handleClosePrintModal}
+          />
         </div>
-      </div>
-      <InvoicePrint
-        invoice={item}
-        isOpen={isPrintModalOpen}
-        onClose={handleClosePrintModal}
-      />
     </>
   );
 };

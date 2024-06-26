@@ -4,6 +4,7 @@ import {
   FaClipboardList,
   FaFlask,
   FaInfoCircle,
+  FaFileInvoice,
 } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
 import logo from "../../assets/logo.svg";
@@ -80,6 +81,15 @@ export const MenuMob = ({ open, onClose, page }) => {
         >
           <FaFlask />
           <span>Drugs list</span>
+        </li>
+        <li
+          className={
+            "flex items-center gap-2 text-[18px] rounded-[8px] p-[12px] mt-3"
+          }
+          onClick={() => navigate("/Invoice")}
+        >
+          <FaFileInvoice />
+          <span>Invoices</span>
         </li>
         <li className="flex items-center gap-2 text-[18px] rounded-[8px] p-[12px] mt-3">
           <FaInfoCircle />

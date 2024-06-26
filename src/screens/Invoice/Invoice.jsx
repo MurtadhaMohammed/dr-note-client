@@ -15,18 +15,7 @@ const InvoiceScreen = () => {
   const [patients, setPatients] = useState([]);
   const { isMobile } = useMobileDetect();
 
-  useEffect(() => {
-    fetchPatients();
-  }, []);
 
-  const fetchPatients = async () => {
-    try {
-      const res = await apiCall({ url: `patient/v1/all` });
-      setPatients(res);
-    } catch (error) {
-      console.error("Failed to fetch patients:", error);
-    }
-  };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
