@@ -114,7 +114,7 @@ const ScheduleScreen = () => {
                     className="mt-[24px] mb-3 ml-[16px] sm:ml-1"
                   >
                     <IoCalendarOutline />
-                    <a className="text-[14px] block">
+                    <a className="text-[14px] text-[#666] block">
                       {dayjs(date)?.format("YYYY, ddd MM")}
                     </a>
                     <Divider type="vertical" />
