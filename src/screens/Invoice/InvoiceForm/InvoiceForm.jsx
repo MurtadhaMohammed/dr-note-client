@@ -21,7 +21,7 @@ import { apiCall } from "../../../lib/services";
 import dayjs from "dayjs";
 import qc from "../../../lib/queryClient";
 import CustomStep from "../../../components/customStep/customStep";
-import "./receiptForm.css";
+import "./InvoiceForm.css";
 
 const InputField = (label, input) => (
   <div className="text-input">
@@ -30,11 +30,11 @@ const InputField = (label, input) => (
   </div>
 );
 
-const ReceiptForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
+const InvoiceForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
   const [current, setCurrent] = useState(0);
   const [isNew, setIsNew] = useState(false);
   const [patient, setPatient] = useState(selectedPatient || {});
-  const [date, setDate] = useState(dayjs().format("YYYY-MM-DD")); // Set current date
+  const [date, setDate] = useState(dayjs().format("YYYY-MM-DD")); 
   const [amount, setAmount] = useState("");
   const [service, setService] = useState("");
   const inputRef = useRef(null);
@@ -48,13 +48,13 @@ const ReceiptForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
-      apiCall({ url: "receipt/v1/create", method: "POST", data }),
+      apiCall({ url: "invoice/v1/create", method: "POST", data }),
     onSuccess: () => {
-      message.success(`Receipt Added Successfully.`);
-      qc.invalidateQueries("receipts");
+      message.success(`Invoice Added Successfully.`);
+      qc.invalidateQueries("invoices");
       onSave();
     },
-    onError: () => message.error("Error !"),
+    onError: () => message.error("Error!"),
   });
 
   const onSelect = (id) => {
@@ -69,13 +69,12 @@ const ReceiptForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
   };
 
   const handleSave = () => {
-    // Save to local storage
-    const savedReceipts = JSON.parse(localStorage.getItem("receipts")) || [];
-    savedReceipts.push({ patient, date, service, amount });
-    localStorage.setItem("receipts", JSON.stringify(savedReceipts));
-
-    message.success("Receipt Added Successfully.");
-    onSave();
+    mutate({
+      patientId: patient.id,
+      date,
+      service,
+      amount,
+    });
     onClose();
   };
 
@@ -95,7 +94,7 @@ const ReceiptForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
             isFetching ? (
               <Spin size="small" />
             ) : (
-              <Typography.Text type="secondary">No Results !</Typography.Text>
+              <Typography.Text type="secondary">No Results!</Typography.Text>
             )
           }
           options={(data || []).map((d) => ({
@@ -252,14 +251,14 @@ const ReceiptForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
   ];
 
   return (
-    <div className="receipt-form">
+    <div className="Invoice-form">
       <div className="head">
         <Space direction="vertical" size={0}>
           <Typography.Title level={5} style={{ margin: 0 }}>
-            New Receipt
+            New Invoice
           </Typography.Title>
           <Typography.Text type="secondary">
-            Select patient and fill in receipt details.
+            Select patient and fill in Invoice details.
           </Typography.Text>
         </Space>
       </div>
@@ -273,4 +272,4 @@ const ReceiptForm = ({ onClose, onSave, currentDate, selectedPatient }) => {
   );
 };
 
-export default ReceiptForm;
+export default InvoiceForm;

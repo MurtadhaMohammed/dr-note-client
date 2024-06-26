@@ -85,8 +85,8 @@ export const AppContainer = ({ head, children, isContainer }) => {
             <span>Drugs list</span>
           </li>
           <li
-            className={location.pathname === "/receipt" ? "active" : ""} // New Invoice menu item
-            onClick={() => navigate("/receipt")}
+            className={location.pathname === "/Invoice" ? "active" : ""} // New Invoice menu item
+            onClick={() => navigate("/Invoice")}
           >
             <FaFileInvoice />
             <span>Invoices</span>
@@ -96,7 +96,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
             <span>Info</span>
           </li>
         </ul>
-        <small className="app-info">
+        <small className="app-info mt-1000">
           Developed by{" "}
           <a href="https://www.puretik.com" target="_blank">
             PureTik
