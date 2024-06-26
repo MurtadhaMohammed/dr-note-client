@@ -31,7 +31,6 @@ export const AppContainer = ({ head, children, isContainer }) => {
   let navigate = useNavigate();
   const prevScrollTopRef = useRef(0);
 
-
   useEffect(() => {
     //console.log(location.pathname.split("/")[1]);
   }, [location]);
@@ -41,14 +40,14 @@ export const AppContainer = ({ head, children, isContainer }) => {
     const prevScrollTop = prevScrollTopRef.current;
 
     // Check if the scroll direction has reversed
-    if (currentScrollTop < prevScrollTop) {
+    if (currentScrollTop >= 0 && currentScrollTop < prevScrollTop) {
       setIsScroll(false);
     } else {
       setIsScroll(true);
     }
 
     // Update the previous scroll position
-    prevScrollTopRef.current = currentScrollTop;
+    if (!isScroll) prevScrollTopRef.current = currentScrollTop;
   };
 
   if (!isContainer) return <div className="container">{children}</div>;
@@ -140,9 +139,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
             </Dropdown>
           </div>
         </Header>
-        <Content
-          onScroll={handleScroll}
-        >
+        <Content onScroll={handleScroll}>
           <div className="container">{children}</div>
         </Content>
       </Layout>
