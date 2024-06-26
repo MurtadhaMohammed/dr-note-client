@@ -45,7 +45,7 @@ const AttachmentsScreen = () => {
     });
 
   return (
-    <div className="p-[16px] sm:p-[24px]">
+    <div className="page p-[16px] sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div>

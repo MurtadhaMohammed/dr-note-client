@@ -133,7 +133,7 @@ const ChekupScreen = () => {
 
   return (
     <div
-      className="checkup-screen p-[16px] sm:p-[24px]"
+      className="page checkup-screen p-[16px] sm:p-[24px]"
     >
       <div className="m-[10px] sm:m-0">
 

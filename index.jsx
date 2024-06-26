@@ -8,6 +8,7 @@ import { QueryClientProvider } from "react-query";
 import qc from "./src/lib/queryClient";
 import "./src/css/app.css";
 import "./src/css/custom.css";
+import "./src/css/animation.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
