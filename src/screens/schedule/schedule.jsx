@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   Button,
@@ -15,7 +15,6 @@ import {
 import {
   UnorderedListOutlined,
   CalendarOutlined,
-  UserAddOutlined,
 } from "@ant-design/icons";
 import "./schedule.css";
 import ScheduleForm from "./scheduleForm/scheduleForm";
@@ -26,6 +25,10 @@ import dayjs from "dayjs";
 import { PatientItem } from "./patientItem/patientItem";
 import { PatientItemMob } from "./patientItemMob/patientItemMob";
 import { useMobileDetect } from "../../hooks/mobileDetect";
+import { IoCalendarOutline } from "react-icons/io5";
+import { TbCalendarPlus } from "react-icons/tb";
+
+
 
 const { Option } = Select;
 
@@ -59,14 +62,29 @@ const ScheduleScreen = () => {
     };
   };
 
+  const getDateInBookings = () => {
+    let dates = [];
+    data?.map((b) => {
+      if (!dates?.find((d) => dayjs(d).isSame(dayjs(b?.date), "date"))) {
+        dates.push(b?.date);
+      }
+    });
+
+    return dates;
+  };
+
+  useEffect(() => {
+    if (isMobile) setTab("list");
+  }, [isMobile]);
+
   const PatientCard = isMobile ? PatientItemMob : PatientItem;
 
   return (
-    <div className="schedule p-[16px] sm:p-[24px]">
-      <section className="app-flex head">
+    <div className="schedule p-0 sm:p-[24px]">
+      <section className="app-flex head ">
         <div></div>
 
-        <div className="actions">
+        <div className="actions hidden sm:block">
           <Space>
             <Radio.Group
               options={[
@@ -91,22 +109,46 @@ const ScheduleScreen = () => {
         </div>
       </section>
       {tab === "list" ? (
-        <section className="patients-list mt-16">
+        <section className="mt-0 sm:mt-16 mb-[60px]">
           <Spin tip="Loading..." spinning={isLoading}>
-            {data?.length > 0 ? (
-              data?.map((item, k) => (
-                <PatientCard
-                  key={k}
-                  item={item?.patient}
-                  // onHistory={(val) => {
-                  //   setRecord(val);
-                  //   setIsHistory(true);
-                  // }}
-                  // onEdit={(val) => {
-                  //   setRecord(val);
-                  //   setIsModal(true);
-                  // }}
-                />
+            {getDateInBookings()?.length > 0 ? (
+              getDateInBookings()?.map((date) => (
+                <>
+                  <Space align="center" className="mt-[24px] mb-2 ml-[16px] sm:ml-1">
+                    <IoCalendarOutline />
+                    <a className="text-[14px] block">
+                      {dayjs(date)?.format("YYYY, ddd MM")}
+                    </a>
+                    <Divider type="vertical" />
+                    <a
+                      onClick={() => {
+                        setCurrentDate(dayjs(date));
+                        setIsNew(true);
+                      }}
+                      className="text-[#0000ff]"
+                    >
+                      + New Book Here
+                    </a>
+                  </Space>
+                  <div className="patients-list">
+                    {data
+                      ?.filter((item) => dayjs(item?.date).isSame(date))
+                      ?.map((item, k) => (
+                        <PatientCard
+                          key={k}
+                          item={item?.patient}
+                          // onHistory={(val) => {
+                          //   setRecord(val);
+                          //   setIsHistory(true);
+                          // }}
+                          // onEdit={(val) => {
+                          //   setRecord(val);
+                          //   setIsModal(true);
+                          // }}
+                        />
+                      ))}
+                  </div>
+                </>
               ))
             ) : (
               <Empty
@@ -116,14 +158,14 @@ const ScheduleScreen = () => {
             )}
           </Spin>
           <button
-            onClick={() => setIsModal(true)}
-            class="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+            onClick={() => setIsNew(true)}
+            class="fixed sm:hidden w-[54px] h-[54px] flex items-center justify-center bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
           >
-            <UserAddOutlined className="text-[22px]" />
+            <TbCalendarPlus className="text-[22px]" />
           </button>
         </section>
       ) : (
-        <section>
+        <section className="hidden sm:block">
           <Calendar
             //onPanelChange={onPanelChange}
             onSelect={(current, { source }) => {
@@ -180,7 +222,7 @@ const ScheduleScreen = () => {
           onSave={() => {
             if (currentDate) {
               setIsNew(false);
-              setIsView(true);
+              if (tab !== "list") setIsView(true);
             } else {
               setIsNew(false);
               setCurrentDate(null);
