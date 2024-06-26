@@ -1,0 +1,86 @@
+.invoice-item-mob {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid #f3f3f3;
+  }
+  
+  .invoice-item-mob:last-child {
+    border: none;
+  }
+  
+  .invoice-item-mob .item-name {
+    flex: 35%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .invoice-item-mob .item-name .name-info {
+    margin: 0 8px;
+    flex: 1;
+  }
+  
+  .invoice-item-mob .item-name .name-info span {
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1;
+  }
+  
+  .invoice-item-mob .item-name .name-info small {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 14px;
+  }
+  
+  .invoice-item-mob .item-details {
+    flex: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .invoice-item-mob .item-service {
+    flex: 60%;
+  }
+  
+  .invoice-item-mob .item-service span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .invoice-item-mob .item-amount {
+    flex: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .invoice-item-mob .item-amount span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .invoice-item-mob .item-amount .text-gray-600 {
+    margin-left: 8px;
+  }
+  
+  .invoice-item-mob .item-actions {
+    flex: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .invoice-item-mob .item-actions button {
+    margin-left: 8px;
+  }
+  
+  .invoice-item-mob .item-actions button:first-child {
+    margin-left: 0;
+  }
+  
+  .invoice-item-mob .item-actions button.ant-btn-icon-only {
+    padding: 0;
+  }
+  

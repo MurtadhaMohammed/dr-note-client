@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { List, Modal, message } from "antd";
 import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import InvoiceItem from "../InvoiceItem/InvoiceItem";
+import InvoiceItemMob from "../invoiceItemMob/InvoiceItemMob"; // Import InvoiceItemMob
 import { apiCall } from "../../../lib/services";
+import { useMobileDetect } from "../../../hooks/mobileDetect"; // Import useMobileDetect hook
 
 const InvoiceList = ({ patientId }) => {
+  const { isMobile } = useMobileDetect(); // Get isMobile from useMobileDetect hook
   const [invoices, setInvoices] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
@@ -50,17 +53,26 @@ const InvoiceList = ({ patientId }) => {
     <div>
       <List
         dataSource={invoices}
-        renderItem={(item) => (
-          <InvoiceItem
-            key={item.id}
-            item={item}
-            onEdit={handleEdit}
-            onDelete={() => handleDelete(item.id)}
-          />
-        )}
+        renderItem={(item) =>
+          isMobile ? ( // Render InvoiceItemMob if isMobile is true
+            <InvoiceItemMob
+              key={item.id}
+              item={item}
+              onEdit={handleEdit}
+              onDelete={() => handleDelete(item.id)}
+            />
+          ) : ( // Render InvoiceItem if isMobile is false
+            <InvoiceItem
+              key={item.id}
+              item={item}
+              onEdit={handleEdit}
+              onDelete={() => handleDelete(item.id)}
+            />
+          )
+        }
       />
       <Modal
-        open={isModalVisible}
+        visible={isModalVisible}
         onCancel={() => {
           setIsModalVisible(false);
           setSelectedInvoice(null);
