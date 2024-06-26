@@ -12,10 +12,7 @@ import {
   Divider,
   Empty,
 } from "antd";
-import {
-  UnorderedListOutlined,
-  CalendarOutlined,
-} from "@ant-design/icons";
+import { UnorderedListOutlined, CalendarOutlined } from "@ant-design/icons";
 import "./schedule.css";
 import ScheduleForm from "./scheduleForm/scheduleForm";
 import { useQuery } from "react-query";
@@ -27,8 +24,6 @@ import { PatientItemMob } from "./patientItemMob/patientItemMob";
 import { useMobileDetect } from "../../hooks/mobileDetect";
 import { IoCalendarOutline } from "react-icons/io5";
 import { TbCalendarPlus } from "react-icons/tb";
-
-
 
 const { Option } = Select;
 
@@ -109,12 +104,15 @@ const ScheduleScreen = () => {
         </div>
       </section>
       {tab === "list" ? (
-        <section className="mt-0 sm:mt-16 mb-[60px]">
+        <section className="mt-0 sm:mt-[16px] mb-[60px]">
           <Spin tip="Loading..." spinning={isLoading}>
             {getDateInBookings()?.length > 0 ? (
               getDateInBookings()?.map((date) => (
                 <>
-                  <Space align="center" className="mt-[24px] mb-2 ml-[16px] sm:ml-1">
+                  <Space
+                    align="center"
+                    className="mt-[24px] mb-3 ml-[16px] sm:ml-1"
+                  >
                     <IoCalendarOutline />
                     <a className="text-[14px] block">
                       {dayjs(date)?.format("YYYY, ddd MM")}
