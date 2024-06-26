@@ -76,58 +76,57 @@ const ScheduleScreen = () => {
 
   return (
     <div className="schedule p-0 sm:p-[24px]">
-      <section className="app-flex head ">
-        <div></div>
+      <div className="actions hidden sm:block">
+        <Space>
+          <Button size="md" type="primary" onClick={() => setIsNew(true)}>
+            + New Book
+          </Button>
+          <Radio.Group
+            options={[
+              {
+                label: <UnorderedListOutlined />,
+                value: "list",
+              },
+              {
+                label: <CalendarOutlined />,
+                value: "schedule",
+              },
+            ]}
+            value={tab}
+            optionType="button"
+            onChange={(e) => setTab(e.target.value)}
+          />
+        </Space>
+      </div>
 
-        <div className="actions hidden sm:block">
-          <Space>
-            <Radio.Group
-              options={[
-                {
-                  label: <UnorderedListOutlined />,
-                  value: "list",
-                },
-                {
-                  label: <CalendarOutlined />,
-                  value: "schedule",
-                },
-              ]}
-              value={tab}
-              optionType="button"
-              onChange={(e) => setTab(e.target.value)}
-            />
-
-            <Button size="md" type="primary" onClick={() => setIsNew(true)}>
-              + New Book
-            </Button>
-          </Space>
-        </div>
-      </section>
       {tab === "list" ? (
-        <section className="mt-0 sm:mt-[16px] mb-[60px]">
+        <section className="mt-0 sm:mt-[8px] mb-[60px]">
           <Spin tip="Loading..." spinning={isLoading}>
             {getDateInBookings()?.length > 0 ? (
               getDateInBookings()?.map((date) => (
                 <>
-                  <Space
-                    align="center"
-                    className="mt-[24px] mb-3 ml-[16px] sm:ml-1"
-                  >
-                    <IoCalendarOutline />
-                    <a className="text-[14px] text-[#666] block">
-                      {dayjs(date)?.format("YYYY, ddd MM")}
-                    </a>
-                    <Divider type="vertical" />
+                  <div className="flex items-baseline justify-between w-full mt-[8px]">
+                    <Space
+                      size={4}
+                      align="center"
+                      className="mt-[24px] mb-3 ml-[16px] sm:ml-1"
+                    >
+                      <IoCalendarOutline />
+                      <Divider type="vertical" />
+                      <a className="text-[14px] text-[#666] block">
+                        {dayjs(date)?.format("YYYY, ddd MM")}
+                      </a>
+                    </Space>
                     <a
                       onClick={() => {
                         setCurrentDate(dayjs(date));
                         setIsNew(true);
                       }}
-                      className="text-[#0000ff]"
+                      className="block mr-[16px]"
                     >
-                      + New Book Here
+                      + Add Book
                     </a>
-                  </Space>
+                  </div>
                   <div className="patients-list">
                     {data
                       ?.filter((item) => dayjs(item?.date).isSame(date))
@@ -163,7 +162,7 @@ const ScheduleScreen = () => {
           </button>
         </section>
       ) : (
-        <section className="hidden sm:block">
+        <section className="hidden sm:block -mt-[42px]">
           <Calendar
             //onPanelChange={onPanelChange}
             onSelect={(current, { source }) => {
