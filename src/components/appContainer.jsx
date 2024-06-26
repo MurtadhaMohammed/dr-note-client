@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Layout, Avatar, Dropdown, Space } from "antd";
 import logo from "../assets/logo.svg";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
@@ -28,12 +28,21 @@ const items = [
 
 export const AppContainer = ({ head, children, isContainer }) => {
   // let history = useHistory();
-  let { setIsLogin, user, setIsScroll , isScroll} = useAppStore();
+  let { setIsLogin, user, setIsScroll, isScroll } = useAppStore();
   let navigate = useNavigate();
+  const prevScrollTopRef = useRef(0);
 
-  useEffect(() => {
-    //console.log(location.pathname.split("/")[1]);
-  }, [location]);
+  const handleScroll = (e) => {
+    const currentScrollTop = e.target.scrollTop;
+    const prevScrollTop = prevScrollTopRef.current;
+
+    // Determine if the scroll direction is down or up
+    if (currentScrollTop > prevScrollTop) !isScroll && setIsScroll(true);
+    else isScroll && setIsScroll(false);
+
+    // Update the previous scroll position
+    prevScrollTopRef.current = currentScrollTop;
+  };
 
   if (!isContainer) return <div className="container">{children}</div>;
 
@@ -131,7 +140,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
             </Dropdown>
           </div>
         </Header>
-        <Content onScroll={(e) =>!!e?.target?.scrollTop !== isScroll &&setIsScroll(!!e?.target?.scrollTop)}>
+        <Content onScroll={handleScroll}>
           <div className="container">{children}</div>
         </Content>
       </Layout>
