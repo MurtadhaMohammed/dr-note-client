@@ -1,4 +1,4 @@
-.patient-item-schedule {
+.patient-item-mob {
   display: flex;
   /* border-radius: 4px; */
   padding: 20px;
@@ -7,38 +7,39 @@
     backdrop-filter: blur(50px); */
 }
 
-.patient-item-schedule:last-child {
+.patient-item-mob:last-child {
   border: none;
 }
 
-.patient-item-schedule .item-name {
+.patient-item-mob .item-name {
   flex: 35%;
   display: flex;
   align-items: center;
 }
-.patient-item-schedule .item-name .name-info {
-  margin: 0 16px;
+.patient-item-mob .item-name .name-info {
+  margin: 0 8px;
+  flex: 1;
 }
-.patient-item-schedule .item-name .name-info span {
+.patient-item-mob .item-name .name-info span {
   display: block;
   font-weight: bold;
   margin: 0;
   font-size: 16px;
   line-height: 1;
 }
-.patient-item-schedule .item-name .name-info small {
+.patient-item-mob .item-name .name-info small {
   margin: 0;
   opacity: 0.8;
   font-size: 14px;
 }
-.patient-item-schedule .item-age {
+.patient-item-mob .item-age {
   flex: 20%;
   display: flex;
   align-items: center;
   font-size: 28px;
   font-weight: bold;
 }
-.patient-item-schedule .item-age span {
+.patient-item-mob .item-age span {
   font-size: 12px;
   font-weight: lighter;
   margin-top: 10px;
@@ -46,34 +47,34 @@
   color: #666;
 }
 
-.patient-item-schedule .item-address {
+.patient-item-mob .item-address {
   flex: 25%;
   display: flex;
   align-items: center;
 }
-.patient-item-schedule .item-address .address-info {
-  margin: 0 12px;
+.patient-item-mob .item-address .address-info {
+  margin: 0 8px;
   margin-top: 2px;
 }
-.patient-item-schedule .item-address .address-info span {
+.patient-item-mob .item-address .address-info span {
   display: block;
   margin: 0;
   line-height: 1;
 }
-.patient-item-schedule .item-address .address-info small {
+.patient-item-mob .item-address .address-info small {
   margin: 0;
   opacity: 0.8;
   font-size: 12px;
   color: #666;
 }
-.patient-item-schedule .item-actions {
-  flex: 40px;
+.patient-item-mob .item-actions {
+  flex: 20%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.patient-item-schedule .item-new {
+.patient-item-mob .item-new {
   display: flex;
   align-items: center;
 }
