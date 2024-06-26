@@ -91,7 +91,7 @@ export const HeaderMob = () => {
       </div>
       {!titles?.find((el) => el.key === page)?.child && (
         <div
-          className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] rounded-[8px] py-[12px] px-[16px] mt-[12px] mb-[16px] transition-all"
+          className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[12px] px-[16px] mt-[12px] mb-[16px] transition-all"
           style={{
             opacity: !isScroll ? 1 : 0,
           }}
