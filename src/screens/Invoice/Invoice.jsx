@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
-import { Select, Button, Modal } from "antd";
+import { Select, Button, Modal ,Drawer } from "antd";
 import "./Invoice.css";
 import { useMobileDetect } from "../../hooks/mobileDetect";
-import InvoiceForm from "./InvoiceForm/InvoiceForm"; 
+import InvoiceForm from "./InvoiceForm/InvoiceForm";
 import InvoiceList from "./InvoiceList/InvoiceList";
 import { apiCall } from "../../lib/services";
 
@@ -14,8 +14,6 @@ const InvoiceScreen = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [patients, setPatients] = useState([]);
   const { isMobile } = useMobileDetect();
-
-
 
   const handleModalClose = () => {
     setIsModalVisible(false);
@@ -37,7 +35,11 @@ const InvoiceScreen = () => {
         <section className="app-flex">
           <div>
             <span>Patient List for</span>
-            <Select defaultValue="1" variant={false} onChange={handlePatientChange}>
+            <Select
+              defaultValue="1"
+              variant={false}
+              onChange={handlePatientChange}
+            >
               {patients.map((patient) => (
                 <Option key={patient.id} value={patient.id}>
                   {patient.name}
@@ -57,7 +59,10 @@ const InvoiceScreen = () => {
       <section className="patients-list mt-0 sm:mt-[12px]">
         <InvoiceList patientId={selectedPatient} />
         {isMobile && (
-          <button className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg">
+          <button
+            className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+            onClick={() => setIsModalVisible(true)}
+          >
             <UserAddOutlined className="text-[22px]" />
           </button>
         )}
