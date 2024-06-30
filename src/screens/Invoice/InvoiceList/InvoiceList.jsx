@@ -1,26 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { List, Modal, message, Spin, Empty } from "antd";
 import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import InvoiceItem from "../InvoiceItem/InvoiceItem";
-import InvoiceItemMob from "../invoiceItemMob/InvoiceItemMob"; 
+import InvoiceItemMob from "../invoiceItemMob/InvoiceItemMob";
+import SearchBox from "../../../components/SearchBox/searchBox";
+import { useAppStore } from "../../../lib/store";
 import { apiCall } from "../../../lib/services";
-import { useMobileDetect } from "../../../hooks/mobileDetect"; 
-// import LoadMoreBtn from "../../components/loadMoreBtn/loadMoreBtn"; 
-import { useInfiniteQuery } from "react-query"; 
+import { useMobileDetect } from "../../../hooks/mobileDetect";
+import { useInfiniteQuery } from "react-query";
 import "./InvoiceList.css";
 
 const InvoiceList = ({ patientId }) => {
-  const { isMobile } = useMobileDetect(); 
-  const pageSize = 10; 
+  const { isMobile } = useMobileDetect();
+  const pageSize = 10;
+  const { querySearch } = useAppStore();
 
   const {
     data,
     isLoading,
-    refetch, 
+    refetch,
   } = useInfiniteQuery(
     ["invoices", patientId],
     async ({ pageParam = 0 }) => {
-      const res = await apiCall({ url: `invoice/v1/all?take=${pageSize}&skip=${pageParam}` });
+      const res = await apiCall({
+        url: `invoice/v1/all?take=${pageSize}&skip=${pageParam}`,
+      });
       return { data: res, nextCursor: pageParam + pageSize };
     },
     {
@@ -28,7 +32,7 @@ const InvoiceList = ({ patientId }) => {
       select: (data) => ({
         ...data,
         pages: data.pages.flatMap((page) => page.data),
-        hasNext: data.pages.findIndex((el) => el.data.length === 0) === -1 ? true : false,
+        hasNext: data.pages.findIndex((el) => el.data.length === 0) === -1,
       }),
       refetchOnMount: false,
       refetchOnWindowFocus: false,
@@ -39,7 +43,7 @@ const InvoiceList = ({ patientId }) => {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
 
   const handleSave = async () => {
-    refetch(); 
+    refetch();
     setIsModalVisible(false);
     setSelectedInvoice(null);
   };
@@ -64,12 +68,22 @@ const InvoiceList = ({ patientId }) => {
 
   const InvoiceCard = isMobile ? InvoiceItemMob : InvoiceItem;
 
+  // Filter the invoices based on the search query
+  const filteredData = useMemo(() => {
+    if (!querySearch?.value) {
+      return data?.pages || [];
+    }
+    return (data?.pages || []).filter((invoice) =>
+      invoice.patient.name.toLowerCase().includes(querySearch.value.toLowerCase())
+    );
+  }, [data, querySearch]);
+
   return (
     <div className="lists">
       <section className="invoices-list">
         <Spin tip="Loading..." spinning={isLoading}>
-          {data?.pages?.length > 0 ? (
-            data.pages.map((item, k) => (
+          {filteredData.length > 0 ? (
+            filteredData.map((item, k) => (
               <InvoiceCard
                 key={k}
                 item={item}
@@ -78,22 +92,10 @@ const InvoiceList = ({ patientId }) => {
               />
             ))
           ) : (
-            <Empty
-              style={{ padding: 50 }}
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-            />
+            <Empty style={{ padding: 50 }} image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </Spin>
       </section>
-      {/* {data?.pages?.length >= pageSize && (
-        <LoadMoreBtn
-          loading={isFetchingNextPage}
-          disabled={!hasNextPage || isFetchingNextPage}
-          onClick={() => fetchNextPage()}
-          isMore={data?.hasNext}
-          listLength={data?.pages?.length || 0}
-        />
-      )} */}
       <Modal
         open={isModalVisible}
         onCancel={() => {

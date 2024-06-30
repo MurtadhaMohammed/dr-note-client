@@ -1,5 +1,4 @@
 .page {
-  margin-top: 128px;
   animation: fadePage .3s;
 }
 
@@ -12,4 +11,11 @@
       opacity: 1;
       transform: translateY(0px);
     }
+}
+
+@media screen and (max-width: 639px) {
+  .page {
+    margin-top: 128px;
+  }
+  
 }
