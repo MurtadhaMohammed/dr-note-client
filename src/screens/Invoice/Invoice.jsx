@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
-import { Select, Button, Modal ,Drawer } from "antd";
+import { Select, Button, Modal, Drawer } from "antd";
 import "./Invoice.css";
 import { useMobileDetect } from "../../hooks/mobileDetect";
 import InvoiceForm from "./InvoiceForm/InvoiceForm";
 import InvoiceList from "./InvoiceList/InvoiceList";
-import { apiCall } from "../../lib/services";
 
 const { Option } = Select;
 
 const InvoiceScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [patients, setPatients] = useState([]);
   const { isMobile } = useMobileDetect();
+
+  const handleDrawerClose = () => {
+    setIsDrawerVisible(false);
+    setSelectedPatient(null);
+  };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
@@ -22,7 +27,7 @@ const InvoiceScreen = () => {
 
   const handleInvoiceSave = () => {
     handleModalClose();
-    // Optionally handle save logic if needed
+    handleDrawerClose();
   };
 
   const handlePatientChange = (value) => {
@@ -30,13 +35,13 @@ const InvoiceScreen = () => {
   };
 
   return (
-    <div className="p-0 sm:p-[24px]">
+    <div className="page p-0 sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div>
-            <span>Patient List for</span>
+            {/* <span>Patient List for</span>
             <Select
-              defaultValue="1"
+              defaultValue={patients[0]?.id}
               variant={false}
               onChange={handlePatientChange}
             >
@@ -45,7 +50,7 @@ const InvoiceScreen = () => {
                   {patient.name}
                 </Option>
               ))}
-            </Select>
+            </Select> */}
           </div>
           <Button
             size="large"
@@ -56,18 +61,34 @@ const InvoiceScreen = () => {
           </Button>
         </section>
       )}
-      <section className="patients-list mt-0 sm:mt-[12px]">
+      <section className="mt-0 sm:mt-[12px]">
         <InvoiceList patientId={selectedPatient} />
         {isMobile && (
           <button
-            className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
-            onClick={() => setIsModalVisible(true)}
+            className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-[#2c24ff] hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+            onClick={() => setIsDrawerVisible(true)}
           >
             <UserAddOutlined className="text-[22px]" />
           </button>
         )}
       </section>
 
+      <Drawer
+        title="Add Invoice"
+        placement="right"
+        closable={true}
+        width={440}
+        open={isDrawerVisible}
+        onClose={handleDrawerClose}
+        onSave={handleInvoiceSave}
+        onCancel={handleDrawerClose}
+      >
+        <InvoiceForm
+          onClose={handleModalClose}
+          onSave={handleInvoiceSave}
+          currentDate={new Date()}
+        />
+      </Drawer>
       <Modal
         destroyOnClose
         open={isModalVisible}

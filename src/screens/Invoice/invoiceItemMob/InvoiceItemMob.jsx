@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Button, Popconfirm, Space, Avatar } from "antd";
+import { Button, Space, Avatar } from "antd";
 import {
-  EditOutlined,
-  DeleteOutlined,
-  PrinterOutlined,
+
   MoreOutlined,
 } from "@ant-design/icons";
-import InvoicePrint from "../../../components/InvoicePrint/invoicePrint"; // Import the InvoicePrint component
+import InvoicePrint from "../../../components/InvoicePrint/invoicePrint";
 import "./invoiceItemMob.css";
 import { Sheet } from "react-modal-sheet";
 import { useConfirmModal } from "../../../components/ConfirmModal/store";

@@ -1,5 +1,10 @@
 import { Button, Space } from "antd";
-import { FaUserInjured, FaClipboardList, FaFlask } from "react-icons/fa";
+import {
+  FaUserInjured,
+  FaClipboardList,
+  FaFlask,
+  FaFileInvoice,
+} from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
@@ -64,6 +69,15 @@ export const HeaderMob = () => {
         <Space size={8}>
           <FaFlask size={18} />
           <b className="text-[20px]">Drugs</b>
+        </Space>
+      ),
+    },
+    {
+      key: "/Invoice",
+      title: (
+        <Space size={8}>
+          <FaFileInvoice size={18} />
+          <b className="text-[20px]">Invoice</b>
         </Space>
       ),
     },

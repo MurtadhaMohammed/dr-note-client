@@ -94,7 +94,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
             <span>Drugs list</span>
           </li>
           <li
-            className={location.pathname === "/Invoice" ? "active" : ""} // New Invoice menu item
+            className={location.pathname === "/Invoice" ? "active" : ""}
             onClick={() => navigate("/Invoice")}
           >
             <FaFileInvoice />

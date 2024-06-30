@@ -86,8 +86,10 @@ export const MenuMob = ({ open, onClose, page }) => {
           className={
             "flex items-center gap-2 text-[18px] rounded-[8px] p-[12px] mt-3"
           }
-          onClick={() => navigate("/Invoice")}
-        >
+          onClick={() => {
+            navigate("/Invoice");
+            onClose();
+          }}        >
           <FaFileInvoice />
           <span>Invoices</span>
         </li>

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Button, Popconfirm, Space, Avatar } from "antd";
-import { EditOutlined, DeleteOutlined, PrinterOutlined } from "@ant-design/icons";
-import InvoicePrint from "../../../components/InvoicePrint/invoicePrint"; // Import the InvoicePrint component
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PrinterOutlined,
+} from "@ant-design/icons";
+import InvoicePrint from "../../../components/InvoicePrint/invoicePrint";
 import "./InvoiceItem.css";
 
 const InvoiceItem = ({ item, onEdit, onDelete }) => {
@@ -12,7 +16,7 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
     const date = new Date(createdAt);
 
     const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
 
     return `${day}/${month}/${year}`;
@@ -32,7 +36,11 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
     <>
       <div className="Invoice-item">
         <div className="item-name">
-          <Avatar style={{ background: "#7265e6" }}>
+          <Avatar
+            style={{
+              background: item.patient?.gender === "male" ? "#7265e6" : "#e91e63",
+            }}
+          >
             {item.patient?.name.substr(0, 1).toUpperCase()}
           </Avatar>
           <div className="name-info">
@@ -52,7 +60,11 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
           </span>
         </div>
         <div className="item-actions">
-          <Button onClick={() => onEdit(item)} type="text" icon={<EditOutlined />} />
+          <Button
+            onClick={() => onEdit(item)}
+            type="text"
+            icon={<EditOutlined />}
+          />
           <Popconfirm
             title="Delete the Invoice"
             onConfirm={onDelete}
@@ -61,7 +73,11 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
           >
             <Button type="text" danger icon={<DeleteOutlined />} />
           </Popconfirm>
-          <Button onClick={handlePrint} type="text" icon={<PrinterOutlined />} />
+          <Button
+            onClick={handlePrint}
+            type="text"
+            icon={<PrinterOutlined />}
+          />
         </div>
       </div>
       <InvoicePrint
