@@ -1,4 +1,4 @@
-import { Button, Space } from "antd";
+import { Button, Space, Input } from "antd";
 import {
   FaUserInjured,
   FaClipboardList,
@@ -8,7 +8,6 @@ import {
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
-
 import { FiSearch } from "react-icons/fi";
 import { useLocation, useParams } from "react-router-dom";
 import { useAppStore } from "../../lib/store";
@@ -18,9 +17,16 @@ import { useState } from "react";
 export const HeaderMob = () => {
   const [isMenu, setIsMenu] = useState(false);
   const location = useLocation();
+  const { querySearch, setQuerySearch } = useAppStore();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  let { value = "" } = querySearch;
   const { selectedName, isScroll } = useAppStore();
   let page = "/" + location.pathname.split("/")[1];
-
+  const handleSearch = (v) => {
+    setSearchQuery(v);
+    setQuerySearch({ key: page, value: v });
+  };
   const titles = [
     {
       key: "/",
@@ -105,7 +111,7 @@ export const HeaderMob = () => {
       </div>
       {!titles?.find((el) => el.key === page)?.child && (
         <div
-          className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[12px] px-[16px] mt-[12px] mb-[16px] transition-all"
+          className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[6px] px-[16px] mt-[12px] mb-[16px] transition-all"
           style={{
             transform: !isScroll ? "rotateX(360deg)" : "rotateX(270deg)",
           }}
@@ -113,6 +119,11 @@ export const HeaderMob = () => {
           <input
             className="bg-[#f6f6f6] w-full text-[18px] outline-0"
             placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              handleSearch(e.target.value);
+            }}
           />
           <FiSearch className="opacity-40" size={22} />
         </div>

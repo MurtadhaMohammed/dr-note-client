@@ -56,7 +56,7 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
         <div className="item-amount">
           <span className="text-[18px] font-bold">
             {item.amount}
-            <span className="text-[12px] mt-2 ml-2 text-gray-600">IQD</span>
+            <span className="text-[10px] mt-1 ml-1 text-gray-600">IQD</span>
           </span>
         </div>
         <div className="item-actions">

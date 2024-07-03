@@ -3,7 +3,6 @@ import { List, Modal, message, Spin, Empty } from "antd";
 import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import InvoiceItem from "../InvoiceItem/InvoiceItem";
 import InvoiceItemMob from "../invoiceItemMob/InvoiceItemMob";
-import SearchBox from "../../../components/SearchBox/searchBox";
 import { useAppStore } from "../../../lib/store";
 import { apiCall } from "../../../lib/services";
 import { useMobileDetect } from "../../../hooks/mobileDetect";

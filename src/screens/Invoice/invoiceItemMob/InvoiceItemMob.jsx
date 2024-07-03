@@ -51,7 +51,7 @@ const InvoiceItemMob = ({ item, onEdit, onDelete }) => {
           <div className="item-amount">
             <span className="price">
               {item.amount}
-              <span className="text-[12px]  mt-2 ml-2 text-gray-600">IQD</span>
+              <span className="text-[10px]  mt-1 ml-1 text-gray-600">IQD</span>
             </span>
         </div>
           <Button

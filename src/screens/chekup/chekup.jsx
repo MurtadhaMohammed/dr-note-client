@@ -8,7 +8,9 @@ import {
   message,
   Space,
   AutoComplete,
+  Modal,
 } from "antd";
+import { FaFileInvoice } from "react-icons/fa";
 import { PlusOutlined, SaveOutlined, PrinterOutlined } from "@ant-design/icons";
 import { DrugItem } from "./drugItem/drugItem";
 import { FileItem } from "./fileItem/fileItem";
@@ -20,6 +22,7 @@ import qc from "../../lib/queryClient";
 import { apiCall } from "../../lib/services";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppStore } from "../../lib/store";
+import InvoiceForm from "../Invoice/InvoiceForm/InvoiceForm";
 
 const { TextArea } = Input;
 
@@ -36,6 +39,7 @@ const ChekupScreen = () => {
   const [drugName, setDrugName] = useState(null);
   const [drugNote, setDrugNote] = useState(null);
   const [options, setOptions] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const { id, visitId } = useParams();
   const { setSelectedName, setRacheta } = useAppStore();
   const navigate = useNavigate();
@@ -81,7 +85,7 @@ const ChekupScreen = () => {
     mutationFn: (data) =>
       apiCall({ url: "file/v1/create", method: "POST", data, isFile: true }),
     onSuccess: () => {
-      message.success(`Uplaod Successfully.`);
+      message.success(`Upload Successfully.`);
       qc.invalidateQueries(`patient-${id}`);
     },
     onError: () => message.error("Error !"),
@@ -131,119 +135,150 @@ const ChekupScreen = () => {
     getDrugs();
   }, []);
 
+  const handleSaveInvoice = async () => {
+    refetch();
+    setIsModalVisible(false);
+  };
+
   return (
-    <div
-      className="page checkup-screen p-[16px] sm:p-[24px]"
-    >
+    <div className="page checkup-screen p-[16px] sm:p-[24px]">
       <div className="m-[10px] sm:m-0">
+        <Row gutter={[50, 50]} className="m-0">
+          <Col md={16}>
+            <Row gutter={[20, 40]}>
+              <Col span={24}>
+                {InputFiled(
+                  "The diagnosis",
+                  <TextArea
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    style={{ width: "100%" }}
+                    rows={6}
+                    placeholder="Write The diagnosis here . . ."
+                  />
+                )}
+              </Col>
 
-      <Row gutter={[50, 50]} className="m-0">
-        <Col md={16}>
-          <Row gutter={[20, 40]}>
-            <Col span={24}>
-              {InputFiled(
-                "The diagnosis",
-                <TextArea
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  style={{ width: "100%" }}
-                  rows={6}
-                  placeholder="Write The diagnosis hire . . ."
-                />
-              )}
-            </Col>
+              <Col
+                span={24}
+                style={{ display: "flex", alignItems: "flex-end" }}
+              >
+                {InputFiled(
+                  "Prescription",
+                  <Space>
+                    <AutoComplete
+                      className="w-[180px] sm:w-[300px]"
+                      size="large"
+                      options={options}
+                      value={drugName}
+                      onChange={(val) => setDrugName(val)}
+                      placeholder="Choose Drug . . ."
+                      onSearch={getDrugs}
+                    />
+                    <Input
+                      className="flex-1"
+                      value={drugNote}
+                      onChange={(e) => setDrugNote(e.target.value)}
+                      size="large"
+                      placeholder="Note"
+                    />
+                    <Button
+                      size="large"
+                      disabled={!drugName}
+                      onClick={handleDrugAdd}
+                      icon={<PlusOutlined />}
+                    />
+                  </Space>
+                )}
+              </Col>
 
-            <Col span={24} style={{ display: "flex", alignItems: "flex-end" }}>
-              {InputFiled(
-                "Prescription",
+              <Col span={24}>
+                <div className="selected-drugs">
+                  {selectedDrugs.map((item) => (
+                    <DrugItem
+                      key={item.id}
+                      item={item}
+                      onRemove={handlRemoveDrug}
+                    />
+                  ))}
+                </div>
+              </Col>
+              <Col span={24}>
                 <Space>
-                  <AutoComplete
-                    className="w-[180px] sm:w-[300px]"
+                  <Button
+                    type="primary"
                     size="large"
-                    options={options}
-                    value={drugName}
-                    onChange={(val) => setDrugName(val)}
-                    placeholder="Chose Drug . . ."
-                    onSearch={getDrugs}
-                  />
-                  <Input
-                    className="flex-1"
-                    value={drugNote}
-                    onChange={(e) => setDrugNote(e.target.value)}
+                    icon={<SaveOutlined />}
+                    loading={isSaveLoading}
+                    disabled={!note}
+                    onClick={handleSave}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    // type="primary"
                     size="large"
-                    placeholder="Note"
-                  />
+                    icon={<PrinterOutlined />}
+                    disabled={!visitId}
+                    onClick={() =>
+                      setRacheta({
+                        open: true,
+                        data: {
+                          patient: data,
+                          visit,
+                        },
+                      })
+                    }
+                  >
+                    Print Racheta
+                  </Button>
                   <Button
                     size="large"
-                    disabled={!drugName}
-                    onClick={handleDrugAdd}
-                    icon={<PlusOutlined />}
-                  />
+                    icon={<FaFileInvoice />}
+                    disabled={!visitId}
+                    onClick={() => setIsModalVisible(true)}
+                  >
+                    Add Invoice
+                  </Button>
                 </Space>
-              )}
-            </Col>
-
-            <Col span={24}>
-              <div className="selected-drugs">
-                {selectedDrugs.map((item) => (
-                  <DrugItem
-                    key={item.id}
-                    item={item}
-                    onRemove={handlRemoveDrug}
-                  />
-                ))}
-              </div>
-            </Col>
-            <Col span={24}>
-              <Space>
-                <Button
-                  type="primary"
-                  size="large"
-                  icon={<SaveOutlined />}
-                  loading={isSaveLoading}
-                  disabled={!note}
-                  onClick={handleSave}
-                >
-                  Save
-                </Button>
-                <Button
-                  // type="primary"
-                  size="large"
-                  icon={<PrinterOutlined />}
-                  disabled={!visitId}
-                  onClick={() =>
-                    setRacheta({
-                      open: true,
-                      data: {
-                        patient: data,
-                        visit,
-                      },
-                    })
-                  }
-                >
-                  Print Racheta
-                </Button>
-              </Space>
-            </Col>
-          </Row>
-        </Col>
-        <Col md={8} xs={24}>
-          <h4>Attachments</h4>
-          <DropZon
-            loading={isLoadingFile}
-            onChange={(file) =>
-              mutateFile({
-                file,
-                patientId: id,
-              })
-            }
-          />
-          {data?.files?.map((file) => (
-            <FileItem key={file.id} file={file} />
-          ))}
-        </Col>
-      </Row>
+              </Col>
+            </Row>
+          </Col>
+          <Col md={8} xs={24}>
+            <h4>Attachments</h4>
+            <DropZon
+              loading={isLoadingFile}
+              onChange={(file) =>
+                mutateFile({
+                  file,
+                  patientId: id,
+                })
+              }
+            />
+            {data?.files?.map((file) => (
+              <FileItem key={file.id} file={file} />
+            ))}
+          </Col>
+        </Row>
       </div>
+      <Modal
+        open={isModalVisible}
+        onCancel={() => {
+          setIsModalVisible(false);
+        }}
+        footer={null}
+        width={400}
+        destroyOnClose
+      >
+        <InvoiceForm
+          visit={visit}
+          patientId={id}
+          onClose={() => {
+            setIsModalVisible(false);
+          }}
+          onSave={handleSaveInvoice}
+        />
+      </Modal>
     </div>
   );
 };

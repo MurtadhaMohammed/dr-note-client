@@ -30,7 +30,7 @@ const InputField = (label, input) => (
   </div>
 );
 
-const InvoiceForm = ({ onClose, onSave, selectedInvoice }) => {
+const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
   const [current, setCurrent] = useState(0);
   const [isNew, setIsNew] = useState(false);
   const [patient, setPatient] = useState(selectedInvoice?.patient || {});
@@ -82,7 +82,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice }) => {
 
   const handleSave = () => {
     mutate({
-      patientId: patient.id,
+      patientId: patient.id || patientId,
       date,
       service,
       amount,
