@@ -105,7 +105,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
             <span>Info</span>
           </li>
         </ul>
-        <small className="app-info mt-1000">
+        <small className="app-info mt-1000 fixed">
           Developed by{" "}
           <a href="https://www.puretik.com" target="_blank">
             PureTik

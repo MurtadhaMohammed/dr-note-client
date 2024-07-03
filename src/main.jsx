@@ -14,6 +14,7 @@ import ScheduleScreen from "./screens/schedule/schedule";
 import ConfirmModal from "./components/ConfirmModal";
 import "./index.css";
 import InvoiceScreen from "./screens/Invoice/Invoice";
+import ExpensesScreen from "./screens/expenses/expenses";
 
 const GoBackComponent = () => {
   const { selectedName } = useAppStore();
@@ -79,6 +80,10 @@ function App() {
         <Route
           path="/Invoice"
           element={<ProtectedRoute comp={<InvoiceScreen />} />}
+        />
+        <Route
+          path="/expenses"
+          element={<ProtectedRoute comp={<ExpensesScreen />} />}
         />
         <Route path="/" element={<ProtectedRoute comp={<HomeScreen />} />} />
       </Routes>
