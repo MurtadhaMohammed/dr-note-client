@@ -85,7 +85,7 @@ const ChekupScreen = () => {
     mutationFn: (data) =>
       apiCall({ url: "file/v1/create", method: "POST", data, isFile: true }),
     onSuccess: () => {
-      message.success(`Uplaod Successfully.`);
+      message.success(`Upload Successfully.`);
       qc.invalidateQueries(`patient-${id}`);
     },
     onError: () => message.error("Error !"),
@@ -134,10 +134,12 @@ const ChekupScreen = () => {
   useEffect(() => {
     getDrugs();
   }, []);
+
   const handleSaveInvoice = async () => {
     refetch();
     setIsModalVisible(false);
   };
+
   return (
     <div className="page checkup-screen p-[16px] sm:p-[24px]">
       <div className="m-[10px] sm:m-0">
@@ -152,7 +154,7 @@ const ChekupScreen = () => {
                     onChange={(e) => setNote(e.target.value)}
                     style={{ width: "100%" }}
                     rows={6}
-                    placeholder="Write The diagnosis hire . . ."
+                    placeholder="Write The diagnosis here . . ."
                   />
                 )}
               </Col>
@@ -170,7 +172,7 @@ const ChekupScreen = () => {
                       options={options}
                       value={drugName}
                       onChange={(val) => setDrugName(val)}
-                      placeholder="Chose Drug . . ."
+                      placeholder="Choose Drug . . ."
                       onSearch={getDrugs}
                     />
                     <Input
@@ -236,7 +238,7 @@ const ChekupScreen = () => {
                     disabled={!visitId}
                     onClick={() => setIsModalVisible(true)}
                   >
-                   Add Invoice
+                    Add Invoice
                   </Button>
                 </Space>
               </Col>
@@ -270,6 +272,7 @@ const ChekupScreen = () => {
       >
         <InvoiceForm
           visit={visit}
+          patientId={id}
           onClose={() => {
             setIsModalVisible(false);
           }}
