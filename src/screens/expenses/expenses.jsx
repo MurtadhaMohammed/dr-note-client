@@ -90,7 +90,8 @@ const ExpensesScreen = () => {
   return (
     <div className="page p-0 sm:p-[24px]">
       {!isMobile && (
-        <div className="flex justify-end align-center mx-5 my-6">
+        <div className="flex justify-between align-center text mx-5 my-6">
+          <p className="">Expense List</p>
           <Button size="large" type="link" onClick={handleAddExpense}>
             + Add Expense
           </Button>

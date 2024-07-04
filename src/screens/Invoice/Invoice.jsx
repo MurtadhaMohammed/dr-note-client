@@ -6,13 +6,11 @@ import { useMobileDetect } from "../../hooks/mobileDetect";
 import InvoiceForm from "./InvoiceForm/InvoiceForm";
 import InvoiceList from "./InvoiceList/InvoiceList";
 
-const { Option } = Select;
 
 const InvoiceScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
-  const [patients, setPatients] = useState([]);
   const { isMobile } = useMobileDetect();
 
   const handleDrawerClose = () => {
@@ -30,14 +28,12 @@ const InvoiceScreen = () => {
     handleDrawerClose();
   };
 
-  const handlePatientChange = (value) => {
-    setSelectedPatient(value);
-  };
 
   return (
     <div className="page p-0 sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
+            <p>Invoice List</p>      
           <div>
             {/* <span>Patient List for</span>
             <Select
