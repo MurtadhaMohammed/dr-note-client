@@ -3,13 +3,13 @@ import { Layout, Avatar, Dropdown, Space } from "antd";
 import logo from "../assets/logo.svg";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import { MdDateRange } from "react-icons/md";
-
 import {
   FaUserInjured,
   FaClipboardList,
   FaFlask,
   FaInfoCircle,
   FaFileInvoice,
+  FaDollarSign 
 } from "react-icons/fa";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { useAppStore } from "../lib/store";
@@ -92,6 +92,13 @@ export const AppContainer = ({ head, children, isContainer }) => {
           >
             <FaFlask />
             <span>Drugs list</span>
+          </li>
+          <li
+            className={location.pathname === "/expenses" ? "active" : ""}
+            onClick={() => navigate("/expenses")}
+          >
+            <FaDollarSign />
+            <span>Expenses</span>
           </li>
           <li
             className={location.pathname === "/Invoice" ? "active" : ""}

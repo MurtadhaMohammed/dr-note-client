@@ -5,6 +5,7 @@ import {
   FaFlask,
   FaInfoCircle,
   FaFileInvoice,
+  FaDollarSign
 } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
 import logo from "../../assets/logo.svg";
@@ -87,6 +88,17 @@ export const MenuMob = ({ open, onClose, page }) => {
             "flex items-center gap-2 text-[18px] rounded-[8px] p-[12px] mt-3"
           }
           onClick={() => {
+            navigate("/expenses");
+            onClose();
+          }}        >
+          <FaDollarSign />
+          <span>Expesnses</span>
+        </li>
+        <li
+          className={
+            "flex items-center gap-2 text-[18px] rounded-[8px] p-[12px] mt-3"
+          }
+          onClick={() => {
             navigate("/Invoice");
             onClose();
           }}        >
@@ -98,7 +110,7 @@ export const MenuMob = ({ open, onClose, page }) => {
           <span>Info</span>
         </li>
       </ul>
-      <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+      <div className=" bottom-10 left-0 right-0 flex justify-center">
         <small className="text-[#666]">
           Developed by{" "}
           <a

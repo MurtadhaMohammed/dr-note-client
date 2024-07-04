@@ -1,19 +1,32 @@
-import React from "react";
-import { Button, Popconfirm, Space } from "antd";
+import React, { useState } from "react";
+import { Button, Popconfirm, Space, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./expensesItem.css";
 
 const ExpenseItem = ({ expense, onEdit, onDelete }) => {
-//   const formatDate = (date) => {
-//     const formattedDate = new Date(date);
-//     const day = String(formattedDate.getDate()).padStart(2, "0");
-//     const month = String(formattedDate.getMonth() + 1).padStart(2, "0");
-//     const year = formattedDate.getFullYear();
-//     return `${day}/${month}/${year}`;
-//   };
+  const [showNoteModal, setShowNoteModal] = useState(false); // State to control modal visibility
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const formattedDate = (date) => {
+    const createdAt = date;
+    const newDate = new Date(createdAt);
+
+    const day = String(newDate.getDate()).padStart(2, "0");
+    const month = String(newDate.getMonth() + 1).padStart(2, "0");
+    const year = newDate.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  };
+
+  const showModal = () => {
+    setShowNoteModal(true);
+  };
+
+  const handleModalCancel = () => {
+    setShowNoteModal(false);
   };
 
   return (
@@ -23,11 +36,15 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
           <span className="font-bold text-[18px]">
             {capitalizeFirstLetter(expense.name)}
           </span>
-          <small>{(expense.date)}</small>
+          <small>{formattedDate(expense.date)}</small>
         </Space>
       </div>
       <div className="note">
-        <span>{expense.note}</span>
+        {expense.note && (
+          <Button type="link" onClick={showModal}>
+            View Note
+          </Button>
+        )}
       </div>
       <div className="item-amount">
         <span className="text-[18px] font-bold">
@@ -36,11 +53,7 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
         </span>
       </div>
       <div className="item-actions">
-        <Button
-          onClick={() => onEdit(expense)}
-          type="text"
-          icon={<EditOutlined />}
-        />
+        <Button onClick={() => onEdit(expense)} type="text" icon={<EditOutlined />} />
         <Popconfirm
           title="Delete the Expense"
           onConfirm={() => onDelete(expense)}
@@ -50,6 +63,18 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
           <Button type="text" danger icon={<DeleteOutlined />} />
         </Popconfirm>
       </div>
+      <Modal
+        title="Expense Note"
+        open={showNoteModal}
+        onCancel={handleModalCancel}
+        footer={[
+          <Button key="close" onClick={handleModalCancel}>
+            Close
+          </Button>,
+        ]}
+      >
+        <p>{expense.note}</p>
+      </Modal>
     </div>
   );
 };

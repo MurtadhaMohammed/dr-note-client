@@ -4,6 +4,7 @@ import {
   FaClipboardList,
   FaFlask,
   FaFileInvoice,
+  FaDollarSign
 } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
@@ -84,6 +85,15 @@ export const HeaderMob = () => {
         <Space size={8}>
           <FaFileInvoice size={18} />
           <b className="text-[20px]">Invoice</b>
+        </Space>
+      ),
+    },
+    {
+      key: "/expenses",
+      title: (
+        <Space size={8}>
+          <FaDollarSign size={18} />
+          <b className="text-[20px]">Expenses</b>
         </Space>
       ),
     },
