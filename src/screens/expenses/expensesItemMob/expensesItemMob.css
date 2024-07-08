@@ -1,0 +1,66 @@
+.expense-item-mob {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid #f3f3f3;
+    
+  }
+  
+  
+  .expense-item-mob .item-name {
+    flex: 35%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .expense-item-mob .item-name .name-info {
+    margin: 0 8px;
+    flex: 1;
+  }
+  
+  .expense-item-mob .item-name .name-info span {
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1;
+  }
+  
+  .expense-item-mob .item-name .name-info small {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 14px;
+  }
+  
+  .expense-item-mob .item-amount {
+    flex: 20%;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .expense-item-mob .item-amount span {
+    font-size: 10px;
+    font-weight: lighter;
+    margin-top: 10px;
+    margin-left: 8px;
+    color: #666;
+  }
+  
+  .expense-item-mob .item-note {
+    flex: 25%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .expense-item-mob .item-note span {
+    display: block;
+    margin: 0;
+    line-height: 1;
+  }
+  
+  .expense-item-mob .item-new {
+    display: flex;
+    align-items: center;
+  }
+  

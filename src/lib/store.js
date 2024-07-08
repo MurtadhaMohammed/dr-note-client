@@ -11,6 +11,8 @@ export const useAppStore = create((set) => ({
   },
   selectedName: null,
   isScroll: false,
+  expenses: [],
+  setExpenses: (expenses) => set({ expenses }),
   setIsScroll: (isScroll) => set({ isScroll }),
   setRacheta: (racheta) => set({ racheta }),
   setQuerySearch: (querySearch) => set({ querySearch }),

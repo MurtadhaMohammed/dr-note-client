@@ -10,4 +10,14 @@
   .fixed {
     position: fixed;
   }
-  
+  .page .p p{
+    margin-bottom:0!important;
+  }
+
+  .page .p{
+    align-items: center;
+    font-weight: bold;
+  }
+  .anticon.anticon-down.ant-select-suffix svg {
+    position: absolute;
+  }

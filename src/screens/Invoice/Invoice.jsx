@@ -1,56 +1,112 @@
-import React, { useState } from "react";
-import { UserAddOutlined } from "@ant-design/icons";
-import { Select, Button, Modal, Drawer } from "antd";
-import "./Invoice.css";
-import { useMobileDetect } from "../../hooks/mobileDetect";
+import React, { useState, useMemo, useEffect } from "react";
+import {
+  List,
+  Modal,
+  message,
+  Spin,
+  Empty,
+  Select,
+  Button,
+  Drawer,
+} from "antd";
 import InvoiceForm from "./InvoiceForm/InvoiceForm";
-import InvoiceList from "./InvoiceList/InvoiceList";
+import InvoiceItem from "./InvoiceItem/InvoiceItem";
+import InvoiceItemMob from "./invoiceItemMob/InvoiceItemMob";
+import { useAppStore } from "../../lib/store";
+import { apiCall } from "../../lib/services";
+import { useMobileDetect } from "../../hooks/mobileDetect";
+import { useInfiniteQuery } from "react-query";
+import { UserAddOutlined } from "@ant-design/icons";
+import "./Invoice.css";
 
 const { Option } = Select;
 
 const InvoiceScreen = () => {
+  const { isMobile } = useMobileDetect();
+  const { querySearch } = useAppStore();
+  const pageSize = 10;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
-  const [patients, setPatients] = useState([]);
-  const { isMobile } = useMobileDetect();
+  const [dateRange, setDateRange] = useState("1");
+  const { data, isLoading, refetch } = useInfiniteQuery(
+    ["invoices", selectedPatient, dateRange],
+    async ({ pageParam = 0 }) => {
+      const res = await apiCall({
+        url: `invoice/v1/all?take=${pageSize}&skip=${pageParam}&range=${dateRange}`,
+      });
+      return { data: res, nextCursor: pageParam + pageSize };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      select: (data) => ({
+        ...data,
+        pages: data.pages.flatMap((page) => page.data),
+        hasNext: data.pages.findIndex((el) => el.data.length === 0) === -1,
+      }),
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  const handleDrawerClose = () => {
-    setIsDrawerVisible(false);
-    setSelectedPatient(null);
-  };
+  useEffect(() => {
+    refetch();
+  }, [dateRange]);
 
-  const handleModalClose = () => {
+  const handleSave = async () => {
+    refetch();
     setIsModalVisible(false);
-    setSelectedPatient(null);
+    setIsDrawerVisible(false);
+    setSelectedInvoice(null);
   };
 
-  const handleInvoiceSave = () => {
-    handleModalClose();
-    handleDrawerClose();
+  const handleEdit = (invoice) => {
+    setSelectedInvoice(invoice);
+    setIsModalVisible(true);
   };
 
-  const handlePatientChange = (value) => {
-    setSelectedPatient(value);
+  const handleDelete = async (invoiceId) => {
+    try {
+      await apiCall({
+        url: `invoice/v1/delete/${invoiceId}`,
+        method: "DELETE",
+      });
+      message.success("Invoice deleted successfully.");
+      refetch();
+    } catch (error) {
+      message.error("Failed to delete invoice.");
+    }
   };
+
+  const InvoiceCard = isMobile ? InvoiceItemMob : InvoiceItem;
+
+  const filteredData = useMemo(() => {
+    if (!querySearch?.value) {
+      return data?.pages || [];
+    }
+    return (data?.pages || []).filter((invoice) =>
+      invoice.patient.name
+        .toLowerCase()
+        .includes(querySearch.value.toLowerCase())
+    );
+  }, [data, querySearch]);
 
   return (
     <div className="page p-0 sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
-          <div>
-            {/* <span>Patient List for</span>
+          <div className="p flex align-center justify-center">
+            <p className="mx-1">Invoice List For</p>
             <Select
-              defaultValue={patients[0]?.id}
-              variant={false}
-              onChange={handlePatientChange}
+              defaultValue="1"
+              onChange={(value) => setDateRange(value)}
+              variant="borderless"
             >
-              {patients.map((patient) => (
-                <Option key={patient.id} value={patient.id}>
-                  {patient.name}
-                </Option>
-              ))}
-            </Select> */}
+              <Option value="3">This Day</Option>
+              <Option value="2">Last Week</Option>
+              <Option value="1">All Time</Option>
+            </Select>
           </div>
           <Button
             size="large"
@@ -61,8 +117,27 @@ const InvoiceScreen = () => {
           </Button>
         </section>
       )}
+
       <section className="mt-0 sm:mt-[12px]">
-        <InvoiceList patientId={selectedPatient} />
+        <div className="lists">
+          <Spin tip="Loading..." spinning={isLoading}>
+            {filteredData.length > 0 ? (
+              filteredData.map((item, k) => (
+                <InvoiceCard
+                  key={k}
+                  item={item}
+                  onEdit={handleEdit}
+                  onDelete={() => handleDelete(item.id)}
+                />
+              ))
+            ) : (
+              <Empty
+                style={{ padding: 50 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+              />
+            )}
+          </Spin>
+        </div>
         {isMobile && (
           <button
             className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-[#2c24ff] hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
@@ -79,27 +154,25 @@ const InvoiceScreen = () => {
         closable={true}
         width={440}
         open={isDrawerVisible}
-        onClose={handleDrawerClose}
-        onSave={handleInvoiceSave}
-        onCancel={handleDrawerClose}
+        onClose={() => setIsDrawerVisible(false)}
       >
         <InvoiceForm
-          onClose={handleModalClose}
-          onSave={handleInvoiceSave}
+          onClose={() => setIsDrawerVisible(false)}
+          onSave={handleSave}
           currentDate={new Date()}
         />
       </Drawer>
       <Modal
         destroyOnClose
         open={isModalVisible}
-        onCancel={handleModalClose}
+        onCancel={() => setIsModalVisible(false)}
         footer={null}
         width={400}
         closable={false}
       >
         <InvoiceForm
-          onClose={handleModalClose}
-          onSave={handleInvoiceSave}
+          onClose={() => setIsModalVisible(false)}
+          onSave={handleSave}
           currentDate={new Date()}
           selectedPatient={selectedPatient}
         />

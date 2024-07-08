@@ -1,0 +1,37 @@
+.list {
+  border: 1px solid #f3f3f3;
+  border-radius: 4px;
+}
+
+.total-amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0px;
+  padding-left: 10px;
+}
+:where(.css-dev-only-do-not-override-1tey0ag).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    padding: 0px;
+}
+.total-amount .total {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  margin: 0;
+  margin-right: 0px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.total-amount .total .amount {
+  font-weight: 400;
+}
+
+.anticon.anticon-down.ant-select-suffix svg {
+    position: absolute;
+  }
+@media (max-width: 600px) {
+  .list {
+    margin: 0;
+    padding: 0;
+  }
+}

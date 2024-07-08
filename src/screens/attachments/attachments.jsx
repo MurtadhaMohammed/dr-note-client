@@ -80,7 +80,7 @@ const AttachmentsScreen = () => {
         </Spin>
         <button
           onClick={() => setIsNew(true)}
-          class="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-[#2c24ff] hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+          className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-[#2c24ff] hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
         >
           <FileAddOutlined className="text-[22px]" />
         </button>

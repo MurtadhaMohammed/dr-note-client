@@ -31,6 +31,9 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
   const handleClosePrintModal = () => {
     setIsPrintModalOpen(false);
   };
+  const moneyFormat = () => {
+    return item.amount.toLocaleString()
+  }
 
   return (
     <>
@@ -55,7 +58,7 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
         </div>
         <div className="item-amount">
           <span className="text-[18px] font-bold">
-            {item.amount}
+            {moneyFormat()}
             <span className="text-[10px] mt-1 ml-1 text-gray-600">IQD</span>
           </span>
         </div>
