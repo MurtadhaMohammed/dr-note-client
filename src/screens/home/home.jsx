@@ -55,7 +55,7 @@ const HomeScreen = () => {
       {!isMobile && (
         <section className="app-flex">
           <div>
-            <span>Patient List for</span>
+            <span className="mr-1">Patient List for</span>
             <Select defaultValue="1" variant={false}>
               <Option value={"1"}>This Day</Option>
               <Option value={"2"}>Last Week</Option>
