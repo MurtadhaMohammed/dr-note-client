@@ -29,6 +29,9 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
     setShowNoteModal(false);
   };
 
+  const moneyFormat = () => {
+    return expense.amount.toLocaleString()
+  }
   return (
     <div className="Expense-item">
       <div className="item-name">
@@ -48,7 +51,7 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
       </div>
       <div className="item-amount">
         <span className="text-[18px] font-bold">
-          {expense.amount}
+          {moneyFormat()}
           <span className="text-[10px] mt-1 ml-1 text-gray-600">IQD</span>
         </span>
       </div>
