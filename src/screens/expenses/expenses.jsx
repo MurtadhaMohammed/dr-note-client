@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Button, List, Spin, message, Empty, Select } from "antd";
+import { Button, List, Spin, message, Empty, Select , Divider } from "antd";
 import ExpenseForm from "./expensesForm/expensesForm";
 import ExpenseItem from "./expensesItem/expensesItem";
 import ExpenseItemMob from "./expensesItemMob/expensesItemMob";
@@ -135,8 +135,8 @@ const ExpensesScreen = () => {
                   <span className="text-[13px] font-bold mt-1 ml-1 text-gray-600">
                     IQD
                   </span>
-                  <span className="mx-1">For</span>
-                </p>
+                  <Divider type="vertical" />
+                  </p>
               </div>
             )}
             <div className="py-[7px]">

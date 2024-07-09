@@ -8,6 +8,7 @@ import {
   Select,
   Button,
   Drawer,
+  Divider,
 } from "antd";
 import InvoiceForm from "./InvoiceForm/InvoiceForm";
 import InvoiceItem from "./InvoiceItem/InvoiceItem";
@@ -97,7 +98,8 @@ const InvoiceScreen = () => {
       {!isMobile && (
         <section className="app-flex">
           <div className="p flex align-center justify-center">
-            <p className="mx-1">Invoice List For</p>
+            <p className="mx-1">Invoice List</p>
+            <Divider type="vertical" />
             <Select
               defaultValue="1"
               onChange={(value) => setDateRange(value)}
