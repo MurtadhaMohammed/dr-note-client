@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Popconfirm, Space, Avatar } from "antd";
+import { Button, Popconfirm, Space, Avatar, Tag } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -54,7 +54,8 @@ const InvoiceItem = ({ item, onEdit, onDelete }) => {
           </div>
         </div>
         <div className="item-service">
-          <span className="text-[18px] font-bold">{item.service}</span>
+          <Tag color="blue">{item.service}</Tag>
+          {/* <span className="text-[18px] font-bold">{item.service}</span> */}
         </div>
         <div className="item-amount">
           <span className="text-[18px] font-bold">
