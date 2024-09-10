@@ -1,0 +1,12 @@
+
+.search-box input.ant-input:focus,
+.search-box input.ant-input-focused {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+
+.search-box input {
+  border: none;
+  outline: none;
+}

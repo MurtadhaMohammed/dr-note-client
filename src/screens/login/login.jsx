@@ -82,7 +82,7 @@ const LoginScreen = () => {
           </div>
           <Button onClick={handleVerify} size="large" type="primary" block>
             <div className="app-flex">
-              <Typography.Text style={{ color: "#fff" }}>
+              <Typography.Text style={{ color: "#fff", paddingRight: 6 }}>
                 Verify
               </Typography.Text>
               {loading ? (

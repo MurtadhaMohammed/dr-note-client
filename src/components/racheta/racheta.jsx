@@ -39,9 +39,9 @@ export const RachetaModal = () => {
             Print
           </Button>
           <Space>
-            <Select  popupMatchSelectWidth={false} placeholder="Size" value={size} onChange={setSize}>
-              <Select.Option value="sm">Small</Select.Option>
-              <Select.Option value="md">Medium</Select.Option>
+            <Select  className={styles.customSelect} popupMatchSelectWidth={false} placeholder="Size" style={{ width: 100, textAlign:"center"}} value={size} onChange={setSize}>
+              <Select.Option  value="sm">Small</Select.Option>
+              <Select.Option  value="md">Medium</Select.Option>
               <Select.Option value="lg">Larg</Select.Option>
             </Select>
             <InputNumber value={header} onChange={setHeader} />
