@@ -164,6 +164,7 @@ const ScheduleScreen = () => {
       ) : (
         <section className="hidden sm:block -mt-[42px]">
           <Calendar
+            className="gender"
             //onPanelChange={onPanelChange}
             onSelect={(current, { source }) => {
               if (source !== "date") return;

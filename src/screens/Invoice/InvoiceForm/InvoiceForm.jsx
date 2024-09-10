@@ -108,6 +108,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     <Row gutter={[16, 16]}>
       <Col span={24}>
         <Select
+          className="gender"
           allowClear
           style={{ width: "100%" }}
           placeholder={"Find patient or create"}
