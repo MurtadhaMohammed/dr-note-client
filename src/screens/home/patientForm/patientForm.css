@@ -5,6 +5,10 @@
     height: 100%;
   }
 
-  .ant-select-arrow {
+  .add-btn{
+    margin-bottom: 10px;
+  }
+
+  .gender .ant-select-arrow {
     inset-inline-end: 23px !important;
   }

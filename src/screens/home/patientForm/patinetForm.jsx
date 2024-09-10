@@ -82,6 +82,7 @@ export const PatientForm = ({ record, onClose }) => {
       style={{
         maxWidth: 600,
         height: "100%",
+        marginBottom: "30px",
       }}
     >
       <div className="patient-form">
@@ -127,6 +128,7 @@ export const PatientForm = ({ record, onClose }) => {
             {InputFiled(
               "Gender",
               <Form.Item
+                className="gender"
                 name="gender"
                 style={{ width: "100%" }}
                 rules={[
@@ -178,7 +180,7 @@ export const PatientForm = ({ record, onClose }) => {
           </Col>
         </Row>
         <Button
-          style={{ width: 140 }}
+          style={{ width: 140, marginBottom: 30 }}
           className="add-btn"
           size="large"
           icon={<SaveOutlined />}

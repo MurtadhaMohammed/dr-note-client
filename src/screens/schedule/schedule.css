@@ -29,8 +29,8 @@
   border-bottom: 1px solid #f3f3f3;
 }
 
-.ant-picker-calendar-year-select {
-  /* margin-left: 20px !important; */
-  inset-inline-start: 0px !important;
-  /* padding-left: 10px !important; */
+:where(.css-dev-only-do-not-override-1tey0ag)
+  .ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector {
+  padding-left: 10px !important;
 }

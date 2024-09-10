@@ -91,7 +91,7 @@ const DrugsScreen = () => {
         />
       )}
       <DrugForm
-        open={isModalVisible}
+        visible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
       />
     </div>
