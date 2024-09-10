@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { useAppStore } from "./store";
 
-const URL = "https://drnote-api.onrender.com/api";
+const URL = "http://localhost:3000/api";
 
 const isTokenValid = (token) => {
   try {

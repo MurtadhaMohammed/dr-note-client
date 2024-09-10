@@ -29,10 +29,10 @@ const InvoiceScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [selectedPatient, setSelectedPatient] = useState(null);
   const [dateRange, setDateRange] = useState("1");
+
   const { data, isLoading, refetch } = useInfiniteQuery(
-    ["invoices", selectedPatient, dateRange],
+    ["invoices", dateRange],
     async ({ pageParam = 0 }) => {
       const res = await apiCall({
         url: `invoice/v1/all?take=${pageSize}&skip=${pageParam}&range=${dateRange}`,
@@ -55,7 +55,7 @@ const InvoiceScreen = () => {
     refetch();
   }, [dateRange]);
 
-  const handleSave = async () => {
+  const handleSave = () => {
     refetch();
     setIsModalVisible(false);
     setIsDrawerVisible(false);
@@ -64,7 +64,11 @@ const InvoiceScreen = () => {
 
   const handleEdit = (invoice) => {
     setSelectedInvoice(invoice);
-    setIsModalVisible(true);
+    if (isMobile) {
+      setIsDrawerVisible(true);
+    } else {
+      setIsModalVisible(true);
+    }
   };
 
   const handleDelete = async (invoiceId) => {
@@ -101,6 +105,7 @@ const InvoiceScreen = () => {
             <p className="mx-1">Invoice List</p>
             <Divider type="vertical" />
             <Select
+              popupMatchSelectWidth={false}
               defaultValue="1"
               onChange={(value) => setDateRange(value)}
               variant="borderless"
@@ -113,7 +118,10 @@ const InvoiceScreen = () => {
           <Button
             size="large"
             type="link"
-            onClick={() => setIsModalVisible(true)}
+            onClick={() => {
+              setSelectedInvoice(null);
+              setIsModalVisible(true);
+            }}
           >
             + Add Invoice
           </Button>
@@ -143,7 +151,10 @@ const InvoiceScreen = () => {
         {isMobile && (
           <button
             className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-[#2c24ff] hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
-            onClick={() => setIsDrawerVisible(true)}
+            onClick={() => {
+              setSelectedInvoice(null);
+              setIsDrawerVisible(true);
+            }}
           >
             <UserAddOutlined className="text-[22px]" />
           </button>
@@ -151,7 +162,7 @@ const InvoiceScreen = () => {
       </section>
 
       <Drawer
-        title="Add Invoice"
+        title="Add/Edit Invoice"
         placement="right"
         closable={true}
         width={440}
@@ -161,7 +172,7 @@ const InvoiceScreen = () => {
         <InvoiceForm
           onClose={() => setIsDrawerVisible(false)}
           onSave={handleSave}
-          currentDate={new Date()}
+          selectedInvoice={selectedInvoice}
         />
       </Drawer>
       <Modal
@@ -175,8 +186,7 @@ const InvoiceScreen = () => {
         <InvoiceForm
           onClose={() => setIsModalVisible(false)}
           onSave={handleSave}
-          currentDate={new Date()}
-          selectedPatient={selectedPatient}
+          selectedInvoice={selectedInvoice}
         />
       </Modal>
     </div>

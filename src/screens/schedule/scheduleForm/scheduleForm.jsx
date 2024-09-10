@@ -204,7 +204,7 @@ const ScheduleForm = ({ onClose, onSave, currentDate }) => {
               />
             )}
           </Col>
-          <Col span={24}>
+          <Col span={1}>
             <Button
               size="small"
               danger
@@ -251,8 +251,9 @@ const ScheduleForm = ({ onClose, onSave, currentDate }) => {
 
   const stepActions = [
     <Space>
-      <Button onClick={() => onClose(false)}>Cancel</Button>
+      <Button type="danger" onClick={() => onClose(false)}>Cancel</Button>
       <Button
+      type="primary"
         disabled={!patient || !patient?.name}
         onClick={() => setCurrent(1)}
       >
@@ -286,7 +287,7 @@ const ScheduleForm = ({ onClose, onSave, currentDate }) => {
       </div>
       <div className="body">{steps[current]}</div>
       <Divider />
-      <div className="app-flex">
+      <div className="app-flex mt-[60px]">
         <CustomStep size={2} current={current} />
         {stepActions[current]}
       </div>

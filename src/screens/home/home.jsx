@@ -56,7 +56,7 @@ const HomeScreen = () => {
         <section className="app-flex">
           <div>
             <span className="mr-1">Patient List for</span>
-            <Select defaultValue="1" variant={false}>
+            <Select popupMatchSelectWidth={false} defaultValue="1" variant={false}>
               <Option value={"1"}>This Day</Option>
               <Option value={"2"}>Last Week</Option>
               <Option value={"3"}>All </Option>
