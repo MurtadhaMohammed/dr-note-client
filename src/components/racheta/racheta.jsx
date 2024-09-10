@@ -39,7 +39,7 @@ export const RachetaModal = () => {
             Print
           </Button>
           <Space>
-            <Select placeholder="Size" value={size} onChange={setSize}>
+            <Select  popupMatchSelectWidth={false} placeholder="Size" value={size} onChange={setSize}>
               <Select.Option value="sm">Small</Select.Option>
               <Select.Option value="md">Medium</Select.Option>
               <Select.Option value="lg">Larg</Select.Option>

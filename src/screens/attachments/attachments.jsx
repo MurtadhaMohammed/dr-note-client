@@ -50,7 +50,7 @@ const AttachmentsScreen = () => {
         <section className="app-flex">
           <div>
             <span>List of Attachments for</span>
-            <Select defaultValue="1" variant={false}>
+            <Select defaultValue="1" popupMatchSelectWidth={false} variant={false}>
               <Option value={"1"}>This Day</Option>
               <Option value={"2"}>Last Week</Option>
               <Option value={"3"}>All </Option>

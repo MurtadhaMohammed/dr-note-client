@@ -118,7 +118,7 @@ export const PatientForm = ({ record, onClose }) => {
                   style={{ width: "100%" }}
                   size="large"
                   placeholder="Example 1998/6/30"
-                  //suffix={<ScheduleOutlined />}
+                //suffix={<ScheduleOutlined />}
                 />
               </Form.Item>
             )}
@@ -147,10 +147,6 @@ export const PatientForm = ({ record, onClose }) => {
                     Female
                   </Select.Option>
                 </Select>
-                {/* <Radio.Group>
-                  <Radio value={"male"}>Male</Radio>
-                  <Radio value={"femal"}>Female</Radio>
-                </Radio.Group> */}
               </Form.Item>
             )}
           </Col>

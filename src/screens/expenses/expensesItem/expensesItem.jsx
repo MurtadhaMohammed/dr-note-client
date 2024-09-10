@@ -42,20 +42,20 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
           <small>{formattedDate(expense.date)}</small>
         </Space>
       </div>
-      <div className="note">
+      <div className="note w-[100px]">
         {expense.note && (
           <Button type="link" onClick={showModal}>
             View Note
           </Button>
         )}
       </div>
-      <div className="item-amount">
+      <div className="item-amount w-[100px]">
         <span className="text-[18px] font-bold">
           {moneyFormat()}
           <span className="text-[10px] mt-1 ml-1 text-gray-600">IQD</span>
         </span>
       </div>
-      <div className="item-actions">
+      <div className="item-actions w-[100px]">
         <Button onClick={() => onEdit(expense)} type="text" icon={<EditOutlined />} />
         <Popconfirm
           title="Delete the Expense"
