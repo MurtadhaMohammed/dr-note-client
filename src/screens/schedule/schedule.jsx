@@ -113,9 +113,9 @@ const ScheduleScreen = () => {
                     >
                       <IoCalendarOutline />
                       <Divider type="vertical" />
-                      <a className="text-[14px] text-[#666] block">
+                      {/* <a className="text-[14px] text-[#666] block">
                         {dayjs(date)?.format("YYYY, ddd MM")}
-                      </a>
+                      </a> */}
                     </Space>
                     <a
                       onClick={() => {
@@ -134,14 +134,14 @@ const ScheduleScreen = () => {
                         <PatientCard
                           key={k}
                           item={item?.patient}
-                          // onHistory={(val) => {
-                          //   setRecord(val);
-                          //   setIsHistory(true);
-                          // }}
-                          // onEdit={(val) => {
-                          //   setRecord(val);
-                          //   setIsModal(true);
-                          // }}
+                        // onHistory={(val) => {
+                        //   setRecord(val);
+                        //   setIsHistory(true);
+                        // }}
+                        // onEdit={(val) => {
+                        //   setRecord(val);
+                        //   setIsModal(true);
+                        // }}
                         />
                       ))}
                   </div>
@@ -251,9 +251,8 @@ const ScheduleScreen = () => {
           <Typography.Text
             style={{ fontWeight: "normal" }}
             type="secondary"
-          >{`You have ${
-            parseList(currentDate)?.list?.length
-          } bookings for this date`}</Typography.Text>
+          >{`You have ${parseList(currentDate)?.list?.length
+            } bookings for this date`}</Typography.Text>
 
           <Button
             type="link"
