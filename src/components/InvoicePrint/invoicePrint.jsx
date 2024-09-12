@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Space, Typography ,Select} from "antd";
+import { Button, Modal, Space, Typography, Select } from "antd";
 import { PrinterOutlined } from "@ant-design/icons";
 import printJS from "print-js";
 import dayjs from "dayjs";
@@ -41,7 +41,7 @@ const InvoicePrint = ({ invoice, isOpen, onClose }) => {
             Print
           </Button>
           <Space>
-            <Select popupMatchSelectWidth={false} placeholder="Size" value={size} onChange={setSize}>
+            <Select className="gender" popupMatchSelectWidth={false} placeholder="Size" value={size} onChange={setSize}>
               <Select.Option value="sm">Small</Select.Option>
               <Select.Option value="md">Medium</Select.Option>
               <Select.Option value="lg">Large</Select.Option>

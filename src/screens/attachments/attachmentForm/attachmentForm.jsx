@@ -31,6 +31,7 @@ const AttachmentForm = ({ onClose }) => {
     <Row gutter={[20, 20]}>
       <Col span={24}>
         <Select
+          className="gender"
           showSearch={true}
           onSearch={setSearchValue}
           placeholder="Select patient"

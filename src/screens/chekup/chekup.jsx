@@ -167,7 +167,7 @@ const ChekupScreen = () => {
                   "Prescription",
                   <Space>
                     <AutoComplete
-                      className="w-[180px] sm:w-[300px]"
+                      className="w-[180px] sm:w-[300px] h-10"
                       size="large"
                       options={options}
                       value={drugName}
@@ -176,7 +176,7 @@ const ChekupScreen = () => {
                       onSearch={getDrugs}
                     />
                     <Input
-                      className="flex-1"
+                      className="flex-1 h-10"
                       value={drugNote}
                       onChange={(e) => setDrugNote(e.target.value)}
                       size="large"
