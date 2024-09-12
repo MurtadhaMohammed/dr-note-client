@@ -9,7 +9,7 @@ import {
   FaFlask,
   FaInfoCircle,
   FaFileInvoice,
-  FaDollarSign 
+  FaDollarSign
 } from "react-icons/fa";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { useAppStore } from "../lib/store";
@@ -58,8 +58,8 @@ export const AppContainer = ({ head, children, isContainer }) => {
               location.pathname === "/"
                 ? "active"
                 : location.pathname.split("/")[1] === "patients"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
             onClick={() => navigate("/")}
           >
@@ -71,8 +71,8 @@ export const AppContainer = ({ head, children, isContainer }) => {
               location.pathname === "/schedule"
                 ? "active"
                 : location.pathname.split("/")[1] === "schedule"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
             onClick={() => navigate("/schedule")}
           >
@@ -112,7 +112,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
             <span>Info</span>
           </li>
         </ul>
-        <small className="app-info mt-1000 fixed">
+        <small className="app-info mt-1500">
           Developed by{" "}
           <a href="https://www.puretik.com" target="_blank">
             PureTik

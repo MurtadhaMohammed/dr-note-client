@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Button, Row, Col, Empty, Spin } from "antd";
-import { DrugForm } from "./drugModal/drugModal";
-import { DrugsItem } from "./drugItem/drugsItem";
-import "./drugs.css";
-import { apiCall } from "../../lib/services";
-import { useInfiniteQuery } from "react-query";
-import { useAppStore } from "../../lib/store";
-import LoadMoreBtn from "../../components/loadMoreBtn/loadMoreBtn";
-import { useMobileDetect } from "../../hooks/mobileDetect";
-import { AppstoreAddOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
+import { Button, Row, Col, Empty, Spin } from 'antd';
+import { DrugForm } from './drugModal/drugModal';
+import { DrugsItem } from './drugItem/drugsItem';
+import './drugs.css';
+import { apiCall } from '../../lib/services';
+import { useInfiniteQuery } from 'react-query';
+import { useAppStore } from '../../lib/store';
+import LoadMoreBtn from '../../components/loadMoreBtn/loadMoreBtn';
+import { useMobileDetect } from '../../hooks/mobileDetect';
+import { AppstoreAddOutlined } from '@ant-design/icons';
 
 const DrugsScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -16,7 +16,7 @@ const DrugsScreen = () => {
   const { isMobile } = useMobileDetect();
   const pageSize = 21;
 
-  let searchValue = querySearch?.key === "drugs" ? querySearch?.value : "";
+  let searchValue = querySearch?.key === 'drugs' ? querySearch?.value : '';
 
   const fetchDrugs = async ({ pageParam = 0 }) => {
     const res = await apiCall({
@@ -27,16 +27,13 @@ const DrugsScreen = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
-      queryKey: ["drugs", searchValue],
+      queryKey: ['drugs', searchValue],
       queryFn: fetchDrugs,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       select: (data) => ({
         ...data,
         pages: data.pages.flatMap((page) => page?.data),
-        hasNext:
-          data.pages.findIndex((el) => el.data.length === 0) === -1
-            ? true
-            : false,
+        hasNext: data.pages.findIndex((el) => el.data.length === 0) === -1,
       }),
       refetchOnWindowFocus: false,
     });
@@ -51,7 +48,10 @@ const DrugsScreen = () => {
           <Button
             size="large"
             type="link"
-            onClick={() => setIsModalVisible(true)}
+            onClick={() => {
+              console.log('Opening modal');
+              setIsModalVisible(true);
+            }}
           >
             + New Drug
           </Button>
@@ -91,7 +91,7 @@ const DrugsScreen = () => {
         />
       )}
       <DrugForm
-        open={isModalVisible}
+        visible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
       />
     </div>

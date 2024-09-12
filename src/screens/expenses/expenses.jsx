@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Button, List, Spin, message, Empty, Select , Divider } from "antd";
+import { Button, List, Spin, message, Empty, Select, Divider } from "antd";
 import ExpenseForm from "./expensesForm/expensesForm";
 import ExpenseItem from "./expensesItem/expensesItem";
 import ExpenseItemMob from "./expensesItemMob/expensesItemMob";
@@ -16,7 +16,8 @@ const ExpensesScreen = () => {
   const { setExpenses, querySearch } = useAppStore();
   const [showForm, setShowForm] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
-  const [dateRange, setDateRange] = useState("1");
+  const [dateRange, setDateRange] = useState("3");
+  const [isSaving, setIsSaving] = useState(false);
   const { isMobile } = useMobileDetect();
   const pageSize = 10;
 
@@ -65,6 +66,7 @@ const ExpensesScreen = () => {
   };
 
   const handleSaveExpense = async (expenseData) => {
+    setIsSaving(true);
     try {
       if (selectedExpense) {
         await apiCall({
@@ -92,6 +94,8 @@ const ExpensesScreen = () => {
       refetch();
     } catch (error) {
       message.error("Failed to save expense");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -121,6 +125,7 @@ const ExpensesScreen = () => {
   const totalAmount = useMemo(() => {
     return filteredData.reduce((total, expense) => total + expense.amount, 0).toLocaleString();
   }, [filteredData]);
+
   const ExpenseCard = isMobile ? ExpenseItemMob : ExpenseItem;
 
   return (
@@ -136,7 +141,7 @@ const ExpensesScreen = () => {
                     IQD
                   </span>
                   <Divider type="vertical" />
-                  </p>
+                </p>
               </div>
             )}
             <div className="py-[7px]">
@@ -144,6 +149,7 @@ const ExpensesScreen = () => {
                 defaultValue="1"
                 variant="borderless"
                 onChange={(value) => setDateRange(value)}
+                popupMatchSelectWidth={false}
               >
                 <Option value="1">This Day</Option>
                 <Option value="2">Last Week</Option>
@@ -158,7 +164,7 @@ const ExpensesScreen = () => {
       )}
 
       <div className="list mt-0 sm:mt-[12px]">
-        <Spin tip="Loading..." spinning={isLoading}>
+        <Spin tip="Loading..." spinning={isLoading || isSaving}>
           {filteredData.length > 0 ? (
             <List
               dataSource={filteredData}

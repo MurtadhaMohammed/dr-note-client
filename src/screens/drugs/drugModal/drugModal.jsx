@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Modal, Input, Row, Col, message, Space, Button } from "antd";
+import { Modal, Input, Row, Col, message, Button } from "antd";
 import { useMutation } from "react-query";
 import { apiCall } from "../../../lib/services";
 import qc from "../../../lib/queryClient";
 
-const InputFiled = (label, input) => (
+const InputField = ({ label, input }) => (
   <div className="text-input">
     <p style={{ marginBottom: 8 }}>{label}</p>
     <div style={{ display: "flex" }}>{input}</div>
@@ -12,58 +12,65 @@ const InputFiled = (label, input) => (
 );
 
 export const DrugForm = ({ visible, onClose }) => {
-  let [name, setName] = useState(null);
+  const [name, setName] = useState("");
 
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
       apiCall({ url: "drug/v1/create", method: "POST", data }),
     onSuccess: () => {
-      message.success(`Insert Successfully.`);
-      setName(null);
+      message.success("Drug added successfully.");
+      setName("");
       qc.invalidateQueries("drugs");
-      onClose(false);
+      onClose();
     },
-    onError: () => message.error("Error !"),
+    onError: () => message.error("Error adding drug!"),
   });
 
+  const handleSave = () => {
+    if (!name) {
+      message.error("Please enter a drug name.");
+      return;
+    }
+    mutate({ name });
+  };
+
   return (
-    <div>
-      <Modal
-        title="Add Prescption"
-        open={visible}
-        destroyOnClose
-        width={400}
-        footer={
-            <Button
-              style={{marginTop: 16}}
-              block
-              loading={isLoading}
-              type="primary"
-              disabled={!name}
-              onClick={() => mutate({ name })}
-            >
-              Save
-            </Button>
-         
-        }
-        onCancel={onClose}
-      >
-        <div>
-          <Row gutter={[25, 25]}>
-            <Col span={24}>
-              {InputFiled(
-                "Prescption Name",
+    <Modal
+      title="Add Drug"
+      open={visible}
+      destroyOnClose
+      width={400}
+      footer={
+        <Button
+          style={{ marginTop: 16 }}
+          block
+          loading={isLoading}
+          type="primary"
+          disabled={!name}
+          onClick={handleSave}
+        >
+          Save
+        </Button>
+      }
+      onCancel={onClose}
+    >
+      <div>
+        <Row gutter={[25, 25]}>
+          <Col span={24}>
+            <InputField
+              label="Drug Name"
+              input={
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   size="large"
-                  placeholder="amoxicillin"
+                  placeholder="Amoxicillin"
                 />
-              )}
-            </Col>
-          </Row>
-        </div>
-      </Modal>
-    </div>
+              }
+            />
+          </Col>
+        </Row>
+      </div>
+    </Modal>
   );
 };
