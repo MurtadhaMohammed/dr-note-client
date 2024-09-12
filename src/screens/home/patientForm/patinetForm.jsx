@@ -36,6 +36,7 @@ export const PatientForm = ({ record, onClose }) => {
     onSuccess: () => {
       message.success(`${record ? "Edit" : "Insert"} Successfully.`);
       qc.invalidateQueries("patients");
+      form.resetFields();
       onClose(false);
     },
     onError: () => message.error("Error !"),
