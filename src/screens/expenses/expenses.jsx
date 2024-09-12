@@ -16,7 +16,7 @@ const ExpensesScreen = () => {
   const { setExpenses, querySearch } = useAppStore();
   const [showForm, setShowForm] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
-  const [dateRange, setDateRange] = useState("3");
+  const [dateRange, setDateRange] = useState("1");
   const [isSaving, setIsSaving] = useState(false);
   const { isMobile } = useMobileDetect();
   const pageSize = 10;
