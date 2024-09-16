@@ -129,7 +129,7 @@ const ScheduleScreen = () => {
                   </div>
                   <div className="patients-list">
                     {data
-                      ?.filter((item) => dayjs(item?.date).isSame(date))
+                      ?.filter((item) => dayjs(item?.date).isSame(date) && item?.patient?.active === true)
                       ?.map((item, k) => (
                         <PatientCard
                           key={k}
