@@ -27,7 +27,7 @@ const HomeScreen = () => {
 
   const fetchPatients = async ({ pageParam = 0 }) => {
     const res = await apiCall({
-      url: `patient/v1/all?q=${searchValue}&period=${selectedPeriod}&take=${pageSize}&skip=${pageParam}`,
+      url: `patient/v1/all?q=${searchValue}&range=${selectedPeriod}&take=${pageSize}&skip=${pageParam}`,
     });
     return { data: res, nextCursor: pageParam + pageSize };
   };
