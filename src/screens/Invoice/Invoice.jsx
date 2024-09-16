@@ -29,13 +29,13 @@ const InvoiceScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [dateRange, setDateRange] = useState("1");
+  const [dateRange, setDateRange] = useState("3");
 
   const { data, isLoading, refetch } = useInfiniteQuery(
     ["invoices", dateRange],
     async ({ pageParam = 0 }) => {
       const res = await apiCall({
-        url: `invoice/v1/all?take=${pageSize}&skip=${pageParam}&range=${dateRange}`,
+        url: `invoice/v1/all?q=&range=${dateRange}&take=${pageSize}&skip=${pageParam}`,
       });
       return { data: res, nextCursor: pageParam + pageSize };
     },

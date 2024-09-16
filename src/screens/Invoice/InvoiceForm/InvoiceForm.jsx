@@ -215,6 +215,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
             onChange={(value) => setService(value)}
             placeholder="Select or enter service"
             style={{ width: "100%" }}
+            className="gender"
             dropdownRender={(menu) => (
               <>
                 {menu}

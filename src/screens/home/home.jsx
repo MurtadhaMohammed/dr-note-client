@@ -18,6 +18,7 @@ const HomeScreen = () => {
   const [isModal, setIsModal] = useState(false);
   const [isHistory, setIsHistory] = useState(false);
   const [record, setRecord] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState("1");
   const { querySearch } = useAppStore();
   const { isMobile } = useMobileDetect();
   const pageSize = 10;
@@ -26,14 +27,15 @@ const HomeScreen = () => {
 
   const fetchPatients = async ({ pageParam = 0 }) => {
     const res = await apiCall({
-      url: `patient/v1/all?q=${searchValue}&take=${pageSize}&skip=${pageParam}`,
+      url: `patient/v1/all?q=${searchValue}&period=${selectedPeriod}&take=${pageSize}&skip=${pageParam}`,
     });
     return { data: res, nextCursor: pageParam + pageSize };
   };
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
-      queryKey: ["patients", searchValue],
+      queryKey: ["patients", searchValue, selectedPeriod],
+      // queryKey: ["patients", searchValue],
       queryFn: fetchPatients,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       select: (data) => ({
@@ -48,6 +50,11 @@ const HomeScreen = () => {
       refetchOnWindowFocus: false,
     });
 
+  const handlePeriodChange = (value) => {
+    setSelectedPeriod(value);
+    refetch();
+  };
+
   const PatientCard = isMobile ? PatientItemMob : PatientItem;
 
   console.log(data, querySearch);
@@ -58,7 +65,13 @@ const HomeScreen = () => {
         <section className="app-flex">
           <div>
             <span className="mr-1">Patient List for</span>
-            <Select popupMatchSelectWidth={false} defaultValue="1" variant={false}>
+            <Select
+              popupMatchSelectWidth={false}
+              onChange={handlePeriodChange}
+              defaultValue="1"
+              variant={false}
+              value={selectedPeriod}
+            >
               <Option value={"1"}>This Day</Option>
               <Option value={"2"}>Last Week</Option>
               <Option value={"3"}>All </Option>
