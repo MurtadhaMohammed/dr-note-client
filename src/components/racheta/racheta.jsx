@@ -44,7 +44,7 @@ export const RachetaModal = () => {
               <Select.Option value="md">Medium</Select.Option>
               <Select.Option value="lg">Larg</Select.Option>
             </Select>
-            <InputNumber value={header} onChange={setHeader} />
+            <InputNumber max={250} value={header} onChange={setHeader} />
           </Space>
         </div>
       }

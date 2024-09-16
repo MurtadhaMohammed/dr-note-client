@@ -92,6 +92,7 @@ const ScheduleForm = ({ onClose, onSave, currentDate }) => {
           onClear={() => setSearchValue("")}
           onChange={onSelect}
           filterOption={false}
+          className="gender"
           notFoundContent={
             isFetching ? (
               <Spin size="small" />

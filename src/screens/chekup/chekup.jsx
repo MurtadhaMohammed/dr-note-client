@@ -23,6 +23,7 @@ import { apiCall } from "../../lib/services";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppStore } from "../../lib/store";
 import InvoiceForm from "../Invoice/InvoiceForm/InvoiceForm";
+import PatientHistory from "../home/history/history";
 
 const { TextArea } = Input;
 
@@ -40,6 +41,7 @@ const ChekupScreen = () => {
   const [drugNote, setDrugNote] = useState(null);
   const [options, setOptions] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedVisit, setSelectedVisit] = useState(null);
   const { id, visitId } = useParams();
   const { setSelectedName, setRacheta } = useAppStore();
   const navigate = useNavigate();
@@ -142,6 +144,7 @@ const ChekupScreen = () => {
 
   return (
     <div className="page checkup-screen p-[16px] sm:p-[24px]">
+      <PatientHistory patientId={id} setSelectedVisit={setSelectedVisit} />
       <div className="m-[10px] sm:m-0">
         <Row gutter={[50, 50]} className="m-0">
           <Col md={16}>
@@ -271,7 +274,7 @@ const ChekupScreen = () => {
         destroyOnClose
       >
         <InvoiceForm
-          visit={visit}
+          visit={selectedVisit}
           patientId={id}
           onClose={() => {
             setIsModalVisible(false);
