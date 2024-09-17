@@ -10,6 +10,9 @@ const SearchBox = ({ page }) => {
   const [val, setVal] = useState(null);
 
   let { value = "" } = querySearch;
+
+  console.log(page, 'page in search box');
+
   return (
     <div className="search-box">
       {value ? (
@@ -29,7 +32,7 @@ const SearchBox = ({ page }) => {
             setQuerySearch({ key: page, value: val });
           }}
         >
-          <LuSearch size={22} style={{ color: val ? "#000" : "#ccc", cursor: "pointer", transition: "0.2s"}} />
+          <LuSearch size={22} style={{ color: val ? "#000" : "#ccc", cursor: "pointer", transition: "0.2s" }} />
         </div>
       )}
 

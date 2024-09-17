@@ -273,6 +273,7 @@ const ChekupScreen = () => {
         <InvoiceForm
           visit={visit}
           patientId={id}
+          selectedInvoice={{ patient: data }}
           onClose={() => {
             setIsModalVisible(false);
           }}

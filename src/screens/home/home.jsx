@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
 import { Select, Button, Empty, Spin, Drawer } from "antd";
 import { PatientItem } from "./patientItem/patientItem";
@@ -57,6 +57,8 @@ const HomeScreen = () => {
 
   const PatientCard = isMobile ? PatientItemMob : PatientItem;
 
+  console.log(data, querySearch);
+
   return (
     <div className="page p-0 sm:p-[24px]">
       {!isMobile && (
@@ -80,6 +82,7 @@ const HomeScreen = () => {
           </Button>
         </section>
       )}
+
       <section className="patients-list mt-0 sm:mt-[12px]">
         <Spin tip="Loading..." spinning={isLoading}>
           {data?.pages?.length > 0 ? (
