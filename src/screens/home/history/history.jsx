@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { IoTimeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-const PatientHistory = ({ patientId, setSelectedVisit }) => {
+const PatientHistory = ({ patientId }) => {
   const navigate = useNavigate();
 
   const pageSize = 10;
@@ -43,11 +43,9 @@ const PatientHistory = ({ patientId, setSelectedVisit }) => {
             size="small"
             key={k}
             style={{ marginBottom: 8 }}
+            styles={{ body: { borderRadius: 4 } }}
             hoverable
-            onClick={() => {
-              setSelectedVisit(item);
-              navigate(`/patients/${patientId}/visit/${item.id}`);
-            }}
+            onClick={() => navigate(`/patients/${patientId}/visit/${item.id}`)}
           >
             <Space align="center">
               <IoTimeOutline size={18} style={{ marginBottom: "-3px" }} />

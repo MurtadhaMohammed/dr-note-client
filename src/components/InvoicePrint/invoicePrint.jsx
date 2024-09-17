@@ -41,9 +41,9 @@ const InvoicePrint = ({ invoice, isOpen, onClose }) => {
             Print
           </Button>
           <Space>
-            <Select className="gender" popupMatchSelectWidth={false} placeholder="Size" value={size} onChange={setSize}>
+            <Select style={{ padding: "0 6px" }} className="gender" popupMatchSelectWidth={false} placeholder="Size" value={size} onChange={setSize}>
               <Select.Option value="sm">Small</Select.Option>
-              <Select.Option value="md">Medium</Select.Option>
+              <Select.Option  value="md">Medium</Select.Option>
               <Select.Option value="lg">Large</Select.Option>
             </Select>
           </Space>

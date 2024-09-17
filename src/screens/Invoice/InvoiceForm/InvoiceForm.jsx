@@ -91,19 +91,18 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
   };
 
   useEffect(() => {
-    if (visit) {
-      setPatient(visit.patient || {});  // Assuming the visit has patient details
-      setDate(dayjs(visit.createdAt).format("YYYY-MM-DD"));
-      setAmount(visit.amount || "");  // Adjust based on visit data structure
-      setService(visit.service || "");  // Adjust based on visit data structure
+    if (selectedInvoice) {
+      setPatient(selectedInvoice.patient);
+      setDate(dayjs(selectedInvoice.date).format("YYYY-MM-DD"));
+      setAmount(selectedInvoice.amount);
+      setService(selectedInvoice.service);
     } else {
       setPatient({});
       setDate(dayjs().format("YYYY-MM-DD"));
       setAmount("");
       setService("");
     }
-  }, [visit]);  // Trigger this when visit changes
-  
+  }, [selectedInvoice]);
 
   const steps = [
     <Row gutter={[16, 16]}>
