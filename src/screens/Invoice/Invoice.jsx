@@ -182,6 +182,7 @@ const InvoiceScreen = () => {
         footer={null}
         width={400}
         closable={false}
+        centered
       >
         <InvoiceForm
           onClose={() => setIsModalVisible(false)}

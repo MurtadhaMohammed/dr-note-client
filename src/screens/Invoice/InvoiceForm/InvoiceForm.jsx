@@ -10,6 +10,7 @@ import {
   Typography,
   message,
   Spin,
+  DatePicker,
 } from "antd";
 import {
   PlusOutlined,
@@ -22,6 +23,7 @@ import dayjs from "dayjs";
 import qc from "../../../lib/queryClient";
 import CustomStep from "../../../components/customStep/customStep";
 import "./InvoiceForm.css";
+import { jwtDecode } from "jwt-decode";
 
 const InputField = (label, input) => (
   <div className="text-input">
@@ -69,9 +71,6 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     onError: () => message.error("Error!"),
   });
 
-  useEffect(() => {
-    console.log('patientttttttttt', patient);
-  }, [selectedInvoice]);
   const onSelect = (id) => {
     let p = data?.find((p) => p.id === id);
     p.birthDate = dayjs(p?.birthDate);
@@ -83,15 +82,23 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     setPatient({ ...patient, [name]: value });
   };
 
+  const handleForm = (value, name) => {
+    setPatient({ ...patient, [name]: value });
+  };
+
   const handleSave = () => {
+    const userId = jwtDecode(localStorage?.getItem('drNote_token'));
+
+    patient['userId'] = userId?.id;
+
     mutate({
-      patientId: patient.id ? parseInt(patient.id) : parseInt(patientId), 
+      patient,
       date,
       service,
       amount,
     });
     onClose();
-  };  
+  };
 
   useEffect(() => {
     if (selectedInvoice) {
@@ -112,7 +119,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
       <Col span={24}>
         <Select
           disabled={!!patient?.id}
-          className="gender"
+          className="gender mt-3"
           allowClear
           style={{ width: "100%" }}
           placeholder={"Find patient or create"}
@@ -172,6 +179,35 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
               ref={inputRef}
               placeholder="John Doe"
             />
+          )}
+        </Col>
+        <Col span={24}>
+          {InputField(
+            "Date of Birth",
+            <DatePicker
+              name="birthDate"
+              onChange={(date, dateString) => handleForm(dateString, "birthDate")}
+              style={{ width: "100%" }}
+              size="large"
+              placeholder="Example 1998/6/30"
+            />
+          )}
+        </Col>
+        <Col span={24}>
+          {InputField(
+            "Gender",
+            <Select
+              style={{ width: "100%" }}
+              size="middle"
+              className="gender"
+              placeholder="Select Gender."
+              value={patient?.gender}
+              name="gender"
+              onChange={(value) => handleForm(value, "gender")}
+            >
+              <Select.Option value="male">Male</Select.Option>
+              <Select.Option value="female">Female</Select.Option>
+            </Select>
           )}
         </Col>
         <Col span={24}>
@@ -294,7 +330,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
           </Typography.Text>
         </Space>
       </div>
-      <div className="body">{steps[current]}</div>
+      <div className=" h-full flex flex-col">{steps[current]}</div>
       <Divider />
       <div className="app-flex">
         <CustomStep size={2} current={current} />
