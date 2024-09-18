@@ -44,8 +44,6 @@ function App() {
   const location = useLocation();
   let page = location.pathname.split("/")[1];
 
-  console.log(page, 'page');
-
   return (
     <AppContainer
       head={

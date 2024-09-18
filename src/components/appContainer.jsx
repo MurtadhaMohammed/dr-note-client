@@ -49,7 +49,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
 
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider width={220} theme="light" className="side-bar">
+      <Sider width={220} theme="light" className="hidden lg:block">
         <div className="brand">
           <img src={logo} />
         </div>
@@ -122,7 +122,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
       </Sider>
       <Layout>
         <HeaderMob />
-        <Header className="hidden sm:block">
+        <Header className="hidden lg:block">
           <div className="container app-flex" style={{ height: "100%" }}>
             {head}
 
@@ -137,7 +137,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
                 },
               }}
             >
-              
+
               <div className="user-account">
                 <Space size={0}>
                   <DownOutlined style={{ fontSize: 12 }} />
@@ -148,7 +148,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
                 </Avatar>
               </div>
             </Dropdown>
-            
+
           </div>
         </Header>
         <Content onScroll={handleScroll}>
