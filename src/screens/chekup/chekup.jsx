@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Select,
   Button,
   Row,
   Col,
@@ -48,13 +47,20 @@ const ChekupScreen = () => {
     mutationFn: (data) =>
       apiCall({ url: "visit/v1/create", method: "POST", data }),
     onSuccess: (resp) => {
+
       message.success(`Insert Successfully.`);
+
+      qc.setQueryData([`visit-${visitId}`, visitId], (oldData) => ({
+        ...oldData,
+        ...resp,
+      }));
+
       qc.invalidateQueries("patients");
       navigate(`/patients/${id}/visit/${resp?.id}`, { replace: true });
     },
-    onError: () => message.error("Error !"),
+    onError: () => message.error("Error!"),
   });
-  
+
   const { data } = useQuery({
     queryKey: [`patient-${id}`, id],
     queryFn: (e) => apiCall({ url: `patient/v1/find/${e.queryKey[1]}` }),
