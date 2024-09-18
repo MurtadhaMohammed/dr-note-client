@@ -75,7 +75,7 @@ const ScheduleScreen = () => {
   const PatientCard = isMobile ? PatientItemMob : PatientItem;
 
   return (
-    <div className="page schedule p-0 sm:p-[24px]">
+    <div className="schedule sm:page p-0 sm:p-[24px]">
       <div className="actions hidden sm:block">
         <Space>
           <Button size="md" type="primary" onClick={() => setIsNew(true)}>

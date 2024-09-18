@@ -151,7 +151,7 @@ const ChekupScreen = () => {
   };
 
   return (
-    <div className="page checkup-screen p-[16px] sm:p-[24px]">
+    <div className="checkup-screen p-[16px] sm:page sm:p-[24px]">
       <div className="m-[10px] sm:m-0">
         <Row gutter={[50, 50]} className="m-0">
           <Col md={16}>
