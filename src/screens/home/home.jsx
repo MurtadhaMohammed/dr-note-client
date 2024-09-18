@@ -18,7 +18,7 @@ const HomeScreen = () => {
   const [isModal, setIsModal] = useState(false);
   const [isHistory, setIsHistory] = useState(false);
   const [record, setRecord] = useState(null);
-  const [selectedPeriod, setSelectedPeriod] = useState("1");
+  const [Range, setRange] = useState("1");
   const { querySearch } = useAppStore();
   const { isMobile } = useMobileDetect();
   const pageSize = 10;
@@ -27,15 +27,15 @@ const HomeScreen = () => {
 
   const fetchPatients = async ({ pageParam = 0 }) => {
     const res = await apiCall({
-      url: `patient/v1/all?q=${searchValue}&range=${selectedPeriod}&take=${pageSize}&skip=${pageParam}`,
+      url: `patient/v1/all?q=${searchValue}&range=${Range}&take=${pageSize}&skip=${pageParam}`,
     });
+    console.log(res);
     return { data: res, nextCursor: pageParam + pageSize };
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
     useInfiniteQuery({
-      queryKey: ["patients", searchValue, selectedPeriod],
-      // queryKey: ["patients", searchValue],
+      queryKey: ["patients", searchValue, Range],
       queryFn: fetchPatients,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       select: (data) => ({
@@ -51,7 +51,7 @@ const HomeScreen = () => {
     });
 
   const handlePeriodChange = (value) => {
-    setSelectedPeriod(value);
+    setRange(value);
     refetch();
   };
 
@@ -70,7 +70,7 @@ const HomeScreen = () => {
               onChange={handlePeriodChange}
               defaultValue="1"
               variant={false}
-              value={selectedPeriod}
+              value={Range}
             >
               <Option value={"1"}>This Day</Option>
               <Option value={"2"}>Last Week</Option>
