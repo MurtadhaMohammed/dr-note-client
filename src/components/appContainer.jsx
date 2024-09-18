@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { Layout, Avatar, Dropdown, Space } from "antd";
 import logo from "../assets/logo.svg";
-import { UserOutlined, DownOutlined } from "@ant-design/icons";
+import { UserOutlined, DownOutlined, MenuOutlined } from "@ant-design/icons";
 import { MdDateRange } from "react-icons/md";
+
 import {
   FaUserInjured,
   FaClipboardList,
@@ -124,6 +125,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
         <Header className="hidden sm:block">
           <div className="container app-flex" style={{ height: "100%" }}>
             {head}
+
             <Dropdown
               menu={{
                 items,
@@ -135,6 +137,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
                 },
               }}
             >
+              
               <div className="user-account">
                 <Space size={0}>
                   <DownOutlined style={{ fontSize: 12 }} />
@@ -145,6 +148,7 @@ export const AppContainer = ({ head, children, isContainer }) => {
                 </Avatar>
               </div>
             </Dropdown>
+            
           </div>
         </Header>
         <Content onScroll={handleScroll}>
