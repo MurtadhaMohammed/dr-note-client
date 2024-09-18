@@ -101,7 +101,7 @@ export const HeaderMob = () => {
 
   return (
     <div
-      className="fixed left-0 right-0 top-0 z-10 sm:visible  p-[16px] bg-white border border-b-[#eee] transition-all"
+      className="fixed left-0 right-0 top-0 z-10 sm:hidden  p-[16px] bg-white border border-b-[#eee] transition-all"
       style={{
         height: isScroll
           ? 66
