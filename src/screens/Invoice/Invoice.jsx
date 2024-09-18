@@ -29,7 +29,7 @@ const InvoiceScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [dateRange, setDateRange] = useState("3");
+  const [dateRange, setDateRange] = useState("1");
 
   const { data, isLoading, refetch } = useInfiniteQuery(
     ["invoices", dateRange],
@@ -110,9 +110,9 @@ const InvoiceScreen = () => {
               onChange={(value) => setDateRange(value)}
               variant="borderless"
             >
-              <Option value="3">This Day</Option>
+              <Option value="1">This Day</Option>
               <Option value="2">Last Week</Option>
-              <Option value="1">All Time</Option>
+              <Option value="3">All Time</Option>
             </Select>
           </div>
           <Button

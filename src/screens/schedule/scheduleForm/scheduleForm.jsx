@@ -171,12 +171,13 @@ const ScheduleForm = ({ onClose, onSave, currentDate }) => {
                 onChange={(val) => setPatient({ ...patient, gender: val })}
                 style={{ width: "100%" }}
                 placeholder="Select Gender."
+                className="gender"
               >
                 <Select.Option id={"male"} value={"male"}>
                   Male
                 </Select.Option>
                 <Select.Option id={"femal"} value={"femal"}>
-                  Fmale
+                  Female
                 </Select.Option>
               </Select>
             )}

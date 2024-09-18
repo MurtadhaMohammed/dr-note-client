@@ -54,7 +54,7 @@ const ChekupScreen = () => {
     },
     onError: () => message.error("Error !"),
   });
-
+  
   const { data } = useQuery({
     queryKey: [`patient-${id}`, id],
     queryFn: (e) => apiCall({ url: `patient/v1/find/${e.queryKey[1]}` }),
@@ -113,6 +113,10 @@ const ChekupScreen = () => {
   const handlRemoveDrug = (id) => {
     setSelectedDrugs(selectedDrugs.filter((el) => el.id !== id));
   };
+
+  useEffect(() => {
+    console.log('Selected Invoice (ChekupScreennnnnnnnn):', data);
+  }, [data]);
 
   const handleSave = () => {
     let _data = { note, drugs: selectedDrugs, patientId: id };

@@ -54,7 +54,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     mutationFn: (data) =>
       apiCall({
         url: selectedInvoice
-          ? `invoice/v1/edit/${selectedInvoice.id}`
+          ? `invoice/v1/edit/${selectedInvoice?.patient?.id}`
           : "invoice/v1/create",
         method: selectedInvoice ? "PUT" : "POST",
         data,
@@ -69,6 +69,9 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     onError: () => message.error("Error!"),
   });
 
+  useEffect(() => {
+    console.log('patientttttttttt', patient);
+  }, [selectedInvoice]);
   const onSelect = (id) => {
     let p = data?.find((p) => p.id === id);
     p.birthDate = dayjs(p?.birthDate);
@@ -82,13 +85,13 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
 
   const handleSave = () => {
     mutate({
-      patientId: patient.id || patientId,
+      patientId: patient.id ? parseInt(patient.id) : parseInt(patientId), 
       date,
       service,
       amount,
     });
     onClose();
-  };
+  };  
 
   useEffect(() => {
     if (selectedInvoice) {

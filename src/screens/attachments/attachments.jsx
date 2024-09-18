@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, Button, Empty, Spin, Row, Col, Modal } from "antd";
 import { AttachmentItem } from "./attachmentItem/attachmentItem";
 import "./attachments.css";
@@ -16,6 +16,7 @@ const AttachmentsScreen = () => {
   const [isNew, setIsNew] = useState(false);
   const { isMobile } = useMobileDetect();
   const { querySearch } = useAppStore();
+  const [dateRange, setDateRange] = useState("1"); // Add state for date range
   const pageSize = 20;
 
   let searchValue =
@@ -23,14 +24,14 @@ const AttachmentsScreen = () => {
 
   const fetchPatients = async ({ pageParam = 0 }) => {
     const res = await apiCall({
-      url: `file/v1/all?q=${searchValue}&take=${pageSize}&skip=${pageParam}`,
+      url: `file/v1/all?q=${searchValue}&range=${dateRange}&take=${pageSize}&skip=${pageParam}`, // Include range in the API call
     });
     return { data: res, nextCursor: pageParam + pageSize };
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
     useInfiniteQuery({
-      queryKey: ["files", searchValue],
+      queryKey: ["files", searchValue, dateRange], // Add dateRange to query key
       queryFn: fetchPatients,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       select: (data) => ({
@@ -44,16 +45,26 @@ const AttachmentsScreen = () => {
       refetchOnWindowFocus: false,
     });
 
+  // Refetch data when the date range changes
+  useEffect(() => {
+    refetch();
+  }, [dateRange]);
+
   return (
     <div className="page p-[16px] sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div>
             <span>List of Attachments for</span>
-            <Select defaultValue="1" popupMatchSelectWidth={false} variant={false}>
-              <Option value={"1"}>This Day</Option>
-              <Option value={"2"}>Last Week</Option>
-              <Option value={"3"}>All </Option>
+            <Select 
+              defaultValue="1" 
+              popupMatchSelectWidth={false} 
+              variant={false}
+              onChange={(value) => setDateRange(value)} // Handle date range change
+            >
+              <Option value="1">This Day</Option>
+              <Option value="2">Last Week</Option>
+              <Option value="3">All </Option>
             </Select>
           </div>
           <Button size="large" type="link" onClick={() => setIsNew(true)}>
