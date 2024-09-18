@@ -42,7 +42,7 @@ const ScheduleScreen = () => {
     queryFn: () => apiCall({ url: `booking/v1/all?q=${searchValue}` }),
     refetchInterval: false,
   });
-
+  console.log(searchValue, "searchValueeeeeeeeeeeee");
   // const onPanelChange = (value, mode) => {
   //   console.log(value.format("YYYY-MM-DD"), mode);
   // };
