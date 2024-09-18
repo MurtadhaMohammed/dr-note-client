@@ -25,18 +25,19 @@ const ExpenseForm = ({ visible, onClose, onSave, expense }) => {
       const values = await form.validateFields();
       const expenseData = {
         ...values,
-        date: values.date.toISOString()
+        date: values.date.format("YYYY-MM-DD")
       };
       setLoading(true);
       await onSave(expenseData);
       form.resetFields();
       setLoading(false);
-      onClose(); // Ensure the form closes after saving
+      onClose();
     } catch (error) {
       console.error('Failed to save expense:', error);
       setLoading(false);
     }
-  };
+};
+
 
   const formContent = (
     <Form form={form} layout="vertical">
