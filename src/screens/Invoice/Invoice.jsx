@@ -106,7 +106,7 @@ const InvoiceScreen = () => {
             <Divider type="vertical" />
             <Select
               popupMatchSelectWidth={false}
-              defaultValue="1"
+              defaultValue="3"
               onChange={(value) => setDateRange(value)}
               variant="borderless"
             >

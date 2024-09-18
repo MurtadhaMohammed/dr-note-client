@@ -18,7 +18,7 @@ const HomeScreen = () => {
   const [isModal, setIsModal] = useState(false);
   const [isHistory, setIsHistory] = useState(false);
   const [record, setRecord] = useState(null);
-  const [selectedPeriod, setSelectedPeriod] = useState("1");
+  const [Range, setRange] = useState("3");
   const { querySearch } = useAppStore();
   const { isMobile } = useMobileDetect();
   const pageSize = 10;
@@ -27,15 +27,15 @@ const HomeScreen = () => {
 
   const fetchPatients = async ({ pageParam = 0 }) => {
     const res = await apiCall({
-      url: `patient/v1/all?q=${searchValue}&period=${selectedPeriod}&take=${pageSize}&skip=${pageParam}`,
+      url: `patient/v1/all?q=${searchValue}&range=${Range}&take=${pageSize}&skip=${pageParam}`,
     });
+    console.log(res);
     return { data: res, nextCursor: pageParam + pageSize };
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
     useInfiniteQuery({
-      queryKey: ["patients", searchValue, selectedPeriod],
-      // queryKey: ["patients", searchValue],
+      queryKey: ["patients", searchValue, Range],
       queryFn: fetchPatients,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       select: (data) => ({
@@ -51,7 +51,7 @@ const HomeScreen = () => {
     });
 
   const handlePeriodChange = (value) => {
-    setSelectedPeriod(value);
+    setRange(value);
     refetch();
   };
 
@@ -66,13 +66,13 @@ const HomeScreen = () => {
             <Select
               popupMatchSelectWidth={false}
               onChange={handlePeriodChange}
-              defaultValue="1"
+              defaultValue="3"
               variant={false}
-              value={selectedPeriod}
+              value={Range}
             >
-              <Option value={"1"}>This Day</Option>
+              <Option value={"3"}>This Day</Option>
               <Option value={"2"}>Last Week</Option>
-              <Option value={"3"}>All </Option>
+              <Option value={"1"}>All </Option>
             </Select>
           </div>
           <Button size="large" type="link" onClick={() => setIsModal(true)}>
