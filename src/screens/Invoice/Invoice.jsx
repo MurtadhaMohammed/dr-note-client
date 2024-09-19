@@ -51,8 +51,6 @@ const InvoiceScreen = () => {
     }
   );
 
-  console.log(data);
-
   useEffect(() => {
     refetch();
   }, [dateRange]);
