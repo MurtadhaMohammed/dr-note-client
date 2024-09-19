@@ -6,6 +6,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { useMutation } from "react-query";
 import { apiCall } from "../../../lib/services";
 import qc from "../../../lib/queryClient";
+import ImageViewer from "../../../components/ImageViewer/ImageViewer";
 
 export const AttachmentItem = ({ item }) => {
   const [flag, setFlag] = useState(false);
@@ -36,19 +37,7 @@ export const AttachmentItem = ({ item }) => {
         </small>
       </div>
 
-      {flag && (
-        <Image.PreviewGroup
-          preview={{
-            visible: flag,
-            onVisibleChange: (visible) => setFlag(visible),
-          }}
-        >
-          <Image
-            src={`https://ucarecdn.com/${item.name}/`}
-            style={{ display: "none" }}
-          />
-        </Image.PreviewGroup>
-      )}
+      <ImageViewer flag={flag} setFlag={setFlag} url={item?.name} />
 
       <div className="action">
         <Popconfirm
