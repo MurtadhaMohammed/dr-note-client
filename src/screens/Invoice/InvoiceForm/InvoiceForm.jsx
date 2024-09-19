@@ -88,16 +88,24 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     setPatient({ ...patient, [name]: value });
   };
 
+  console.log(selectedInvoice);
+
   const handleSave = () => {
     const userId = jwtDecode(localStorage?.getItem('drNote_token'));
 
-    const data = {
-      name: patient?.name,
-      gender: patient?.gender,
-      address: patient?.address,
-      birthDate: patient?.birthDate,
-      phone: patient?.phone,
-      userId: userId?.id
+    let data = {};
+
+    if (selectedInvoice) {
+      data = patient;
+    } else {
+      data = {
+        name: patient?.name,
+        gender: patient?.gender,
+        address: patient?.address,
+        birthDate: patient?.birthDate,
+        phone: patient?.phone,
+        userId: userId?.id
+      }
     }
 
     mutate({
