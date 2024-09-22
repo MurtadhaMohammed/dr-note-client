@@ -131,10 +131,6 @@ const ChekupScreen = () => {
     setSelectedDrugs(selectedDrugs.filter((el) => el.id !== id));
   };
 
-  useEffect(() => {
-    console.log('Selected Invoice (ChekupScreennnnnnnnn):', data);
-  }, [data]);
-
   const handleSave = () => {
     let _data = { note, drugs: selectedDrugs, patientId: id };
     if (visitId) _data.id = visitId;
