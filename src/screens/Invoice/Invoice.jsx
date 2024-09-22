@@ -51,6 +51,8 @@ const InvoiceScreen = () => {
     }
   );
 
+  console.log(data);
+
   useEffect(() => {
     refetch();
   }, [dateRange]);
@@ -98,7 +100,7 @@ const InvoiceScreen = () => {
   }, [data, querySearch]);
 
   return (
-    <div className="page p-0 sm:p-[24px]">
+    <div className="sm:page p-0 sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div className="p flex align-center justify-center">
@@ -182,6 +184,7 @@ const InvoiceScreen = () => {
         footer={null}
         width={400}
         closable={false}
+        centered
       >
         <InvoiceForm
           onClose={() => setIsModalVisible(false)}

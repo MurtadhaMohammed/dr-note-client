@@ -129,7 +129,7 @@ const ExpensesScreen = () => {
   const ExpenseCard = isMobile ? ExpenseItemMob : ExpenseItem;
 
   return (
-    <div className="page p-0 sm:p-[24px]">
+    <div className="sm:page p-0 sm:p-[24px]">
       {!isMobile && (
         <div className="flex align-center justify-between mx-2 my-4">
           <div className="flex">

@@ -60,7 +60,7 @@ const HomeScreen = () => {
   console.log(data, querySearch);
 
   return (
-    <div className="page p-0 sm:p-[24px] sm">
+    <div className="sm:page p-0 sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div>

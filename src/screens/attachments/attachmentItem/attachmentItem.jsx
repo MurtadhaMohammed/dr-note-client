@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./attachmentItem.css";
 import dayjs from "dayjs";
-import { Button, Popconfirm, Space, message } from "antd";
+import { Button, Image, Popconfirm, Space, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useMutation } from "react-query";
 import { apiCall } from "../../../lib/services";
 import qc from "../../../lib/queryClient";
 
 export const AttachmentItem = ({ item }) => {
+  const [flag, setFlag] = useState(false);
+
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
       apiCall({ url: `file/v1/delete/${item?.id}`, method: "DELETE", data }),
@@ -19,7 +21,10 @@ export const AttachmentItem = ({ item }) => {
   });
 
   return (
-    <div className="attachment-item">
+    <div className="attachment-item" onClick={(e) => {
+      e.stopPropagation();
+      setFlag(true);
+    }}>
       <div className="icon">
         <span className={`fiv-viv fiv-icon-${item.type || "png"}`}></span>
       </div>
@@ -30,6 +35,21 @@ export const AttachmentItem = ({ item }) => {
           {dayjs(item.createdAt).format("YYYY , dddd MM  hh:mm A")}
         </small>
       </div>
+
+      {flag && (
+        <Image.PreviewGroup
+          preview={{
+            visible: flag,
+            onVisibleChange: (visible) => setFlag(visible),
+          }}
+        >
+          <Image
+            src={`https://ucarecdn.com/${item.name}/`}
+            style={{ display: "none" }}
+          />
+        </Image.PreviewGroup>
+      )}
+
       <div className="action">
         <Popconfirm
           title="Delete this file"

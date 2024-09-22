@@ -51,14 +51,14 @@ const AttachmentsScreen = () => {
   }, [dateRange]);
 
   return (
-    <div className="page p-[16px] sm:p-[24px]">
+    <div className="sm:page p-0 sm:p-[24px]">
       {!isMobile && (
         <section className="app-flex">
           <div>
             <span>List of Attachments for</span>
-            <Select 
-              defaultValue="1" 
-              popupMatchSelectWidth={false} 
+            <Select
+              defaultValue="1"
+              popupMatchSelectWidth={false}
               variant={false}
               onChange={(value) => setDateRange(value)} // Handle date range change
             >
