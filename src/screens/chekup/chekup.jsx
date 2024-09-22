@@ -84,8 +84,19 @@ const ChekupScreen = () => {
     if (visit) {
       setNote(visit?.note);
       setSelectedDrugs(visit?.drugs);
+    } else {
+      setNote(null);
+      setSelectedDrugs([]);
     }
   }, [visit]);
+
+  useEffect(() => {
+    if (!visitId) {
+      setNote(null);
+      setSelectedDrugs([]);
+      qc.removeQueries([`visit-${visitId}`, visitId]);
+    }
+  }, [visitId]);
 
   const { mutate: mutateFile, isLoading: isLoadingFile } = useMutation({
     mutationFn: (data) =>
@@ -204,7 +215,7 @@ const ChekupScreen = () => {
 
               <Col span={24}>
                 <div className="selected-drugs">
-                  {selectedDrugs.map((item) => (
+                  {selectedDrugs?.map((item) => (
                     <DrugItem
                       key={item.id}
                       item={item}

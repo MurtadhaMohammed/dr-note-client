@@ -77,6 +77,8 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     setPatient(p);
   };
 
+  console.log(patient);
+
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
     setPatient({ ...patient, [name]: value });
@@ -86,13 +88,28 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     setPatient({ ...patient, [name]: value });
   };
 
+  console.log(selectedInvoice);
+
   const handleSave = () => {
     const userId = jwtDecode(localStorage?.getItem('drNote_token'));
 
-    patient['userId'] = userId?.id;
+    let data = {};
+
+    if (selectedInvoice) {
+      data = patient;
+    } else {
+      data = {
+        name: patient?.name,
+        gender: patient?.gender,
+        address: patient?.address,
+        birthDate: patient?.birthDate,
+        phone: patient?.phone,
+        userId: userId?.id
+      }
+    }
 
     mutate({
-      patient,
+      patient: data,
       date,
       service,
       amount,
