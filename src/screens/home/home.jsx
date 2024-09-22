@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
 import { Select, Button, Empty, Spin, Drawer } from "antd";
 import { PatientItem } from "./patientItem/patientItem";
@@ -11,6 +11,7 @@ import { useAppStore } from "../../lib/store";
 import PatientHistory from "./history/history";
 import { useMobileDetect } from "../../hooks/mobileDetect";
 import { PatientItemMob } from "./patientItemMob/patientItemMob";
+import { useInvoiceStore } from "../../store/invoiceStore";
 
 const { Option } = Select;
 
@@ -21,6 +22,8 @@ const HomeScreen = () => {
   const [Range, setRange] = useState("1");
   const { querySearch } = useAppStore();
   const { isMobile } = useMobileDetect();
+  const { setData } = useInvoiceStore();
+
   const pageSize = 10;
 
   let searchValue = querySearch?.key === "HOME" ? querySearch?.value : "";
@@ -32,6 +35,20 @@ const HomeScreen = () => {
     console.log(res);
     return { data: res, nextCursor: pageParam + pageSize };
   };
+
+  const fetchInvoices = async ({ pageParam = 0 }) => {
+    const res = await apiCall({
+      url: `invoice/v1/all?q=${searchValue}&range=${Range}&take=${pageSize}&skip=${pageParam}`,
+    });
+    setData(res);
+    return { data: res, nextCursor: pageParam + pageSize };
+  };
+
+  const invoicesData = useInfiniteQuery({
+    queryKey: ["invoices", searchValue],
+    queryFn: fetchInvoices,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? false,
+  });
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
     useInfiniteQuery({
@@ -56,8 +73,6 @@ const HomeScreen = () => {
   };
 
   const PatientCard = isMobile ? PatientItemMob : PatientItem;
-
-  console.log(data, querySearch);
 
   return (
     <div className="sm:page p-0 sm:p-[24px]">

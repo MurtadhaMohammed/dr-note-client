@@ -18,7 +18,7 @@ const ExpenseItem = ({ expense, onEdit, onDelete }) => {
     const month = String(newDate.getMonth() + 1).padStart(2, "0");
     const year = newDate.getFullYear();
 
-    return `${day}/${month}/${year}`;
+    return `${day-1}/${month}/${year}`;
   };
 
   const showModal = () => {

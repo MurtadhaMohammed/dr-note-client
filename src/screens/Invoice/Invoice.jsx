@@ -103,12 +103,12 @@ const InvoiceScreen = () => {
         <section className="app-flex">
           <div className="p flex align-center justify-center">
             <p className="mx-1">Invoice List</p>
-            <Divider type="vertical" />
             <Select
               popupMatchSelectWidth={false}
               defaultValue="1"
               onChange={(value) => setDateRange(value)}
               variant="borderless"
+              style={{ marginTop: "-8px" }}
             >
               <Option value="1">This Day</Option>
               <Option value="2">Last Week</Option>

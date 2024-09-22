@@ -22,6 +22,7 @@ import { apiCall } from "../../lib/services";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppStore } from "../../lib/store";
 import InvoiceForm from "../Invoice/InvoiceForm/InvoiceForm";
+import { useInvoiceStore } from "../../store/invoiceStore";
 
 const { TextArea } = Input;
 
@@ -42,6 +43,7 @@ const ChekupScreen = () => {
   const { id, visitId } = useParams();
   const { setSelectedName, setRacheta } = useAppStore();
   const navigate = useNavigate();
+  const { _data } = useInvoiceStore();
 
   const { mutate, isSaveLoading } = useMutation({
     mutationFn: (data) =>
@@ -290,6 +292,7 @@ const ChekupScreen = () => {
         <InvoiceForm
           visit={visit}
           patientId={id}
+          invoiceID={_data}
           selectedInvoice={{ patient: data }}
           onClose={() => {
             setIsModalVisible(false);

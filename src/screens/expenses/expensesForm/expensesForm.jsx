@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Drawer, Form, Input, InputNumber, DatePicker,Button } from 'antd';
+import { Modal, Drawer, Form, Input, InputNumber, DatePicker, Button } from 'antd';
 import dayjs from 'dayjs';
-import { apiCall } from '../../../lib/services';
 import { useMobileDetect } from "../../../hooks/mobileDetect";
 
 const ExpenseForm = ({ visible, onClose, onSave, expense }) => {
@@ -25,7 +24,7 @@ const ExpenseForm = ({ visible, onClose, onSave, expense }) => {
       const values = await form.validateFields();
       const expenseData = {
         ...values,
-        date: values.date.format("YYYY-MM-DD")
+        date: values.date.add(1, 'day').toISOString()
       };
       setLoading(true);
       await onSave(expenseData);
@@ -36,8 +35,7 @@ const ExpenseForm = ({ visible, onClose, onSave, expense }) => {
       console.error('Failed to save expense:', error);
       setLoading(false);
     }
-};
-
+  };
 
   const formContent = (
     <Form form={form} layout="vertical">
