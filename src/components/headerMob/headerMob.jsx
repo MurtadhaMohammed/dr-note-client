@@ -4,7 +4,7 @@ import {
   FaClipboardList,
   FaFlask,
   FaFileInvoice,
-  FaDollarSign
+  FaDollarSign,
 } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
@@ -24,10 +24,13 @@ export const HeaderMob = () => {
   let { value = "" } = querySearch;
   const { selectedName, isScroll } = useAppStore();
   let page = "/" + location.pathname.split("/")[1];
+
   const handleSearch = (v) => {
     setSearchQuery(v);
-    setQuerySearch({ key: page, value: v });
+    const key = page === "/" ? "HOME" : page;
+    setQuerySearch({ key, value: v });
   };
+
   const titles = [
     {
       key: "/",
@@ -106,8 +109,8 @@ export const HeaderMob = () => {
         height: isScroll
           ? 66
           : titles?.find((el) => el.key === page)?.child
-            ? 66
-            : 128,
+          ? 66
+          : 128,
       }}
     >
       <div className="flex items-center justify-between">
@@ -122,9 +125,6 @@ export const HeaderMob = () => {
       {!titles?.find((el) => el.key === page)?.child && (
         <div
           className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[6px] px-[16px] mt-[12px] mb-[16px] transition-all"
-          style={{
-            transform: !isScroll ? "rotateX(360deg)" : "rotateX(270deg)",
-          }}
         >
           <input
             className="bg-[#f6f6f6] w-full text-[18px] outline-0"
@@ -135,7 +135,7 @@ export const HeaderMob = () => {
               handleSearch(e.target.value);
             }}
           />
-          <FiSearch className="opacity-40" size={22} />
+          <FiSearch className="opacity-40 cursor-pointer" size={22} onClick={() => handleSearch(searchQuery)} />
         </div>
       )}
       <MenuMob open={isMenu} onClose={() => setIsMenu(false)} page={page} />

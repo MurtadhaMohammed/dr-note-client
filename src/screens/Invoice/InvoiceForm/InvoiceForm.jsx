@@ -32,7 +32,7 @@ const InputField = (label, input) => (
   </div>
 );
 
-const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
+const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId }) => {
   const [current, setCurrent] = useState(0);
   const [isNew, setIsNew] = useState(false);
   const [patient, setPatient] = useState(selectedInvoice?.patient || {});
@@ -56,7 +56,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     mutationFn: (data) =>
       apiCall({
         url: selectedInvoice
-          ? `invoice/v1/edit/${selectedInvoice?.patient?.id}`
+          ? `invoice/v1/edit/${selectedInvoice?.id}`
           : "invoice/v1/create",
         method: selectedInvoice ? "PUT" : "POST",
         data,
@@ -77,8 +77,6 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
     setPatient(p);
   };
 
-  console.log(patient);
-
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
     setPatient({ ...patient, [name]: value });
@@ -87,8 +85,6 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, patientId }) => {
   const handleForm = (value, name) => {
     setPatient({ ...patient, [name]: value });
   };
-
-  console.log(selectedInvoice);
 
   const handleSave = () => {
     const userId = jwtDecode(localStorage?.getItem('drNote_token'));
