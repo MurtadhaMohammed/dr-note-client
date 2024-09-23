@@ -64,7 +64,6 @@ const ExpensesScreen = () => {
     setSelectedExpense(expense);
     setShowForm(true);
   };
-  console.log(`Requesting expenses for range: ${dateRange} with query: ${searchValue}`);
   const handleSaveExpense = async (expenseData) => {
     setIsSaving(true);
     try {

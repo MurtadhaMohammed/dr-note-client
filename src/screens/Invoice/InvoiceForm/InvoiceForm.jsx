@@ -52,11 +52,16 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId })
     refetchInterval: false,
   });
 
+  const invoice = invoiceID?.find(v => {
+    return (v.patientId == patientId)
+  })
+
+
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
       apiCall({
         url: selectedInvoice
-          ? `invoice/v1/edit/${selectedInvoice?.id}`
+          ? `invoice/v1/edit/${selectedInvoice?.id || invoice?.id}`
           : "invoice/v1/create",
         method: selectedInvoice ? "PUT" : "POST",
         data,

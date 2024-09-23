@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Popconfirm, Space, message } from "antd";
-import { FaMapMarkerAlt, FaCopy } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import Avatar from "antd/lib/avatar/avatar";
 import getAge from "get-age";
 import "./patientItem.css";
@@ -28,7 +28,6 @@ export const PatientItem = ({ bookingId, item }) => {
 
   return (
     <div className="patient-item-schedule">
-     
       <div className="item-name">
         <Avatar
           style={{ background: item.gender === "male" ? "#7265e6" : "#e91e63" }}
@@ -66,7 +65,9 @@ export const PatientItem = ({ bookingId, item }) => {
         <Popconfirm
           title="Delete the task"
           description="Are you sure to cancel this booking?"
-          onConfirm={() => mutate()}
+          onConfirm={() => {
+            mutate();
+          }}
           okText="Yes"
           cancelText="No"
         >
@@ -74,7 +75,6 @@ export const PatientItem = ({ bookingId, item }) => {
             loading={isLoading}
             size="small"
             className="mt-1"
-            // type="text"
             danger
             icon={<FiX className="-mb-0.5" />}
           />

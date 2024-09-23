@@ -1,11 +1,5 @@
 import { Button, Space } from "antd";
-import {
-  FaUserInjured,
-  FaClipboardList,
-  FaFlask,
-  FaFileInvoice,
-  FaDollarSign,
-} from "react-icons/fa";
+import { FaUserInjured, FaClipboardList, FaFlask, FaFileInvoice, FaDollarSign } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
@@ -19,18 +13,40 @@ export const HeaderMob = () => {
   const [isMenu, setIsMenu] = useState(false);
   const location = useLocation();
   const { querySearch, setQuerySearch } = useAppStore();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(querySearch?.value || "");
 
-  let { value = "" } = querySearch;
   const { selectedName, isScroll } = useAppStore();
   let page = "/" + location.pathname.split("/")[1];
 
   const handleSearch = (v) => {
     setSearchQuery(v);
-    const key = page === "/" ? "HOME" : page;
+        let key;
+    switch (page) {
+      case "/schedule":
+        key = "schedule";
+        break;
+      case "/patients":
+        key = "patients";
+        break;
+      case "/attachements":
+        key = "attachements";
+        break;
+      case "/drugs":
+        key = "drugs";
+        break;
+      case "/Invoice":
+        key = "invoice";
+        break;
+      case "/expenses":
+        key = "expenses";
+        break;
+      default:
+        key = "HOME";
+    }
+  
     setQuerySearch({ key, value: v });
   };
-
+  
   const titles = [
     {
       key: "/",
@@ -45,11 +61,7 @@ export const HeaderMob = () => {
       key: "/patients",
       title: (
         <Space size={8}>
-          <Button
-            onClick={() => history.back()}
-            type="text"
-            icon={<IoIosArrowBack size={24} />}
-          />
+          <Button onClick={() => history.back()} type="text" icon={<IoIosArrowBack size={24} />} />
           <b className="text-[20px]">{selectedName}</b>
         </Space>
       ),
@@ -69,7 +81,7 @@ export const HeaderMob = () => {
       title: (
         <Space size={8}>
           <FaClipboardList size={18} />
-          <b className="text-[20px]">Attachements</b>
+          <b className="text-[20px]">Attachments</b>
         </Space>
       ),
     },
@@ -106,21 +118,12 @@ export const HeaderMob = () => {
     <div
       className="block left-0 right-0 top-0 z-10 lg:hidden  p-[16px] bg-white border border-b-[#eee] transition-all"
       style={{
-        height: isScroll
-          ? 66
-          : titles?.find((el) => el.key === page)?.child
-          ? 66
-          : 128,
+        height: isScroll ? 66 : titles?.find((el) => el.key === page)?.child ? 66 : 128,
       }}
     >
       <div className="flex items-center justify-between">
         {titles?.find((el) => el.key === page)?.title}
-        <Button
-          className="flex items-center justify-center"
-          type="text"
-          onClick={() => setIsMenu(true)}
-          icon={<IoMenu size={28} />}
-        />
+        <Button className="flex items-center justify-center" type="text" onClick={() => setIsMenu(true)} icon={<IoMenu size={28} />} />
       </div>
       {!titles?.find((el) => el.key === page)?.child && (
         <div
