@@ -22,7 +22,6 @@ const HomeScreen = () => {
   const [Range, setRange] = useState("3");
   const { querySearch } = useAppStore();
   const { isMobile } = useMobileDetect();
-  const { setData } = useInvoiceStore();
 
   const pageSize = 10;
 
@@ -35,20 +34,6 @@ const HomeScreen = () => {
     console.log(res);
     return { data: res, nextCursor: pageParam + pageSize };
   };
-
-  const fetchInvoices = async ({ pageParam = 0 }) => {
-    const res = await apiCall({
-      url: `invoice/v1/all?q=${searchValue}&range=${Range}&take=${pageSize}&skip=${pageParam}`,
-    });
-    setData(res);
-    return { data: res, nextCursor: pageParam + pageSize };
-  };
-
-  const invoicesData = useInfiniteQuery({
-    queryKey: ["invoices", searchValue],
-    queryFn: fetchInvoices,
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? false,
-  });
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
     useInfiniteQuery({

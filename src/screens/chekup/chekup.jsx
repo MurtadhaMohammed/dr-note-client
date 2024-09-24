@@ -43,7 +43,6 @@ const ChekupScreen = () => {
   const { id, visitId } = useParams();
   const { setSelectedName, setRacheta } = useAppStore();
   const navigate = useNavigate();
-  const { _data } = useInvoiceStore();
 
   const { mutate, isSaveLoading } = useMutation({
     mutationFn: (data) =>
@@ -294,8 +293,7 @@ const ChekupScreen = () => {
         <InvoiceForm
           visit={visit}
           patientId={id}
-          invoiceID={_data}
-          selectedInvoice={{ patient: data }}
+          _patient={data}
           onClose={() => {
             setIsModalVisible(false);
           }}
