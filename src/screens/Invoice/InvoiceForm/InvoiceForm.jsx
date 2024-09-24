@@ -54,8 +54,6 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId })
   const invoice = invoiceID?.find(v => {
     return (v.patientId == patientId)
   })
-  
-  
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
       apiCall({
