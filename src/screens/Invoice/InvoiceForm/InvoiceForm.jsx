@@ -32,10 +32,10 @@ const InputField = (label, input) => (
   </div>
 );
 
-const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId }) => {
+const InvoiceForm = ({ onClose, onSave, selectedInvoice, _patient, patientId }) => {
   const [current, setCurrent] = useState(0);
   const [isNew, setIsNew] = useState(false);
-  const [patient, setPatient] = useState(selectedInvoice?.patient || {});
+  const [patient, setPatient] = useState(selectedInvoice?.patient || _patient || {});
   const [date, setDate] = useState(
     selectedInvoice
       ? dayjs(selectedInvoice.date).format("YYYY-MM-DD")
@@ -52,15 +52,11 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId })
     refetchInterval: false,
   });
 
-  const invoice = invoiceID?.find(v => {
-    return (v.patientId == patientId)
-  })
-
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
       apiCall({
         url: selectedInvoice
-          ? `invoice/v1/edit/${selectedInvoice?.id || invoice?.id}`
+          ? `invoice/v1/edit/${selectedInvoice?.id}}`
           : "invoice/v1/create",
         method: selectedInvoice ? "PUT" : "POST",
         data,
@@ -124,7 +120,6 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId })
       setAmount(selectedInvoice.amount);
       setService(selectedInvoice.service);
     } else {
-      setPatient({});
       setDate(dayjs().format("YYYY-MM-DD"));
       setAmount("");
       setService("");
