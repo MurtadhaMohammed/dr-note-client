@@ -159,6 +159,8 @@ const ChekupScreen = () => {
     setIsModalVisible(false);
   };
 
+  console.log("Opening InvoiceForm with selectedInvoice:", { patient: data });
+
   return (
     <div className="checkup-screen p-[16px] sm:page sm:p-[24px]">
       <div className="m-[10px] sm:m-0">

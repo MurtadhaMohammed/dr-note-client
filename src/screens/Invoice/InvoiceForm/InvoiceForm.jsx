@@ -45,23 +45,22 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId })
   const [service, setService] = useState(selectedInvoice?.service || "");
   const inputRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
-
   const { data, isFetching } = useQuery({
     queryKey: ["patient-book", searchValue],
     queryFn: () => apiCall({ url: `patient/v1/all?q=${searchValue}` }),
     refetchInterval: false,
   });
-
+  
   const invoice = invoiceID?.find(v => {
     return (v.patientId == patientId)
   })
-
-
+  
+  
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
       apiCall({
         url: selectedInvoice
-          ? `invoice/v1/edit/${selectedInvoice?.id || invoice?.id}`
+          ? `invoice/v1/edit/${selectedInvoice?.patient?.id || invoice?.id}`
           : "invoice/v1/create",
         method: selectedInvoice ? "PUT" : "POST",
         data,
