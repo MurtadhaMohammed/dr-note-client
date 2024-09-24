@@ -19,7 +19,7 @@ const HomeScreen = () => {
   const [isModal, setIsModal] = useState(false);
   const [isHistory, setIsHistory] = useState(false);
   const [record, setRecord] = useState(null);
-  const [Range, setRange] = useState("1");
+  const [Range, setRange] = useState("3");
   const { querySearch } = useAppStore();
   const { isMobile } = useMobileDetect();
   const { setData } = useInvoiceStore();
@@ -83,7 +83,7 @@ const HomeScreen = () => {
             <Select
               popupMatchSelectWidth={false}
               onChange={handlePeriodChange}
-              defaultValue="1"
+              defaultValue="3"
               variant={false}
               value={Range}
             >

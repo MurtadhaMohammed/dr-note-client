@@ -29,7 +29,7 @@ const InvoiceScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [dateRange, setDateRange] = useState("1");
+  const [dateRange, setDateRange] = useState("3");
 
   const { data, isLoading, refetch } = useInfiniteQuery(
     ["invoices", dateRange],
@@ -105,7 +105,7 @@ const InvoiceScreen = () => {
             <p className="mx-1">Invoice List</p>
             <Select
               popupMatchSelectWidth={false}
-              defaultValue="1"
+              defaultValue="3"
               onChange={(value) => setDateRange(value)}
               variant="borderless"
               style={{ marginTop: "-8px" }}

@@ -50,6 +50,8 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId })
     queryFn: () => apiCall({ url: `patient/v1/all?q=${searchValue}` }),
     refetchInterval: false,
   });
+
+  console.log(invoiceID, 'invoiceID')
   
   const invoice = invoiceID?.find(v => {
     return (v.patientId == patientId)
@@ -58,7 +60,7 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, invoiceID, patientId })
     mutationFn: (data) =>
       apiCall({
         url: selectedInvoice
-          ? `invoice/v1/edit/${selectedInvoice?.patient?.id || invoice?.id}`
+          ? `invoice/v1/edit/${selectedInvoice?.id || invoice?.id}`
           : "invoice/v1/create",
         method: selectedInvoice ? "PUT" : "POST",
         data,
