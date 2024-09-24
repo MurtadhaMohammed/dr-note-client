@@ -36,17 +36,14 @@ const ScheduleScreen = () => {
   const { isMobile } = useMobileDetect();
   const [tab, setTab] = useState("schedule");
 
-  // Extract search value for filtering
   let searchValue = querySearch?.key === "schedule" ? querySearch?.value : "";
 
-  // Fetch data with react-query
   const { data, isLoading } = useQuery({
     queryKey: ["bookings", searchValue],
     queryFn: () => apiCall({ url: `booking/v1/all?q=${searchValue}` }),
     refetchInterval: false,
   });
 
-  // Filter the data based on searchValue
   const filteredData = useMemo(() => {
     if (!searchValue) {
       return data || [];

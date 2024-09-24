@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { useAppStore } from "../../lib/store";
 import { MenuMob } from "./menu";
 import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 export const HeaderMob = () => {
   const [isMenu, setIsMenu] = useState(false);
@@ -127,19 +128,31 @@ export const HeaderMob = () => {
       </div>
       {!titles?.find((el) => el.key === page)?.child && (
         <div
-          className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[6px] px-[16px] mt-[12px] mb-[16px] transition-all"
-        >
-          <input
-            className="bg-[#f6f6f6] w-full text-[18px] outline-0"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              handleSearch(e.target.value);
+        className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[6px] px-[16px] mt-[12px] mb-[16px] transition-all"
+      >
+        <input
+          className="bg-[#f6f6f6] w-full text-[18px] outline-0"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            handleSearch(e.target.value);
+          }}
+        />
+        {searchQuery && (
+          <IoClose
+            className="text-gray-400 cursor-pointer"
+            size={22}
+            onClick={() => {
+              setSearchQuery('');
+              handleSearch('');
             }}
           />
+        )}
+        {!searchQuery && (
           <FiSearch className="opacity-40 cursor-pointer" size={22} onClick={() => handleSearch(searchQuery)} />
-        </div>
+        )}
+      </div>
       )}
       <MenuMob open={isMenu} onClose={() => setIsMenu(false)} page={page} />
     </div>
