@@ -45,7 +45,6 @@ const AttachmentsScreen = () => {
       refetchOnWindowFocus: false,
     });
 
-  // Refetch data when the date range changes
   useEffect(() => {
     refetch();
   }, [dateRange]);
@@ -72,7 +71,7 @@ const AttachmentsScreen = () => {
           </Button>
         </section>
       )}
-      <section className="mt-0 sm:mt-[14px]">
+      <section className="mt-0 sm:mt-[14px] overflow-clip">
         <Spin tip="Loading..." spinning={isLoading}>
           {data?.pages?.length > 0 ? (
             <Row gutter={[20, 20]}>
