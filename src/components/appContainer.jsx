@@ -69,8 +69,8 @@ export const AppContainer = ({ head, children, isContainer }) => {
               location.pathname === "/"
                 ? "active"
                 : location.pathname.split("/")[1] === "patients"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
             onClick={() => navigate("/")}
           >
@@ -79,11 +79,11 @@ export const AppContainer = ({ head, children, isContainer }) => {
           </li>
           <li
             className={
-              location.pathname === "/schedule" 
+              location.pathname === "/schedule"
                 ? "active"
                 : location.pathname.split("/")[1] === "schedule"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
             onClick={() => navigate("/schedule")}
           >
