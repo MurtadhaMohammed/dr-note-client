@@ -4,7 +4,7 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./expensesItem.css";
 
 const ExpenseItem = ({ expense, onEdit, onDelete }) => {
-  const [showNoteModal, setShowNoteModal] = useState(false); // State to control modal visibility
+  const [showNoteModal, setShowNoteModal] = useState(false);
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);

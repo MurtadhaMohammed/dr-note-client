@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   Select,
   Button,
@@ -24,6 +24,7 @@ import { PatientItemMob } from "./patientItemMob/patientItemMob";
 import { useMobileDetect } from "../../hooks/mobileDetect";
 import { IoCalendarOutline } from "react-icons/io5";
 import { TbCalendarPlus } from "react-icons/tb";
+import { HeaderMob } from "../../components/headerMob/headerMob";
 
 const { Option } = Select;
 
@@ -31,7 +32,7 @@ const ScheduleScreen = () => {
   const [isNew, setIsNew] = useState(false);
   const [isView, setIsView] = useState(false);
   const [currentDate, setCurrentDate] = useState(null);
-  const { querySearch } = useAppStore();
+  const { querySearch, setQuerySearch } = useAppStore();
   const { isMobile } = useMobileDetect();
   const [tab, setTab] = useState("schedule");
 
@@ -42,14 +43,19 @@ const ScheduleScreen = () => {
     queryFn: () => apiCall({ url: `booking/v1/all?q=${searchValue}` }),
     refetchInterval: false,
   });
-  console.log(searchValue, "searchValueeeeeeeeeeeee");
-  // const onPanelChange = (value, mode) => {
-  //   console.log(value.format("YYYY-MM-DD"), mode);
-  // };
+
+  const filteredData = useMemo(() => {
+    if (!searchValue) {
+      return data || [];
+    }
+    return (data || []).filter((booking) =>
+      booking.patient.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  }, [data, searchValue]);
 
   const parseList = (current) => {
-    let list = data
-      ? [...data]?.filter((b) => current?.isSame(dayjs(b?.date), "D"))
+    let list = filteredData
+      ? [...filteredData]?.filter((b) => current?.isSame(dayjs(b?.date), "D"))
       : [];
     return {
       count: list?.length > 3 ? list?.length - 3 : 0,
@@ -59,7 +65,7 @@ const ScheduleScreen = () => {
 
   const getDateInBookings = () => {
     let dates = [];
-    data?.map((b) => {
+    filteredData?.map((b) => {
       if (!dates?.find((d) => dayjs(d).isSame(dayjs(b?.date), "date"))) {
         dates.push(b?.date);
       }
@@ -113,9 +119,6 @@ const ScheduleScreen = () => {
                     >
                       <IoCalendarOutline />
                       <Divider type="vertical" />
-                      {/* <a className="text-[14px] text-[#666] block">
-                        {dayjs(date)?.format("YYYY, ddd MM")}
-                      </a> */}
                     </Space>
                     <a
                       onClick={() => {
@@ -128,20 +131,17 @@ const ScheduleScreen = () => {
                     </a>
                   </div>
                   <div className="patients-list">
-                    {data
-                      ?.filter((item) => dayjs(item?.date).isSame(date) && item?.patient?.active === true)
+                    {filteredData
+                      ?.filter(
+                        (item) =>
+                          dayjs(item?.date).isSame(date) &&
+                          item?.patient?.active === true
+                      )
                       ?.map((item, k) => (
                         <PatientCard
                           key={k}
                           item={item?.patient}
-                        // onHistory={(val) => {
-                        //   setRecord(val);
-                        //   setIsHistory(true);
-                        // }}
-                        // onEdit={(val) => {
-                        //   setRecord(val);
-                        //   setIsModal(true);
-                        // }}
+                          bookingId={item?.id}
                         />
                       ))}
                   </div>
@@ -165,7 +165,6 @@ const ScheduleScreen = () => {
         <section className="hidden sm:block -mt-[42px]">
           <Calendar
             className="gender"
-            //onPanelChange={onPanelChange}
             onSelect={(current, { source }) => {
               if (source !== "date") return;
               setCurrentDate(current);
@@ -232,7 +231,6 @@ const ScheduleScreen = () => {
       <Modal
         destroyOnClose
         footer={null}
-        // closable={false}
         open={isView}
         width={800}
         title={
@@ -252,8 +250,7 @@ const ScheduleScreen = () => {
           <Typography.Text
             style={{ fontWeight: "normal" }}
             type="secondary"
-          >{`You have ${parseList(currentDate)?.list?.length
-            } bookings for this date`}</Typography.Text>
+          >{`You have ${parseList(currentDate)?.list?.length} bookings for this date`}</Typography.Text>
 
           <Button
             type="link"
@@ -269,11 +266,12 @@ const ScheduleScreen = () => {
         <div className="-mx-[20px]">
           {currentDate &&
             parseList(currentDate)?.list?.map((b, i) => (
-              <PatientItem bookingId={b?.id} item={b?.patient} />
+              <PatientItem bookingId={b?.id} item={b?.patient} key={i} />
             ))}
         </div>
       </Modal>
     </div>
   );
 };
+
 export default ScheduleScreen;

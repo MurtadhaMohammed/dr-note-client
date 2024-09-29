@@ -10,9 +10,6 @@ const SearchBox = ({ page }) => {
   const [val, setVal] = useState(null);
 
   let { value = "" } = querySearch;
-
-  console.log(page, 'page in search box');
-
   return (
     <div className="search-box">
       {value ? (

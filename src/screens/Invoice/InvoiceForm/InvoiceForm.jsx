@@ -45,7 +45,6 @@ const InvoiceForm = ({ onClose, onSave, selectedInvoice, _patient, patientId }) 
   const [service, setService] = useState(selectedInvoice?.service || "");
   const inputRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
-
   const { data, isFetching } = useQuery({
     queryKey: ["patient-book", searchValue],
     queryFn: () => apiCall({ url: `patient/v1/all?q=${searchValue}` }),
