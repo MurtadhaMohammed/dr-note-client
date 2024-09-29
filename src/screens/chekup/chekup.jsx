@@ -223,7 +223,7 @@ const ChekupScreen = () => {
                 </div>
               </Col>
               <Col span={24}>
-                <Space>
+                <Space className="flex flex-wrap">
                   <Button
                     type="primary"
                     size="large"
