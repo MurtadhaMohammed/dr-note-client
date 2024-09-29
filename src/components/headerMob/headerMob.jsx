@@ -21,7 +21,7 @@ export const HeaderMob = () => {
 
   const handleSearch = (v) => {
     setSearchQuery(v);
-        let key;
+    let key;
     switch (page) {
       case "/schedule":
         key = "schedule";
@@ -44,10 +44,10 @@ export const HeaderMob = () => {
       default:
         key = "HOME";
     }
-  
+
     setQuerySearch({ key, value: v });
   };
-  
+
   const titles = [
     {
       key: "/",
@@ -119,7 +119,7 @@ export const HeaderMob = () => {
     <div
       className="block left-0 right-0 top-0 z-10 lg:hidden  p-[16px] bg-white sm:border sm:border-b-[#eee] transition-all"
       style={{
-        height: 120
+        maxHeight: 120
       }}
     >
       <div className="flex items-center justify-between">
@@ -128,31 +128,31 @@ export const HeaderMob = () => {
       </div>
       {!titles?.find((el) => el.key === page)?.child && (
         <div
-        className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[6px] px-[16px] mt-[12px] mb-[16px] transition-all"
-      >
-        <input
-          className="bg-[#f6f6f6] w-full text-[18px] outline-0"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            handleSearch(e.target.value);
-          }}
-        />
-        {searchQuery && (
-          <IoClose
-            className="text-gray-400 cursor-pointer"
-            size={22}
-            onClick={() => {
-              setSearchQuery('');
-              handleSearch('');
+          className="flex items-center justify-between bg-[#f6f6f6] border border-[#f6f6f6] h-[48px] rounded-[8px] py-[6px] px-[16px] mt-[12px] mb-[16px] transition-all"
+        >
+          <input
+            className="bg-[#f6f6f6] w-full text-[18px] outline-0"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              handleSearch(e.target.value);
             }}
           />
-        )}
-        {!searchQuery && (
-          <FiSearch className="opacity-40 cursor-pointer" size={22} onClick={() => handleSearch(searchQuery)} />
-        )}
-      </div>
+          {searchQuery && (
+            <IoClose
+              className="text-gray-400 cursor-pointer"
+              size={22}
+              onClick={() => {
+                setSearchQuery('');
+                handleSearch('');
+              }}
+            />
+          )}
+          {!searchQuery && (
+            <FiSearch className="opacity-40 cursor-pointer" size={22} onClick={() => handleSearch(searchQuery)} />
+          )}
+        </div>
       )}
       <MenuMob open={isMenu} onClose={() => setIsMenu(false)} page={page} />
     </div>
