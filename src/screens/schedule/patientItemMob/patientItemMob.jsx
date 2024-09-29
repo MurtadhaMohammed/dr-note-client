@@ -124,19 +124,7 @@ export const PatientItemMob = ({ item, onEdit, onHistory }) => {
           {/* <Sheet.Header /> */}
           <Sheet.Content>
             <div className="flex flex-col overflow-hidden">
-              <button
-                onClick={() =>
-                  openConfirm({
-                    title: "Delete Patient!",
-                    msg: "Are you sure to delete this Patient?",
-                    onConfirm: () => mutate(),
-                  })
-                }
-                className="p-[20px] border border-b-[#eee] transition-all active:opacity-30 text-[#ff0000] text-[18px]"
-              >
-                Delete Patient
-              </button>
-              <button
+              {/* <button
                 className="p-[20px] border-b border-b-[#eee] transition-all active:opacity-30 text-[18px]"
                 onClick={() => {
                   setIsActions(false);
@@ -144,8 +132,8 @@ export const PatientItemMob = ({ item, onEdit, onHistory }) => {
                 }}
               >
                 View History
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 onClick={() => {
                   setIsActions(false);
                   onEdit(item);
@@ -153,7 +141,7 @@ export const PatientItemMob = ({ item, onEdit, onHistory }) => {
                 className="p-[20px]  border-b border-b-[#eee] transition-all active:opacity-30 text-[18px]"
               >
                 Edit Patient
-              </button>
+              </button> */}
 
               <button
                 onClick={() => navigate(`/patients/${item.id}`)}
@@ -161,6 +149,29 @@ export const PatientItemMob = ({ item, onEdit, onHistory }) => {
               >
                 Add New Checkup
               </button>
+              <button
+                onClick={() =>
+                  openConfirm({
+                    title: "Delete Schedule!",
+                    msg: "Are you sure to delete this schedule?",
+                    onConfirm: () => {
+                      mutate(
+                        {},
+                        {
+                          onSuccess: () => {
+                            qc.invalidateQueries("bookings");
+                            closeConfirm();
+                          },
+                        }
+                      );
+                    },
+                  })
+                }
+                className="p-[20px] transition-all active:opacity-30 text-[#ff0000] text-[18px]"
+              >
+                Delete Schedule
+              </button>
+
               <button
                 onClick={() => setIsActions(false)}
                 className="p-[20px] m-[20px] rounded-[12px] bg-[#f6f6f6] transition-all active:opacity-30 text-[18px]"

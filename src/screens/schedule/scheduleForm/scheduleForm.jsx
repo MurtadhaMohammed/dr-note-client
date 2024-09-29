@@ -72,7 +72,13 @@ const ScheduleForm = ({ onClose, onSave, currentDate }) => {
   };
 
   const handleSave = () => {
-    mutate({ patient, date, note });
+    const incrementedDate = dayjs(date).add(1, 'day')
+  
+    mutate({ 
+      patient, 
+      date: incrementedDate,
+      note 
+    });
   };
 
   useEffect(() => {
