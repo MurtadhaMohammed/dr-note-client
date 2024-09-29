@@ -69,19 +69,6 @@ const InvoiceItemMob = ({ item, onEdit, onDelete }) => {
             <Sheet.Content>
               <div className="flex flex-col overflow-hidden">
                 <button
-                  onClick={() =>
-                    openConfirm({
-                      title: "Delete Patient!",
-                      msg: "Are you sure to delete this Patient?",
-                      onConfirm: () => handleDelete(),
-                    })
-                  }
-                  className="p-[20px] border border-b-[#eee] transition-all active:opacity-30 text-[#ff0000] text-[18px]"
-                >
-                  Delete Patient
-                </button>
-
-                <button
                   onClick={() => {
                     setIsActions(false);
                     onEdit(item);
@@ -98,11 +85,25 @@ const InvoiceItemMob = ({ item, onEdit, onDelete }) => {
                   Print Invoice
                 </button>
                 <button
+                  onClick={() =>
+                    openConfirm({
+                      title: "Delete Patient!",
+                      msg: "Are you sure to delete this Patient?",
+                      onConfirm: () => handleDelete(),
+                    })
+                  }
+                  className="p-[20px] transition-all active:opacity-30 text-[#ff0000] text-[18px]"
+                >
+                  Delete Invoice
+                </button>
+
+                <button
                   onClick={() => setIsActions(false)}
                   className="p-[20px] m-[20px] rounded-[12px] bg-[#f6f6f6] transition-all active:opacity-30 text-[18px]"
                 >
                   Cancel
                 </button>
+                
               </div>
             </Sheet.Content>
           </Sheet.Container>
