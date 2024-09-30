@@ -154,7 +154,7 @@ export const PatientItemMob = ({ item, onEdit, onHistory }) => {
                 onClick={() =>
                   openConfirm({
                     title: "Delete Patient!",
-                    msg: "Are you sure to delete this Patient?",
+                    msg: "Are you sure to delete this Patient?",      
                     onConfirm: () => mutate(),
                   })
                 }
