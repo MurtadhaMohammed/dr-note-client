@@ -1,8 +1,8 @@
 import { jwtDecode } from "jwt-decode";
 import { useAppStore } from "./store";
 
-const URL = "http://85.208.51.126:3001/api";
-// const URL = "http://localhost:3001/api";
+// const URL = "http://85.208.51.126:3001/api";
+const URL = "http://localhost:3001/api";
 
 const isTokenValid = (token) => {
   try {
