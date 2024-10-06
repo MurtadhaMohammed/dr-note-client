@@ -55,13 +55,14 @@ const ScheduleScreen = () => {
 
   const parseList = (current) => {
     let list = filteredData
-      ? [...filteredData]?.filter((b) => current?.isSame(dayjs(b?.date), "D"))
+      ? [...filteredData]?.filter((b) => dayjs(b?.date).subtract(1, 'day').isSame(current, "day"))
       : [];
     return {
       count: list?.length > 3 ? list?.length - 3 : 0,
       list,
     };
   };
+  
 
   const getDateInBookings = () => {
     let dates = [];
@@ -119,10 +120,11 @@ const ScheduleScreen = () => {
                     >
                       <IoCalendarOutline />
                       <Divider type="vertical" />
+                      <Typography.Text>{date.slice(0, 10)}</Typography.Text>
                     </Space>
                     <a
                       onClick={() => {
-                        setCurrentDate(dayjs(date));
+                        setCurrentDate(dayjs(date).subtract(1, 'day'));
                         setIsNew(true);
                       }}
                       className="block mr-[16px]"
