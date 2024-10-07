@@ -7,7 +7,7 @@ import { useAppStore } from "../../lib/store";
 import { useInfiniteQuery } from "react-query";
 import { apiCall } from "../../lib/services";
 import "./expenses.css";
-import { UserAddOutlined } from "@ant-design/icons";
+import { FaPlus } from "react-icons/fa";
 import { useMobileDetect } from "../../hooks/mobileDetect";
 
 const { Option } = Select;
@@ -187,9 +187,9 @@ const ExpensesScreen = () => {
       </div>
       <button
         onClick={handleAddExpense}
-        className="fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-[#2c24ff] hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
+        className="pos fixed sm:hidden w-[54px] h-[54px] bottom-4 right-4 bg-[#2c24ff] hover:bg-blue-700 text-white font-bold rounded-full shadow-lg"
       >
-        <UserAddOutlined className="text-[22px]" />
+        <FaPlus className="text-[20px]" />
       </button>
       {showForm && (
         <ExpenseForm

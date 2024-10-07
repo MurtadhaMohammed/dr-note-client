@@ -130,8 +130,8 @@ export const MenuMob = ({ open, onClose, page }) => {
             </Popconfirm>
           </li>
         </ul>
-        <div className=" bottom-10 left-0 right-0 flex justify-center">
-          <small className="text-[#666]">
+        <div className="pos bottom-10 left-0 right-0 flex justify-center">
+          <small className="footer text-[#666]">
             Developed by{" "}
             <a
               href="https://www.puretik.com"

@@ -2,3 +2,15 @@
     display: flex;
     color: red;
 }
+
+.pos{
+    position: relative;
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+    bottom: 20px;
+    right: 90px;
+    position: fixed;
+}
