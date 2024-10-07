@@ -34,22 +34,26 @@ const HomeScreen = () => {
     return { data: res, nextCursor: pageParam + pageSize };
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
-    useInfiniteQuery({
-      queryKey: ["patients", searchValue, Range],
-      queryFn: fetchPatients,
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-      select: (data) => ({
-        ...data,
-        pages: data.pages.flatMap((page) => page?.data),
-        hasNext:
-          data.pages.findIndex((el) => el.data.length === 0) === -1
-            ? true
-            : false,
-      }),
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ["patients", searchValue, Range],
+    queryFn: fetchPatients,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    select: (data) => ({
+      ...data,
+      pages: data.pages.flatMap((page) => page?.data),
+      hasNext:
+        data.pages.findIndex((el) => el.data.length === 0) === -1 ? true : false,
+    }),
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+  });
 
   const handlePeriodChange = (value) => {
     setRange(value);
@@ -161,4 +165,5 @@ const HomeScreen = () => {
     </div>
   );
 };
+
 export default HomeScreen;
