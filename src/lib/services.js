@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { useAppStore } from "./store";
 
-export const URL = "http://85.208.51.126:3001/api";
+export const URL = "https://drnote.puretik.com/api";
 // export const URL = "http://localhost:3001/api";
 
 const isTokenValid = (token) => {
