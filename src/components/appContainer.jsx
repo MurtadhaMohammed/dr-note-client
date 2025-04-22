@@ -90,9 +90,6 @@ export const AppContainer = ({ head, children, isContainer }) => {
             <MdDateRange />
             <span>Schedule</span>
           </li>
-          <Tooltip>
-            
-          </Tooltip>
           <li
             className={location.pathname === "/attachements" ? "active" : ""}
             style={{

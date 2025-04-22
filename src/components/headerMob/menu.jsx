@@ -78,7 +78,12 @@ export const MenuMob = ({ open, onClose, page }) => {
               navigate("/attachements");
               onClose();
             }}
-            style={{ ...activeStyle("/attachements"), cursor: "pointer" }}
+            style={{
+              ...activeStyle("/attachements"),
+              cursor: "pointer",
+              pointerEvents: "none",
+              opacity: 0.4,
+            }}
           >
             <FaClipboardList />
             <span>Attachments</span>
@@ -111,7 +116,12 @@ export const MenuMob = ({ open, onClose, page }) => {
               navigate("/Invoice");
               onClose();
             }}
-            style={{ ...activeStyle("/Invoice"), cursor: "pointer" }}
+            style={{
+              ...activeStyle("/Invoice"),
+              cursor: "pointer",
+              pointerEvents: "none",
+              opacity: 0.4,
+            }}
           >
             <FaFileInvoice />
             <span>Invoices</span>
@@ -123,7 +133,10 @@ export const MenuMob = ({ open, onClose, page }) => {
               okText="Yes"
               cancelText="No"
             >
-              <span className="flex items-center gap-2" style={{ cursor: "pointer" }}>
+              <span
+                className="flex items-center gap-2"
+                style={{ cursor: "pointer" }}
+              >
                 <LuLogOut size={22} color="red" />
                 <span>Logout</span>
               </span>
