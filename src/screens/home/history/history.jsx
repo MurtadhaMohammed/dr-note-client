@@ -30,8 +30,8 @@ const PatientHistory = ({ patientId }) => {
             ? true
             : false,
       }),
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
+      // refetchOnMount: false,
+      // refetchOnWindowFocus: false,
       enabled: !!patientId,
     });
 
@@ -55,9 +55,9 @@ const PatientHistory = ({ patientId }) => {
             </Space>
             <Divider style={{ margin: "8px 0px" }} />
             <div className="patient-history-note">
-            <Typography.Text type="secondary" >
-              {item?.note || "...."}
-            </Typography.Text>
+              <Typography.Text type="secondary">
+                {item?.note || "...."}
+              </Typography.Text>
             </div>
             <Space wrap>
               {item?.drugs?.map((drug) => (

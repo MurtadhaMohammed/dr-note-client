@@ -1,5 +1,6 @@
 import { Image } from 'antd';
 import React, { useState, useEffect } from 'react';
+import { URL } from '../../lib/services';
 
 const ImageViewer = ({ flag = false, setFlag, url = '' }) => {
     const [imageUrl, setImageUrl] = useState('');
@@ -8,7 +9,7 @@ const ImageViewer = ({ flag = false, setFlag, url = '' }) => {
         const fetchImage = async () => {
             if (url) {
                 try {
-                    const response = await fetch(`http://localhost:3001/api/file/v1/image/${url}`, {
+                    const response = await fetch(`${URL}/file/v1/image/${url}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': localStorage.getItem('drNote_token') || '',

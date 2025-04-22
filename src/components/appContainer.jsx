@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Layout, Avatar, Dropdown, Space, Popconfirm } from "antd";
+import { Layout, Avatar, Dropdown, Space, Popconfirm, Tooltip } from "antd";
 import logo from "../assets/logo.svg";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import { MdDateRange } from "react-icons/md";
@@ -90,8 +90,15 @@ export const AppContainer = ({ head, children, isContainer }) => {
             <MdDateRange />
             <span>Schedule</span>
           </li>
+          <Tooltip>
+            
+          </Tooltip>
           <li
             className={location.pathname === "/attachements" ? "active" : ""}
+            style={{
+              pointerEvents: "none",
+              opacity: .4
+            }}
             onClick={() => navigate("/attachements")}
           >
             <FaClipboardList />
@@ -114,11 +121,18 @@ export const AppContainer = ({ head, children, isContainer }) => {
           <li
             className={location.pathname === "/Invoice" ? "active" : ""}
             onClick={() => navigate("/Invoice")}
+            style={{
+              pointerEvents: "none",
+              opacity: .4
+            }}
           >
             <FaFileInvoice />
             <span>Invoices</span>
           </li>
-          <li>
+          <li  style={{
+              pointerEvents: "none",
+              opacity: .4
+            }}>
             <FaInfoCircle />
             <span>Info</span>
           </li>

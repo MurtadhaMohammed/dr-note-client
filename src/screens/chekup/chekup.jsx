@@ -256,6 +256,10 @@ const ChekupScreen = () => {
                     icon={<FaFileInvoice />}
                     disabled={!visitId}
                     onClick={() => setIsModalVisible(true)}
+                    style={{
+                      pointerEvents: "none",
+                      opacity: .4
+                    }}
                   >
                     Add Invoice
                   </Button>
@@ -266,6 +270,7 @@ const ChekupScreen = () => {
           <Col md={8} xs={24}>
             <h4>Attachments</h4>
             <DropZon
+              disabled
               loading={isLoadingFile}
               onChange={(file) =>
                 mutateFile({

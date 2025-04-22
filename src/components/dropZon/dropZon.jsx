@@ -4,7 +4,7 @@ import "./dropZon.css";
 import imageIcon from "../../assets/cloud.svg";
 import { Spin } from "antd";
 
-function DropZon({ onChange, loading = false }) {
+function DropZon({ onChange, loading = false, disabled = false }) {
   const [isDrag, setIsDrag] = useState(false);
 
   function convertImageToBase64(file) {
@@ -19,7 +19,7 @@ function DropZon({ onChange, loading = false }) {
   }
 
   return (
-    <div className="drop-file-glass">
+    <div className={`drop-file-glass ${disabled ? "pointer-events-none opacity-40" : ""}`}>
       <Spin spinning={loading}>
         <div
           className="drop-file"

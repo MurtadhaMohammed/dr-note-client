@@ -5,11 +5,13 @@ import "./fileItem.css";
 import dayjs from "dayjs";
 import { useMutation } from "react-query";
 import qc from "../../../lib/queryClient";
-import { apiCall } from "../../../lib/services";
+import { apiCall, URL } from "../../../lib/services";
 import ImageViewer from "../../../components/ImageViewer/ImageViewer";
 
 export const FileItem = ({ file }) => {
   const [flag, setFlag] = useState(false);
+
+  console.log(file);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: (data) =>
@@ -22,13 +24,21 @@ export const FileItem = ({ file }) => {
   });
 
   return (
-    <div
-      className="file-item"
-    >
-      <div className="file-info" onClick={(e) => {
-        e.stopPropagation();
-        setFlag(true);
-      }}>
+    <div className="file-item">
+      <div
+        className="file-info"
+        onClick={(e) => {
+          e.stopPropagation();
+          const isImage = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i.test(
+            file?.name
+          );
+          if (isImage) {
+            setFlag(true);
+          } else {
+            window.open(`${URL}/file/v1/image/${file?.name}`, "_blank");
+          }
+        }}
+      >
         <span className={`fiv-viv fiv-icon-png`}></span>
         <div className="file-text">
           <span className="truncate w-[60vw]  md:w-[15vw]">{file.name}</span>
