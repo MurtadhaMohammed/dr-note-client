@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Popconfirm, Space, message } from "antd";
+import { Button, Popconfirm, Space, message , Avatar} from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -7,7 +7,6 @@ import {
   MoreOutlined,
 } from "@ant-design/icons";
 import { FaMapMarkerAlt, FaCopy } from "react-icons/fa";
-import Avatar from "antd/lib/avatar/avatar";
 import getAge from "get-age";
 import "./patientItemMob.css";
 import { useNavigate } from "react-router-dom";

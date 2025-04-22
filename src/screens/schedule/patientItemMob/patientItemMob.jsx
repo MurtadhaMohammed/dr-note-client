@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Popconfirm, Space, message } from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  HistoryOutlined,
-  MoreOutlined,
-} from "@ant-design/icons";
-import { FaMapMarkerAlt, FaCopy } from "react-icons/fa";
-import Avatar from "antd/lib/avatar/avatar";
-import getAge from "get-age";
+import { Button, Avatar, Space, message } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
+import { FaMapMarkerAlt } from "react-icons/fa";
+
 import "./patientItemMob.css";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
